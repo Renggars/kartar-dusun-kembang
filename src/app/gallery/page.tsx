@@ -3,13 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import rectangle from "../../../public/rectangle.png";
-import gallery1 from "../../../public/gallery1.png";
-import gallery2 from "../../../public/gallery2.png";
-import gallery3 from "../../../public/gallery3.png";
-import gallery4 from "../../../public/gallery4.png";
-import gallery5 from "../../../public/gallery5.png";
-import gallery6 from "../../../public/gallery6.png";
+import rectangle from "../../assets/rectangle.png";
+import gallery1 from "../../assets/gallery1.png";
+import gallery2 from "../../assets/gallery2.png";
+import gallery3 from "../../assets/gallery3.png";
+import gallery4 from "../../assets/gallery4.png";
+import gallery5 from "../../assets/gallery5.png";
+import gallery6 from "../../assets/gallery6.png";
 
 export default function GalleryPage() {
   const galleries = [

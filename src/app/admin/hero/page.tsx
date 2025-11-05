@@ -6,7 +6,6 @@ import Image from "next/image";
 import { uploadHeroImage } from "@/lib/uploadHeroImage";
 
 export default function HeroPage() {
-  // Ambil data hero dari database
   const { data: hero, isLoading, refetch } = trpc.hero.get.useQuery();
   const createHero = trpc.hero.create.useMutation();
   const updateHero = trpc.hero.update.useMutation();
@@ -17,9 +16,10 @@ export default function HeroPage() {
     description: "",
     imageUrl: "",
   });
+
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  // Ketika data hero sudah didapat, isi form
   useEffect(() => {
     if (hero) {
       setForm({
@@ -31,21 +31,6 @@ export default function HeroPage() {
     }
   }, [hero]);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    const imageUrl = await uploadHeroImage(file);
-    setUploading(false);
-
-    if (imageUrl) {
-      setForm({ ...form, imageUrl });
-    } else {
-      alert("Gagal mengunggah gambar.");
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -54,17 +39,39 @@ export default function HeroPage() {
       return;
     }
 
+    setUploading(true);
+
+    let imageUrl = form.imageUrl || "";
+    if (selectedImage) {
+      const uploadedUrl = await uploadHeroImage(selectedImage);
+      if (!uploadedUrl) {
+        alert("Gagal mengunggah gambar.");
+        setUploading(false);
+        return;
+      }
+      imageUrl = uploadedUrl;
+    }
+
+    const payload = {
+      ...form,
+      imageUrl,
+    };
+
     try {
       if (form.id) {
-        await updateHero.mutateAsync(form);
+        await updateHero.mutateAsync(payload);
       } else {
-        await createHero.mutateAsync(form);
+        await createHero.mutateAsync(payload);
       }
-      await refetch(); // refresh data terbaru dari database
+
+      await refetch();
       alert("Hero section berhasil disimpan!");
+      setSelectedImage(null);
     } catch (error) {
-      alert("Terjadi kesalahan saat menyimpan data!");
       console.error(error);
+      alert("Terjadi kesalahan saat menyimpan data!");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -76,7 +83,6 @@ export default function HeroPage() {
     <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow text-gray-900">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Hero Section</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* JUDUL */}
         <div>
           <label className="block font-semibold mb-1">Judul</label>
           <input
@@ -88,7 +94,6 @@ export default function HeroPage() {
           />
         </div>
 
-        {/* DESKRIPSI */}
         <div>
           <label className="block font-semibold mb-1">Deskripsi Singkat</label>
           <textarea
@@ -100,46 +105,46 @@ export default function HeroPage() {
           />
         </div>
 
-        {/* UPLOAD GAMBAR */}
         <div>
-          <label className="block font-semibold mb-1">Gambar/Banner</label>
+          <label className="block font-semibold mb-1">Gambar</label>
           <input
             type="file"
             accept="image/*"
-            onChange={handleImageUpload}
-            className="block w-full text-sm text-gray-600 border border-gray-300 rounded cursor-pointer focus:outline-none"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) setSelectedImage(file);
+            }}
+            className="block text-sm text-gray-600 border border-gray-300 rounded cursor-pointer focus:outline-none px-4 py-1"
           />
 
-          {uploading && (
-            <p className="text-sm text-blue-600 mt-2">Mengunggah gambar...</p>
-          )}
-
-          {/* Preview gambar dari database */}
-          {form.imageUrl && (
+          {(form.imageUrl || selectedImage) && (
             <div className="mt-3">
-              <p className="text-sm text-gray-700 mb-1">Gambar saat ini:</p>
+              <p className="text-sm text-gray-700 mb-1">Preview:</p>
               <Image
-                src={form.imageUrl}
+                src={
+                  selectedImage
+                    ? URL.createObjectURL(selectedImage)
+                    : form.imageUrl
+                }
                 alt="Hero Banner"
                 width={600}
                 height={350}
-                className="rounded-lg shadow-md border border-gray-200"
+                className="rounded-lg shadow-md border border-gray-200 object-cover"
               />
             </div>
           )}
         </div>
 
-        {/* TOMBOL SIMPAN */}
         <button
           type="submit"
           disabled={uploading}
-          className={`px-4 py-2 rounded text-white font-medium ${
+          className={`cursor-pointer px-4 py-2 rounded text-white font-medium ${
             uploading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
-          {uploading ? "Menunggu Upload..." : "Simpan Perubahan"}
+          {uploading ? "Menyimpan..." : "Simpan Perubahan"}
         </button>
       </form>
     </div>

@@ -1,11 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { FaPlayCircle } from "react-icons/fa";
 
-const ActivityCard = ({ title, description, icon, href }) => (
+// 💡 terima icon sebagai Komponen, bukan elemen
+const ActivityCard = ({ title, description, Icon, href }) => (
   <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between">
     <div>
-      <div className="text-blue-600 mb-4">{icon}</div>
+      {/* pastikan Icon dirender sebagai komponen */}
+      <div className="text-blue-600 mb-4">
+        <Icon className="text-4xl" />
+      </div>
       <h3 className="text-xl font-bold mb-2 text-gray-800">{title}</h3>
       <p className="text-gray-600">{description}</p>
     </div>
@@ -41,81 +46,19 @@ const Activities = () => {
             title="Bakti Sosial & Lingkungan"
             description="Mengadakan kegiatan kebersihan lingkungan, santunan, dan program sosial lain untuk meningkatkan kepedulian."
             href="/program/bakti-sosial"
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
-                  2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 
-                  4.5 2.09C13.09 3.81 14.76 3 16.5 3 
-                  19.58 3 22 5.42 22 8.5c0 3.78-3.4 
-                  6.86-8.55 11.54L12 21.35z"
-                />
-              </svg>
-            }
+            Icon={FaPlayCircle}
           />
           <ActivityCard
             title="Pengembangan Skill Pemuda"
             description="Workshop dan pelatihan seperti public speaking, digital marketing, dan desain untuk meningkatkan keahlian."
             href="/program/pengembangan-skill"
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9.663 17h4.673M12 3v1m6.364 
-                  1.636l-.707.707M21 12h-1M4 12H3m15.364 
-                  6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 
-                  0l-.707.707"
-                />
-              </svg>
-            }
+            Icon={FaPlayCircle}
           />
           <ActivityCard
             title="Olahraga & Seni"
             description="Menyelenggarakan turnamen olahraga dan pentas seni untuk menyalurkan bakat serta mempererat persaudaraan."
             href="/program/olahraga-seni"
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14.752 11.168l-3.197-2.132A1 
-                  1 0 0010 9.87v4.263a1 1 0 
-                  001.555.832l3.197-2.132a1 1 0 
-                  000-1.664z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12a9 9 0 
-                  11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            }
+            Icon={FaPlayCircle}
           />
         </div>
 
