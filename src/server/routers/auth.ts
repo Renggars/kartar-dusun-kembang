@@ -2,7 +2,6 @@
 
 import { publicProcedure, router } from "../trpc";
 import { registerSchema, loginSchema } from "@/server/validation/authSchema";
-// 🔽 Import service yang berisi logika
 import {
   registerUser,
   loginUser,

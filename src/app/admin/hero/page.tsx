@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { trpc } from "@/server/client";
 import Image from "next/image";
-import { uploadHeroImage } from "@/lib/uploadHeroImage";
+import { uploadHeroImage, deleteHeroImage } from "@/lib/uploadHeroImage";
 
 export default function HeroPage() {
   const { data: hero, isLoading, refetch } = trpc.hero.get.useQuery();
@@ -40,24 +40,32 @@ export default function HeroPage() {
     }
 
     setUploading(true);
-
     let imageUrl = form.imageUrl || "";
-    if (selectedImage) {
-      const uploadedUrl = await uploadHeroImage(selectedImage);
-      if (!uploadedUrl) {
-        alert("Gagal mengunggah gambar.");
-        setUploading(false);
-        return;
-      }
-      imageUrl = uploadedUrl;
-    }
-
-    const payload = {
-      ...form,
-      imageUrl,
-    };
 
     try {
+      // Jika user upload gambar baru
+      if (selectedImage) {
+        // Hapus gambar lama dulu
+        if (form.imageUrl) {
+          await deleteHeroImage(form.imageUrl);
+        }
+
+        // Upload gambar baru
+        const uploadedUrl = await uploadHeroImage(selectedImage);
+        if (!uploadedUrl) {
+          alert("Gagal mengunggah gambar.");
+          setUploading(false);
+          return;
+        }
+        imageUrl = uploadedUrl;
+      }
+
+      const payload = {
+        ...form,
+        imageUrl,
+      };
+
+      // Simpan ke database
       if (form.id) {
         await updateHero.mutateAsync(payload);
       } else {

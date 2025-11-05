@@ -1,7 +1,6 @@
 // components/Node.jsx
 
 import Image from "next/image";
-import React from "react";
 
 const Node = ({ name, title, department, imageUrl }) => {
   return (

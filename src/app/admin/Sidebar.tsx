@@ -1,16 +1,13 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Home,
-  Image,
-  Users,
-  Settings,
-  LayoutDashboard,
-  Newspaper,
-  Mail,
-  X,
-} from "lucide-react";
+import { FaHome } from "react-icons/fa";
+import { FiUsers, FiImage } from "react-icons/fi";
+import { LuNewspaper } from "react-icons/lu";
+import { CiSettings } from "react-icons/ci";
+import { MdMailOutline, MdOutlineDashboard } from "react-icons/md";
+import { IoIosClose } from "react-icons/io";
+import Image from "next/image";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -23,65 +20,74 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const menus = [
     {
       name: "Dashboard",
-      icon: <LayoutDashboard size={18} />,
+      icon: <MdOutlineDashboard size={18} />,
       href: "/admin/dashboard",
     },
-    { name: "Hero Section", icon: <Home size={18} />, href: "/admin/hero" },
-    { name: "Tentang Kami", icon: <Users size={18} />, href: "/admin/tentang" },
-    { name: "Pengurus", icon: <Users size={18} />, href: "/admin/pengurus" },
+    { name: "Hero Section", icon: <FaHome size={18} />, href: "/admin/hero" },
+    {
+      name: "Tentang Kami",
+      icon: <FiUsers size={18} />,
+      href: "/admin/tentang",
+    },
+    { name: "Pengurus", icon: <FiUsers size={18} />, href: "/admin/pengurus" },
     {
       name: "Program & Kegiatan",
-      icon: <Newspaper size={18} />,
+      icon: <LuNewspaper size={18} />,
       href: "/admin/program",
     },
-    { name: "Galeri Foto", icon: <Image size={18} />, href: "/admin/gallery" },
+    {
+      name: "Galeri Foto",
+      icon: <FiImage size={18} />,
+      href: "/admin/gallery",
+    },
     {
       name: "Berita Terbaru",
-      icon: <Newspaper size={18} />,
+      icon: <LuNewspaper size={18} />,
       href: "/admin/berita",
     },
-    { name: "Pesan Masuk", icon: <Mail size={18} />, href: "/admin/pesan" },
+    {
+      name: "Pesan Masuk",
+      icon: <MdMailOutline size={18} />,
+      href: "/admin/pesan",
+    },
     {
       name: "Pengaturan Website",
-      icon: <Settings size={18} />,
+      icon: <CiSettings size={18} />,
       href: "/admin/pengaturan",
     },
   ];
 
   return (
     <aside
-      className={`fixed md:static z-50 top-0 left-0 h-screen w-72 bg-blue-800 text-white flex flex-col px-5 transform transition-transform duration-300
+      className={`fixed md:static top-0 left-0 z-50 h-screen w-72 bg-blue-800 text-white flex flex-col transform transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
       `}
     >
-      {/* Header di sidebar (desktop) */}
-      <div className="hidden md:flex items-center gap-3 px-5 py-4 border-b border-blue-700">
-        <img src="/logo.png" alt="Logo" className="w-10 h-10" />
+      {/* Header di sidebar */}
+      <div className="flex items-center gap-3 px-5 py-4 border-b border-blue-700">
+        <Image src="/logo.png" alt="Logo" width={40} height={40} />
         <h1 className="text-lg font-semibold">Admin Panel</h1>
       </div>
 
       {/* Tombol close (mobile only) */}
-      <div className="flex md:hidden items-center justify-between py-4 px-3 border-b border-blue-700">
-        <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="Logo" className="w-8 h-8" />
-          <h1 className="font-semibold text-white">Menu</h1>
-        </div>
-        <button onClick={onClose}>
-          <X size={22} />
-        </button>
-      </div>
+      <button
+        onClick={onClose}
+        className="md:hidden absolute top-4 right-4 p-1 rounded-md hover:bg-blue-700"
+      >
+        <IoIosClose size={22} />
+      </button>
 
       {/* Menu navigasi */}
-      <nav className="flex-1 overflow-y-auto mt-4">
+      <nav className="flex-1 overflow-y-auto mt-4 px-3 pb-6">
         {menus.map((menu) => (
           <Link
             key={menu.name}
             href={menu.href}
             onClick={() => {
               setActive(menu.name);
-              onClose(); // auto close di mobile
+              onClose();
             }}
-            className={`flex items-center gap-3 px-6 py-3 font-medium rounded-xl mt-2 transition-colors 
+            className={`flex items-center gap-3 px-4 py-3 font-medium rounded-lg transition-colors 
               ${active === menu.name ? "bg-blue-600" : "hover:bg-blue-700"}
             `}
           >

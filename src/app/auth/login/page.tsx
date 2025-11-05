@@ -18,7 +18,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Eye, EyeOff } from "lucide-react";
+import { FaEye } from "react-icons/fa";
+import { IoIosEyeOff } from "react-icons/io";
 
 const loginSchema = z.object({
   email: z.string().email("Email tidak valid."),
@@ -104,9 +105,9 @@ export default function LoginPage() {
                         tabIndex={-1}
                       >
                         {showPassword ? (
-                          <EyeOff className="w-5 h-5" />
+                          <FaEye className="w-5 h-5" />
                         ) : (
-                          <Eye className="w-5 h-5" />
+                          <IoIosEyeOff className="w-5 h-5" />
                         )}
                       </button>
                     </div>

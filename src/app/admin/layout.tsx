@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Sidebar from "./Sidebar";
-import { Menu } from "lucide-react";
+import { IoIosMenu } from "react-icons/io";
 
 export default function AdminLayout({
   children,
@@ -12,32 +12,35 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Overlay (mobile only) */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-white bg-opacity-40 z-40 md:hidden"
+          className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Konten utama */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
+        {/* Header (mobile) */}
         <header className="md:hidden fixed top-0 left-0 right-0 flex items-center justify-between px-4 py-3 bg-blue-800 text-white shadow z-30">
           <button
             onClick={() => setSidebarOpen(true)}
             className="p-2 rounded-md bg-blue-700 hover:bg-blue-600 transition-colors"
           >
-            <Menu size={22} />
+            <IoIosMenu size={22} />
           </button>
           <h1 className="text-lg font-semibold">Admin Panel</h1>
         </header>
 
-        {/* Main content */}
-        <main className="flex-1 p-6 mt-12">{children}</main>
+        {/* Main content scrollable */}
+        <main className="flex-1 overflow-y-auto p-6  mt-12 md:mt-0">
+          {children}
+        </main>
       </div>
     </div>
   );
