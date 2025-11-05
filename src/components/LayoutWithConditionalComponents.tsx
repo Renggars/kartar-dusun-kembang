@@ -1,0 +1,24 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+
+export default function LayoutWithConditionalComponents({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+
+  const isExcludedPage =
+    pathname.startsWith("/admin") || pathname.startsWith("/auth");
+
+  return (
+    <>
+      {!isExcludedPage && <Navbar />}
+      <main className="flex-1">{children}</main>
+      {!isExcludedPage && <Footer />}
+    </>
+  );
+}
