@@ -3,34 +3,27 @@
 
 import React, { useState } from "react";
 import OrganizationChart from "./OrganizationChart";
-import {
-  karangTarunaStructure,
-  dusunStructure,
-} from "../constants/structureData";
 
 const StructurePage = () => {
   // 'kartar' sebagai default, bisa juga 'dusun'
   const [activeStructure, setActiveStructure] = useState("kartar");
 
-  const structureData =
-    activeStructure === "kartar" ? karangTarunaStructure : dusunStructure;
-
   return (
     <div className="min-h-screen text-white bg-white">
       {/* Konten Halaman */}
-      <div className="pt-12 px-4 sm:px-6 lg:px-8 ">
-        <h1 className="text-5xl font-extrabold text-center mb-12 text-black">
+      <div className="pt-16 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-5xl font-extrabold text-center text-black">
           Structure
         </h1>
 
         {/* Tombol Pilihan (mirip Gambar 2) */}
-        <div className="flex justify-center mb-16 space-x-4">
+        <div className="flex justify-center mb-5 space-x-4 mt-8">
           <button
             onClick={() => setActiveStructure("kartar")}
             className={`py-3 px-8 text-lg font-semibold rounded-lg transition duration-300 shadow-md ${
               activeStructure === "kartar"
-                ? "bg-blue-600 text-white shadow-indigo-500/50 hover:bg-blue-700"
-                : "bg-gray-500 text-gray-300 hover:bg-gray-600"
+                ? "bg-blue-500 text-white shadow-indigo-500/50 hover:bg-blue-600"
+                : "bg-gray-400 text-black hover:bg-gray-500"
             }`}
           >
             Kartar
@@ -40,8 +33,8 @@ const StructurePage = () => {
             onClick={() => setActiveStructure("dusun")}
             className={`py-3 px-8 text-lg font-semibold rounded-lg transition duration-300 shadow-md ${
               activeStructure === "dusun"
-                ? "bg-indigo-600 text-white shadow-indigo-500/50 hover:bg-indigo-700"
-                : "bg-gray-400 text-black hover:bg-gray-500"
+                ? "bg-blue-500 text-white shadow-indigo-500/50 hover:bg-blue-600"
+                : "bg-gray-500 text-black hover:bg-gray-500"
             }`}
           >
             Dusun
@@ -50,7 +43,7 @@ const StructurePage = () => {
       </div>
 
       {/* Tampilkan Struktur yang Aktif */}
-      <OrganizationChart structureData={structureData} />
+      <OrganizationChart />
     </div>
   );
 };
