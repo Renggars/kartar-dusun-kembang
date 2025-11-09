@@ -55,7 +55,7 @@ export default function About() {
                 <h2 className="text-xl font-bold text-gray-900">VISI</h2>
                 <p className="mt-3 text-gray-600 leading-relaxed whitespace-pre-line">
                   {about?.visi ||
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero incidunt animi, laboriosam, voluptatum ipsa nam dolorum repellendus libero fugit eveniet ratione tempora, dolor ipsum dignissimos maxime sed! Explicabo est delectus."}
+                    "Bertujuan untuk berkontribusi positif bagi masyarakat."}
                 </p>
               </div>
 
@@ -63,7 +63,7 @@ export default function About() {
                 <h2 className="text-xl font-bold text-gray-900">MISI</h2>
                 <p className="mt-3 text-gray-600 leading-relaxed whitespace-pre-line">
                   {about?.misi ||
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero incidunt animi, laboriosam, voluptatum ipsa nam dolorum repellendus libero fugit eveniet ratione tempora, dolor ipsum dignissimos maxime sed! Explicabo est delectus."}
+                    "Meningkatkan kepedulian terhadap lingkungan sosial masyarakat."}
                 </p>
               </div>
             </div>
