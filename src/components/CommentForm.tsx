@@ -1,13 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { LuMessageCircleMore, LuSend, LuImagePlus } from "react-icons/lu";
+import { LuMessageCircleMore, LuSend } from "react-icons/lu";
 
 export const CommentForm = () => {
   const [loading, setLoading] = useState(false);
-  const [selectedFileName, setSelectedFileName] = useState("");
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const {
     register,
@@ -16,17 +14,10 @@ export const CommentForm = () => {
     formState: { errors },
   } = useForm();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedFileName(e.target.files[0].name);
-    }
-  };
-
   const onSubmit = () => {
     setLoading(true);
     setTimeout(() => {
       reset();
-      setSelectedFileName("");
       setLoading(false);
     }, 1000);
   };
@@ -42,6 +33,19 @@ export const CommentForm = () => {
         </h2>
       </div>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+        {/* Nama Lengkap */}
+        <label className="flex flex-col">
+          <span className="text-gray-900 font-medium mb-4">Full Name</span>
+          <input
+            type="text"
+            {...register("name", { required: "Full name is required" })}
+            placeholder="Your Full Name"
+            className="bg-gray-100 py-4 px-6 placeholder:text-gray-500 text-gray-800 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 outline-none transition-all duration-200"
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm">{errors.name.message}</p>
+          )}
+        </label>
         <label className="flex flex-col">
           <span className="text-gray-900 font-medium mb-4">Your Email</span>
           <input
