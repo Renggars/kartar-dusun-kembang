@@ -1,25 +1,39 @@
 "use client";
 
+import { trpc } from "@/server/client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuMessageCircleMore, LuSend } from "react-icons/lu";
 
+type MessageFormData = {
+  name: string;
+  email: string;
+  message: string;
+};
+
 export const CommentForm = () => {
   const [loading, setLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<MessageFormData>();
 
-  const onSubmit = () => {
-    setLoading(true);
-    setTimeout(() => {
+  const createMessage = trpc.message.create.useMutation({
+    onSuccess: () => {
       reset();
       setLoading(false);
-    }, 1000);
+    },
+    onError: () => {
+      setLoading(false);
+      alert("Failed to send message, please try again.");
+    },
+  });
+
+  const onSubmit = (data: MessageFormData) => {
+    setLoading(true);
+    createMessage.mutate(data);
   };
 
   return (
@@ -74,7 +88,7 @@ export const CommentForm = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full relative h-12 bg-linear-to-r from-[#6366f1] to-[#a855f7] text-white font-semibold rounded-2xl overflow-hidden group transition-all duration-250"
+          className="w-full relative h-12 bg-linear-to-r from-[#6366f1] to-[#a855f7] text-white font-semibold rounded-2xl overflow-hidden group transition-all duration-250 cursor-pointer"
         >
           <div className="absolute bg-white/30 inset-0 translate-y-12 group-hover:translate-y-0 transition-transform duration-500" />
           {loading ? (
