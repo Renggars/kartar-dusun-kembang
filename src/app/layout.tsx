@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
 import { TRPCProvider } from "@/components/providers/trpc-provider";
+import AosInitializer from "@/components/AosInitializer";
 
 // import { Footer } from "@/components/componentMain";
 import { Toaster } from "react-hot-toast";
@@ -40,6 +41,7 @@ export default function RootLayout({
         >
           <TRPCProvider>
             <LayoutWithConditionalComponents>
+              <AosInitializer />
               {children}
             </LayoutWithConditionalComponents>
           </TRPCProvider>

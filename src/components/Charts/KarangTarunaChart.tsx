@@ -60,11 +60,7 @@ export default function KarangTarunaChart() {
     >
       {/* Dosen */}
       <div className="flex flex-col items-center">
-        <div
-          className="text-white mb-2"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
+        <div className="text-white mb-2" data-aos="fade-up" data-aos-delay="50">
           Penasehat
         </div>
 
@@ -73,7 +69,7 @@ export default function KarangTarunaChart() {
             <div
               key={`acara-${index}`}
               data-aos="fade-up"
-              data-aos-delay={550 + index * 50}
+              data-aos-delay={50 + index * 50}
             >
               <MemberCard name={member.name} position={member.position} />
             </div>
@@ -87,57 +83,67 @@ export default function KarangTarunaChart() {
         <div
           className="w-0.5 h-6 lg:h-8 xl:h-10 bg-white"
           data-aos="fade-up"
-          data-aos-delay="350"
+          data-aos-delay="150"
         />
         <div className="flex w-full justify-center max-w-7xl">
           {/* Horizontal line */}
           <div
             className="w-0.5 h-5 bg-white relative"
             data-aos="fade-up"
-            data-aos-delay="400"
+            data-aos-delay="200"
           />
           {/* Vertical line */}
           <div
             className="h-0.5 w-[180px] sm:w-[274px] md:w-[246px] lg:w-[440px] xl:w-[466px] bg-white"
             data-aos="fade-up"
-            data-aos-delay="400"
+            data-aos-delay="200"
           />
           {/* Horizontal line */}
           <div
             className="w-0.5 h-5 bg-white relative"
             data-aos="fade-up"
-            data-aos-delay="400"
+            data-aos-delay="200"
           />
         </div>
         <div className="flex justify-center items-center gap-x-[115px] sm:gap-x-[216px] md:gap-x-[190px] lg:gap-x-[380px] xl:gap-[410px]">
-          <div className="text-white my-1 ml-5 sm:ml-6 md:ml-5 lg:ml-4 xl:ml-10">
+          <div
+            className="text-white my-1 ml-5 sm:ml-6 md:ml-5 lg:ml-4 xl:ml-10"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             Ketua
           </div>
-          <div className="text-white my-1 xl:mr-5">Wakil Ketua</div>
-        </div>
-        <div className="flex justify-center items-center gap-x-[66px] sm:gap-x-[163px] md:gap-x-[130px] lg:gap-x-[314px] xl:gap-[340px]">
           <div
-            className="flex flex-col items-center  sm:mr-0 sm:ml-4 md:mr-2"
+            className="text-white my-1 xl:mr-5"
             data-aos="fade-up"
-            data-aos-delay="450"
+            data-aos-delay="200"
+          >
+            Wakil Ketua
+          </div>
+        </div>
+        <div className="flex justify-center items-center gap-x-[66px] sm:gap-x-[163px] md:gap-x-[132px] lg:gap-x-[314px] xl:gap-[340px]">
+          <div
+            className="flex flex-col items-center sm:mr-0 sm:ml-4 md:mr-2"
+            data-aos="fade-up"
+            data-aos-delay="250"
           >
             <MemberCard name={KarangTarunaData.ketua.name} />
             <div
-              className="w-0.5 h-5 bg-white relative lg:ml-1"
+              className="w-0.5 h-5 bg-white relative md:mr-px lg:ml-1"
               data-aos="fade-up"
-              data-aos-delay="550"
+              data-aos-delay="300"
             />
           </div>
           <div
             className="flex flex-col items-center  sm:mr-4 md:mr-3"
             data-aos="fade-up"
-            data-aos-delay="450"
+            data-aos-delay="250"
           >
             <MemberCard name={KarangTarunaData.wakilKetua.name} />
             <div
-              className="w-0.5 h-5 bg-white relative lg:mr-[17px] xl:mr-3"
+              className="w-0.5 h-5 bg-white relative md:mr-[5px] lg:mr-[17px] xl:mr-3"
               data-aos="fade-up"
-              data-aos-delay="550"
+              data-aos-delay="300"
             />
           </div>
         </div>
@@ -145,13 +151,13 @@ export default function KarangTarunaChart() {
         <div
           className="h-0.5 w-[180px] sm:w-[277px] md:w-[252px] md:ml-px lg:ml-0 lg:w-[441px] lg:mr-[3px] xl:mr-0 xl:w-[470px] bg-white"
           data-aos="fade-up"
-          data-aos-delay="400"
+          data-aos-delay="350"
         />
         {/* Horizontal line */}
         <div
           className="w-0.5 h-4  bg-white relative"
           data-aos="fade-up"
-          data-aos-delay="550"
+          data-aos-delay="400"
         />
       </div>
 
@@ -161,31 +167,39 @@ export default function KarangTarunaChart() {
         <div
           className="w-0.5 h-5 md:h-6 lg:h-8 xl:h-10 bg-white"
           data-aos="fade-up"
-          data-aos-delay="350"
+          data-aos-delay="450"
         />
         <div className="flex w-full justify-center max-w-7xl">
           {/* Horizontal line */}
           <div
             className="w-0.5 h-5 bg-white relative"
             data-aos="fade-up"
-            data-aos-delay="400"
+            data-aos-delay="500"
           />
           {/* Vertical line */}
           <div
             className="h-0.5 w-[180px] sm:w-[274px] md:w-[250px] lg:w-[440px] xl:w-[466px] bg-white"
             data-aos="fade-up"
-            data-aos-delay="400"
+            data-aos-delay="450"
           />
           {/* Horizontal line */}
           <div
             className="w-0.5 h-5 bg-white relative"
             data-aos="fade-up"
-            data-aos-delay="400"
+            data-aos-delay="500"
           />
         </div>
         <div className="flex justify-center items-center gap-x-[103px] sm:gap-x-48 md:gap-x-[175px] lg:gap-x-[370px] xl:gap-[395px]">
-          <div className="text-white my-1 xl:ml-4">Sekretaris</div>
-          <div className="text-white">Bendahara</div>
+          <div
+            className="text-white my-1 xl:ml-4"
+            data-aos="fade-up"
+            data-aos-delay="450"
+          >
+            Sekretaris
+          </div>
+          <div className="text-white" data-aos="fade-up" data-aos-delay="450">
+            Bendahara
+          </div>
         </div>
         <div className="flex justify-center items-center gap-x-10 sm:gap-x-[150px] md:gap-x-[140px] md:ml-3 lg:ml-0 lg:gap-x-[312px] xl:gap-[340px] ">
           <div
@@ -195,7 +209,7 @@ export default function KarangTarunaChart() {
           >
             <MemberCard name={KarangTarunaData.sekretaris.name} />
             <div
-              className="w-0.5 h-[66px] bg-white relative sm:ml-3 md:ml-0 lg:mr-[17px] xl:mr-3"
+              className="w-0.5 h-[66px] bg-white relative sm:ml-3 md:ml-0 lg:mr-px "
               data-aos="fade-up"
               data-aos-delay="550"
             />
@@ -206,7 +220,7 @@ export default function KarangTarunaChart() {
               <div
                 key={`dokumentasi-${index}`}
                 data-aos="fade-up"
-                data-aos-delay={650 + index * 50}
+                data-aos-delay={450 + index * 50}
                 className="mt-2"
               >
                 <MemberCard name={member.name} />
@@ -223,23 +237,23 @@ export default function KarangTarunaChart() {
 
         {/* Horizontal line */}
         <div
-          className="h-0.5 w-[178px] sm:-mt-0.5 md:mt-0 sm:w-[272px] sm:ml-1 md:ml-0 md:w-[254px] lg:ml-0 lg:w-[445px] lg:mr-0.5 xl:mr-0 xl:w-[470px] bg-white"
+          className="h-0.5 w-[178px] sm:-mt-0.5 md:mt-0 sm:w-[272px] sm:ml-1 md:ml-0 md:w-[254px] lg:w-[443px] xl:mr-0 xl:w-[470px] bg-white"
           data-aos="fade-up"
-          data-aos-delay="400"
+          data-aos-delay="600"
         />
 
         {/* Vertical line */}
         <div
           className="w-0.5 h-4 sm:h-8 xl:h-10 bg-white relative"
           data-aos="fade-up"
-          data-aos-delay="550"
+          data-aos-delay="650"
         />
 
         {/* Horizontal line */}
         <div
           className="h-0.5 w-[178px] sm:w-[274px] sm:ml-2 md:ml-0 md:w-[470px] lg:w-[608px] xl:w-[746px] bg-white"
           data-aos="fade-up"
-          data-aos-delay="400"
+          data-aos-delay="700"
         />
 
         {/* Vertical lines */}
@@ -247,17 +261,17 @@ export default function KarangTarunaChart() {
           <div
             className="w-0.5 h-5 bg-white relative"
             data-aos="fade-up"
-            data-aos-delay="550"
+            data-aos-delay="750"
           />
           <div
             className="w-0.5 h-5 bg-white relative"
             data-aos="fade-up"
-            data-aos-delay="550"
+            data-aos-delay="750"
           />
           <div
             className="hidden md:block w-0.5 h-5 bg-white relative"
             data-aos="fade-up"
-            data-aos-delay="550"
+            data-aos-delay="750"
           />
         </div>
       </div>
@@ -265,17 +279,17 @@ export default function KarangTarunaChart() {
       {/* LEVEL 4 (Seksi Keagamaan, Seksi Sosial, Seksi Keamanan) */}
       <div className="flex flex-col items-center">
         <div className="grid grid-cols-2 md:grid-cols-3 justify-center gap-x-[50px] sm:gap-x-[150px] sm:ml-2 md:ml-0  md:gap-x-32 lg:gap-x-[204px] xl:gap-x-[272px] my-1 text-center">
-          <div data-aos="fade-up" data-aos-delay="600">
+          <div data-aos="fade-up" data-aos-delay="800">
             Seksi Keagamaan
           </div>
           <div
             data-aos="fade-up"
-            data-aos-delay="600"
+            data-aos-delay="800"
             className="hidden md:block xl:mr-2"
           >
             Seksi Sosial
           </div>
-          <div data-aos="fade-up" data-aos-delay="600">
+          <div data-aos="fade-up" data-aos-delay="800">
             Seksi Keamanan
           </div>
         </div>
@@ -289,13 +303,17 @@ export default function KarangTarunaChart() {
                 <div
                   key={`keagamaan-${index}`}
                   data-aos="fade-up"
-                  data-aos-delay={550 + index * 50}
+                  data-aos-delay={800 + index * 50}
                 >
                   <MemberCard name={member.name} />
                 </div>
               ))}
             </div>
-            <div className="w-0.5 h-5 md:h-[70px] bg-white lg:mr-3" />
+            <div
+              className="w-0.5 h-5 md:h-[70px] bg-white lg:mr-3"
+              data-aos="fade-up"
+              data-aos-delay="900"
+            />
           </div>
 
           {/* Seksi Sosial */}
@@ -305,13 +323,17 @@ export default function KarangTarunaChart() {
                 <div
                   key={`sosial-${index}`}
                   data-aos="fade-up"
-                  data-aos-delay={550 + index * 50}
+                  data-aos-delay={800 + index * 50}
                 >
                   <MemberCard name={member.name} />
                 </div>
               ))}
             </div>
-            <div className="w-0.5 h-5 bg-white ml-3 sm:ml-0" />
+            <div
+              className="w-0.5 h-5 bg-white ml-3 sm:ml-0"
+              data-aos="fade-up"
+              data-aos-delay="900"
+            />
           </div>
 
           {/* Seksi Keamanan */}
@@ -320,12 +342,16 @@ export default function KarangTarunaChart() {
               <div
                 key={`keamanan-${index}`}
                 data-aos="fade-up"
-                data-aos-delay={550 + index * 50}
+                data-aos-delay={800 + index * 50}
               >
                 <MemberCard name={member.name} />
               </div>
             ))}
-            <div className="w-0.5 h-5 md:h-[70px] bg-white sm:ml-2.5 -mt-3" />
+            <div
+              className="w-0.5 h-5 md:h-[70px] bg-white sm:ml-2.5 -mt-3"
+              data-aos="fade-up"
+              data-aos-delay="950"
+            />
           </div>
         </div>
 
@@ -333,7 +359,7 @@ export default function KarangTarunaChart() {
         <div
           className="hidden md:flex h-0.5 bg-white md:w-[471px] md:ml-[5px] lg:w-[609px] lg:ml-[5px] xl:w-[759px] lg:mr-1.5"
           data-aos="fade-up"
-          data-aos-delay="650"
+          data-aos-delay="950"
         />
       </div>
 
@@ -343,22 +369,22 @@ export default function KarangTarunaChart() {
         <div
           className="hidden md:block w-0.5 h-6 bg-white"
           data-aos="fade-up"
-          data-aos-delay="700"
+          data-aos-delay="950"
         />
         <div
           className="hidden md:block text-lg text-white my-1"
           data-aos="fade-up"
-          data-aos-delay="600"
+          data-aos-delay="950"
         >
           Humas
         </div>
 
         {/* === MOBILE VIEW (2 kolom seperti Level 4) === */}
-        <div className="grid grid-cols-2 md:hidden justify-center gap-x-[94px] sm:ml-1.5 text-center my-1">
-          <div data-aos="fade-up" data-aos-delay="600">
+        <div className="grid grid-cols-2 md:hidden justify-center gap-x-[94px] sm:gap-x-[198px] sm:ml-1.5 text-center my-1">
+          <div data-aos="fade-up" data-aos-delay="950">
             Seksi Sosial
           </div>
-          <div data-aos="fade-up" data-aos-delay="600">
+          <div data-aos="fade-up" data-aos-delay="950">
             Humas
           </div>
         </div>
@@ -368,7 +394,7 @@ export default function KarangTarunaChart() {
             <div
               key={`dokumentasi-${index}`}
               data-aos="fade-up"
-              data-aos-delay={650 + index * 50}
+              data-aos-delay={950 + index * 50}
             >
               <MemberCard name={member.name} />
             </div>
@@ -384,7 +410,7 @@ export default function KarangTarunaChart() {
                 <div
                   key={`sosial-${index}`}
                   data-aos="fade-up"
-                  data-aos-delay={650 + index * 50}
+                  data-aos-delay={950 + index * 50}
                 >
                   <MemberCard name={member.name} />
                 </div>
@@ -399,7 +425,7 @@ export default function KarangTarunaChart() {
                 <div
                   key={`bendahara-${index}`}
                   data-aos="fade-up"
-                  data-aos-delay={650 + index * 50}
+                  data-aos-delay={950 + index * 50}
                 >
                   <MemberCard name={member.name} />
                 </div>
