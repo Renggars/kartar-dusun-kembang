@@ -36,6 +36,14 @@ model About {
   updatedAt DateTime @updatedAt
 }
 
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
 enum Role {
   ADMIN
 }
