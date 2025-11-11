@@ -17,7 +17,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Eye, EyeOff } from "lucide-react";
+import { FaEye } from "react-icons/fa";
+import { IoIosEyeOff } from "react-icons/io";
 
 // 🔹 Validasi menggunakan Zod
 const registerSchema = z
@@ -140,9 +141,9 @@ export default function RegisterPage() {
                         tabIndex={-1}
                       >
                         {showPassword ? (
-                          <EyeOff className="w-5 h-5" />
+                          <IoIosEyeOff className="w-5 h-5" />
                         ) : (
-                          <Eye className="w-5 h-5" />
+                          <FaEye className="w-5 h-5" />
                         )}
                       </button>
                     </div>
@@ -176,9 +177,9 @@ export default function RegisterPage() {
                         tabIndex={-1}
                       >
                         {showConfirmPassword ? (
-                          <EyeOff className="w-5 h-5" />
+                          <IoIosEyeOff className="w-5 h-5" />
                         ) : (
-                          <Eye className="w-5 h-5" />
+                          <FaEye className="w-5 h-5" />
                         )}
                       </button>
                     </div>

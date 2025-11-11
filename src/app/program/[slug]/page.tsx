@@ -48,8 +48,7 @@ interface PageProps {
 
 export default async function ProgramDetail({ params }: PageProps) {
   const { slug } = await params;
-
-  const program = programs[slug];
+  const program = programs[slug as keyof typeof programs];
 
   if (!program) {
     return (
