@@ -13,4 +13,10 @@ export const messageService = {
       orderBy: { createdAt: "desc" },
     });
   },
+
+  async deleteComment(id: string) {
+    return await prisma.message.delete({
+      where: { id },
+    });
+  },
 };
