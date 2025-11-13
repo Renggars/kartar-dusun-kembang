@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import rectangle from "../assets/rectangle.png";
 import umkm1 from "../assets/gallery1.png";
 import umkm2 from "../assets/gallery3.png";
 import wisata1 from "../assets/gallery2.png";
@@ -61,6 +60,7 @@ export default function Marketplace() {
   return (
     <section className="py-20 bg-gray-950 min-h-screen">
       <div className="container mx-auto px-4 sm:px-10 xl:px-20">
+        {/* Header Section */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-100">
             Marketplace Dusun Kembang
@@ -72,7 +72,7 @@ export default function Marketplace() {
           <div className="w-24 h-1 bg-lime-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
-        {/* Filter kategori tetap ada */}
+        {/* Filter kategori */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((cat) => (
             <button
@@ -89,42 +89,27 @@ export default function Marketplace() {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Card List */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {filteredData.map((item) => (
             <div
               key={item.id}
-              className="relative group cursor-pointer transition-transform duration-500 hover:-translate-y-2"
+              className="bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:-translate-y-2 transition-transform duration-300"
             >
-              <div className="relative w-full h-[200px] sm:h-[380px] overflow-hidden rounded-2xl shadow-lg">
-                {/* Background Rectangle */}
+              <div className="relative w-full h-56">
                 <Image
-                  src={rectangle}
-                  alt="Card background"
+                  src={item.image}
+                  alt={item.title}
                   fill
-                  className="object-contain z-0"
+                  className="object-cover"
                 />
-
-                {/* Konten utama */}
-                <div className="absolute inset-0 z-10 flex flex-col items-center justify-start p-1 lg:p-5">
-                  <div className="relative w-full h-20 lg:h-40 overflow-hidden rounded-xl mt-2">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-
-                  <div className="mt-4 text-center px-2">
-                    <h3 className="text-xs lg:text-lg font-bold text-gray-900">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-gray-600 mt-1">{item.desc}</p>
-                  </div>
-                </div>
-
-                {/* Badge kategori di pojok kanan bawah */}
-                <span className="absolute bottom-[103px] -right-3 z-20 px-3 py-1 text-[10px] text-xs font-semibold  text-lime-300 rounded-full shadow-md">
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-100">
+                  {item.title}
+                </h3>
+                <p className="text-gray-400 text-sm mt-1">{item.desc}</p>
+                <span className="inline-block mt-3 px-3 py-1 text-xs font-semibold bg-lime-100 text-lime-700 rounded-full">
                   {item.category}
                 </span>
               </div>
