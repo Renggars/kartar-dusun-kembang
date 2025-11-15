@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { trpc } from "@/trpc/client";
+import { ProgramItem } from "@/types";
 
 export default function ProgramPage() {
   const { data: programs, isLoading } = trpc.program.list.useQuery();
@@ -35,7 +36,7 @@ export default function ProgramPage() {
       <div className="mx-auto px-6 py-6 md:py-10 max-w-7xl">
         {/* Grid Program */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {programs?.map((program) => (
+          {programs?.map((program: ProgramItem) => (
             <div
               key={program.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300"

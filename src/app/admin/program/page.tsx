@@ -9,17 +9,7 @@ import {
 } from "@/lib/uploadProgramImage";
 import { trpc } from "@/trpc/client";
 import { FaFileUpload } from "react-icons/fa";
-
-type Program = {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
-  title: string;
-  description: string;
-  imageUrl: string | null;
-  slug: string;
-  date: Date;
-};
+import { ProgramItem } from "@/types";
 
 function formatDate(d: string) {
   return new Date(d).toLocaleDateString("id-ID", {
@@ -88,7 +78,7 @@ export default function AdminProgramsPage() {
 
       {/* List Program */}
       <div className="grid gap-4">
-        {programsQuery.data?.map((p: Program) => (
+        {programsQuery.data?.map((p: ProgramItem) => (
           <div
             key={p.id}
             className="bg-white p-4 rounded-lg shadow flex items-center justify-between"

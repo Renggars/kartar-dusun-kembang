@@ -6,7 +6,9 @@
     "dev": "set NEXT_FORCE_WEBPACK=1 && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+     "trpc:check": "trpc typecheck"
+
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

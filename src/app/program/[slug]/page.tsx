@@ -12,6 +12,12 @@ import {
   FaRegCalendarAlt,
 } from "react-icons/fa";
 
+type RelatedProgram = {
+  slug: string;
+  title: string;
+  imageUrl: string | null;
+};
+
 export default function ProgramDetailPage() {
   const { slug } = useParams() as { slug: string };
 
@@ -129,7 +135,7 @@ export default function ProgramDetailPage() {
           </h3>
 
           <div className="space-y-4">
-            {relatedPrograms?.map((related) => (
+            {relatedPrograms?.map((related: RelatedProgram) => (
               <Link
                 key={related.slug}
                 href={`/program/${related.slug}`}
