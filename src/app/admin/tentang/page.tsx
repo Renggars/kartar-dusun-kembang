@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { trpc } from "@/server/client";
 import Image from "next/image";
 import { uploadAboutImage, deleteAboutImage } from "@/lib/uploadAboutImage";
+import { trpc } from "@/trpc/client";
 
 export default function AboutPage() {
   const { data: about, isLoading, refetch } = trpc.about.get.useQuery();

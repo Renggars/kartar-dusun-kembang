@@ -10,8 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { trpc } from "@/server/client";
 import toast from "react-hot-toast";
+import { trpc } from "@/trpc/client";
 
 export default function PesanPage() {
   const utils = trpc.useUtils();

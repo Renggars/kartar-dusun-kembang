@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { trpc } from "@/server/client";
 import Image from "next/image";
 import { uploadHeroImage, deleteHeroImage } from "@/lib/uploadHeroImage";
+import { trpc } from "@/trpc/client";
 
 export default function HeroPage() {
   const { data: hero, isLoading, refetch } = trpc.hero.get.useQuery();

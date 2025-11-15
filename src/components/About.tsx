@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { trpc } from "@/server/client";
 import aboutImage from "../assets/about.png";
+import { trpc } from "@/trpc/client";
 
 export default function About() {
   // Ambil data dari tRPC

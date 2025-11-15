@@ -20,15 +20,14 @@ export async function proxy(req: NextRequest) {
     try {
       // Verifikasi token
       await jwtVerify(token, secret);
-      return NextResponse.next(); // token valid → lanjut
+      return NextResponse.next();
     } catch (err) {
       console.error("Invalid JWT:", err);
-      // Token invalid / expired → redirect ke login
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
   }
 
-  // Kalau sudah login, jangan boleh buka halaman login lagi
+  // Kalau sudah login tidak boleh buka halaman login lagi
   if (pathname.startsWith("/auth/login") && token) {
     try {
       await jwtVerify(token, secret);

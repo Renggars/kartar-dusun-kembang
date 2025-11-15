@@ -1,6 +1,6 @@
 "use client";
 
-import { trpc } from "@/server/client";
+import { trpc } from "@/trpc/client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuMessageCircleMore, LuSend } from "react-icons/lu";

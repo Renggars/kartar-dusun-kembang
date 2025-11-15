@@ -2,35 +2,21 @@
 
 import Link from "next/link";
 import Image from "next/image";
-
-const activities = [
-  {
-    title: "Pelatihan Keterampilan Digital",
-    date: "28 Agustus 2025",
-    description:
-      "Workshop untuk meningkatkan literasi digital dan keterampilan coding bagi pemuda desa.",
-    image: "https://images.unsplash.com/photo-1581091215360-6df03e0c6af5",
-    href: "/program/pengembangan-skill",
-  },
-  {
-    title: "Kerja Bakti Lingkungan",
-    date: "28 Agustus 2025",
-    description:
-      "Kegiatan gotong royong membersihkan area desa, selokan, dan fasilitas umum setiap bulan.",
-    image: "https://images.unsplash.com/photo-1590490360182-c33d57733427",
-    href: "/program/bakti-sosial",
-  },
-  {
-    title: "Turnamen Olahraga Antar RW",
-    date: "28 Agustus 2025",
-    description:
-      "Turnamen futsal dan bulu tangkis untuk mempererat persaudaraan antarwarga desa.",
-    image: "https://images.unsplash.com/photo-1521412644187-c49fa049e84d",
-    href: "/program/olahraga-seni",
-  },
-];
+import { trpc } from "@/trpc/client";
 
 export default function Activities() {
+  const { data: programs, isLoading } = trpc.program.list.useQuery({
+    take: 3,
+  });
+
+  if (isLoading) {
+    return (
+      <section className="pt-20 pb-10 bg-gray-50">
+        <div className="container mx-auto px-6 text-center">Loading...</div>
+      </section>
+    );
+  }
+
   return (
     <section className="pt-20 pb-10 bg-gray-50">
       <div className="container mx-auto px-6">
@@ -47,27 +33,31 @@ export default function Activities() {
 
         {/* Kartu Kegiatan */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-          {activities.map((item, i) => (
+          {programs?.map((item) => (
             <div
-              key={i}
+              key={item.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
             >
               <div className="relative h-48 md:h-52 xl:h-56 w-full">
                 <Image
-                  src={item.image}
+                  src={item.imageUrl || "/placeholder-400x300.png"}
                   alt={item.title}
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="p-6">
-                <p className=" text-gray-500 mb-1">{item.date}</p>
+                <p className="text-gray-500 mb-1">
+                  {new Date(item.date).toLocaleDateString("id-ID")}
+                </p>
                 <h3 className="text-lg font-bold text-gray-800 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{item.description}</p>
+                <p className="text-gray-600 mb-4 line-clamp-3">
+                  {item.description}
+                </p>
                 <Link
-                  href={item.href}
+                  href={`/program/${item.slug}`}
                   className="bg-blue-500 text-white py-1 px-2 rounded-md font-semibold hover:bg-blue-600 cursor-pointer"
                 >
                   Lihat Detail

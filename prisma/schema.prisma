@@ -44,6 +44,17 @@ model Message {
   createdAt DateTime @default(now())
 }
 
+model Program {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  date        DateTime
+  description String   @db.Text
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 enum Role {
   ADMIN
 }

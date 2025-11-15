@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { trpc } from "@/server/client";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
@@ -20,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
+import { trpc } from "@/trpc/client";
 
 const loginSchema = z.object({
   email: z.string().email("Email tidak valid."),

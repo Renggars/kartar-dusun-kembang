@@ -75,7 +75,7 @@ export default function GalleryPage() {
                   ? "ml-[-60px] sm:ml-[-90px] md:ml-[-110px] lg:ml-[-130px] xl:-ml-40"
                   : ""
               }
-              hover:scale-110 hover:!rotate-0 hover:!-translate-y-4 hover:z-50
+              hover:scale-110 hover:rotate-0! hover:-translate-y-4! hover:z-50
             `}
           >
             <Image
