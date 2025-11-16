@@ -12,14 +12,14 @@ import {
 import { MarketplaceInput } from "@/types";
 
 export const marketplaceRouter = router({
-  list: publicProcedure.query(({ ctx }) => {
-    return listMarketplace(ctx);
+  list: publicProcedure.query(() => {
+    return listMarketplace();
   }),
 
   getBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
-    .query(({ ctx, input }) => {
-      return getMarketplaceBySlug(ctx, input.slug);
+    .query(({ input }) => {
+      return getMarketplaceBySlug(input.slug);
     }),
 
   getRelated: publicProcedure
@@ -29,8 +29,8 @@ export const marketplaceRouter = router({
         excludeSlug: z.string().optional(),
       })
     )
-    .query(({ ctx, input }) => {
-      return getRelatedMarketplace(ctx, input as MarketplaceInput);
+    .query(({ input }) => {
+      return getRelatedMarketplace(input);
     }),
 
   create: publicProcedure
@@ -43,9 +43,7 @@ export const marketplaceRouter = router({
         imageUrl: z.string().nullable().optional(),
       })
     )
-    .mutation(({ ctx, input }) =>
-      createMarketplace(ctx, input as MarketplaceInput)
-    ),
+    .mutation(({ input }) => createMarketplace(input as MarketplaceInput)),
 
   update: publicProcedure
     .input(
@@ -58,11 +56,9 @@ export const marketplaceRouter = router({
         imageUrl: z.string().nullable().optional(),
       })
     )
-    .mutation(({ ctx, input }) =>
-      updateMarketplace(ctx, input as MarketplaceInput)
-    ),
+    .mutation(({ input }) => updateMarketplace(input as MarketplaceInput)),
 
   delete: publicProcedure
     .input(z.object({ id: z.number() }))
-    .mutation(({ ctx, input }) => deleteMarketplace(ctx, input.id)),
+    .mutation(({ input }) => deleteMarketplace(input.id)),
 });
