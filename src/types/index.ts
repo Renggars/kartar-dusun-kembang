@@ -8,3 +8,13 @@ export type ProgramItem = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+// src/types/marketplace.ts
+export enum MarketplaceCategory {
+  Umkm = "UMKM",
+  Wisata = "Wisata",
+  Cafe = "Cafe",
+  Event = "Event",
+}
+
+export type MarketplaceCategoryType = keyof typeof MarketplaceCategory;

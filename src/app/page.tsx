@@ -15,7 +15,7 @@ export default function Home() {
       <About />
       <StructurePage />
       <Gallery />
-      <Marketplace />
+      <Marketplace limit={6} />
       <section
         id="contact"
         className="w-full bg-white text-gray-800 min-h-screen flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16 lg:px-24"

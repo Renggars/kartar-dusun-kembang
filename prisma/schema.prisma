@@ -55,6 +55,24 @@ model Program {
   updatedAt   DateTime @updatedAt
 }
 
+model MarketplaceItem {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  category    Category
+  description String
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Category {
+  UMKM
+  Wisata
+  Cafe
+  Event
+}
+
 enum Role {
   ADMIN
 }

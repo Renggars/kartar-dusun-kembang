@@ -7,6 +7,7 @@ import { LuNewspaper } from "react-icons/lu";
 import { CiSettings } from "react-icons/ci";
 import { MdMailOutline, MdOutlineDashboard } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
+import { FaShop } from "react-icons/fa6";
 import Image from "next/image";
 
 interface SidebarProps {
@@ -40,20 +41,16 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       icon: <FiImage size={18} />,
       href: "/admin/gallery",
     },
-    {
-      name: "Berita Terbaru",
-      icon: <LuNewspaper size={18} />,
-      href: "/admin/berita",
-    },
+
     {
       name: "Pesan Masuk",
       icon: <MdMailOutline size={18} />,
       href: "/admin/pesan",
     },
     {
-      name: "Pengaturan Website",
-      icon: <CiSettings size={18} />,
-      href: "/admin/pengaturan",
+      name: "Marketplace",
+      icon: <FaShop size={18} />,
+      href: "/admin/marketplace",
     },
   ];
 
