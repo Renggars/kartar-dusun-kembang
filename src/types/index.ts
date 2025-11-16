@@ -1,3 +1,5 @@
+import { Category } from "@prisma/client";
+
 export type ProgramItem = {
   id: number;
   title: string;
@@ -24,7 +26,7 @@ export type MarketplaceInput = {
   id?: number;
   title: string;
   slug: string;
-  category: MarketplaceCategory;
+  category: Category;
   description: string;
   imageUrl?: string | null;
 };
