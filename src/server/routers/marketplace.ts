@@ -10,7 +10,6 @@ import {
   deleteMarketplace,
 } from "@/server/service/marketplaceService";
 import { MarketplaceInput } from "@/types";
-import { Category } from "@prisma/client";
 
 export const marketplaceRouter = router({
   list: publicProcedure.query(({ ctx }) => {
@@ -26,12 +25,12 @@ export const marketplaceRouter = router({
   getRelated: publicProcedure
     .input(
       z.object({
-        category: z.enum(Category).optional(),
+        category: z.string().optional(),
         excludeSlug: z.string().optional(),
       })
     )
     .query(({ ctx, input }) => {
-      return getRelatedMarketplace(ctx, input);
+      return getRelatedMarketplace(ctx, input as MarketplaceInput);
     }),
 
   create: publicProcedure
