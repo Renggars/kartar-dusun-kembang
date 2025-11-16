@@ -20,7 +20,15 @@ export type MarketplaceItem = {
   updatedAt: Date;
 };
 
-// src/types/marketplace.ts
+export type MarketplaceInput = {
+  id?: number;
+  title: string;
+  slug: string;
+  category: MarketplaceCategory;
+  description: string;
+  imageUrl?: string | null;
+};
+
 export enum MarketplaceCategory {
   Umkm = "UMKM",
   Wisata = "Wisata",

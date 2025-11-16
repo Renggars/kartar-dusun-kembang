@@ -9,6 +9,7 @@ import {
   updateMarketplace,
   deleteMarketplace,
 } from "@/server/service/marketplaceService";
+import { MarketplaceInput } from "@/types";
 
 export const marketplaceRouter = router({
   list: publicProcedure.query(({ ctx }) => {
@@ -29,7 +30,7 @@ export const marketplaceRouter = router({
       })
     )
     .query(({ ctx, input }) => {
-      return getRelatedMarketplace(ctx, input);
+      return getRelatedMarketplace(ctx, input as MarketplaceInput);
     }),
 
   create: publicProcedure
@@ -42,7 +43,9 @@ export const marketplaceRouter = router({
         imageUrl: z.string().nullable().optional(),
       })
     )
-    .mutation(({ ctx, input }) => createMarketplace(ctx, input)),
+    .mutation(({ ctx, input }) =>
+      createMarketplace(ctx, input as MarketplaceInput)
+    ),
 
   update: publicProcedure
     .input(
@@ -55,7 +58,9 @@ export const marketplaceRouter = router({
         imageUrl: z.string().nullable().optional(),
       })
     )
-    .mutation(({ ctx, input }) => updateMarketplace(ctx, input)),
+    .mutation(({ ctx, input }) =>
+      updateMarketplace(ctx, input as MarketplaceInput)
+    ),
 
   delete: publicProcedure
     .input(z.object({ id: z.number() }))

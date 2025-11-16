@@ -1,15 +1,6 @@
 import type { Context } from "@/server/context";
+import { MarketplaceCategory, MarketplaceInput } from "@/types";
 import { TRPCError } from "@trpc/server";
-import { Category } from "@prisma/client"; // enum Prisma
-
-interface MarketplaceInput {
-  id?: number;
-  title: string;
-  slug: string;
-  category: Category;
-  description: string;
-  imageUrl?: string | null;
-}
 
 export const listMarketplace = (ctx: Context) => {
   return ctx.prisma.marketplaceItem.findMany({
@@ -31,7 +22,7 @@ export const getMarketplaceBySlug = async (ctx: Context, slug: string) => {
 
 export const getRelatedMarketplace = (
   ctx: Context,
-  input: { category?: Category; excludeSlug?: string }
+  input: { category?: MarketplaceCategory; excludeSlug?: string }
 ) => {
   return ctx.prisma.marketplaceItem.findMany({
     where: {
