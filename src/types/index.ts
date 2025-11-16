@@ -9,6 +9,17 @@ export type ProgramItem = {
   updatedAt: Date;
 };
 
+export type MarketplaceItem = {
+  id: number;
+  slug: string;
+  title: string;
+  category: string;
+  description: string;
+  imageUrl: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 // src/types/marketplace.ts
 export enum MarketplaceCategory {
   Umkm = "UMKM",

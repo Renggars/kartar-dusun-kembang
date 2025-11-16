@@ -4,7 +4,6 @@ import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 import { FiUsers, FiImage } from "react-icons/fi";
 import { LuNewspaper } from "react-icons/lu";
-import { CiSettings } from "react-icons/ci";
 import { MdMailOutline, MdOutlineDashboard } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 import { FaShop } from "react-icons/fa6";

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaInstagram } from "react-icons/fa";
 import { trpc } from "@/trpc/client";
+import { MarketplaceItem } from "@/types";
 
 export default function MarketplaceDetailPage() {
   const { slug } = useParams() as { slug: string };
@@ -85,7 +86,7 @@ export default function MarketplaceDetailPage() {
           <h3 className="text-xl font-semibold mb-4">Rekomendasi Lain</h3>
 
           <div className="space-y-4">
-            {related?.map((r) => (
+            {related?.map((r: MarketplaceItem) => (
               <Link
                 key={r.slug}
                 href={`/marketplace/${r.slug}`}

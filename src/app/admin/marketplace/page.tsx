@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import { trpc } from "@/trpc/client";
 import { FaFileUpload } from "react-icons/fa";
-import { MarketplaceCategory } from "@/types";
+import { MarketplaceCategory, MarketplaceItem } from "@/types";
 import {
   deleteMarketplaceImage,
   uploadMarketplaceImage,
@@ -71,7 +71,7 @@ export default function AdminMarketplacePage() {
 
       {/* List Items */}
       <div className="grid gap-4">
-        {dataQuery.data?.map((item) => (
+        {dataQuery.data?.map((item: MarketplaceItem) => (
           <div
             key={item.id}
             className="bg-white p-4 rounded-lg shadow flex items-center justify-between"
@@ -175,7 +175,7 @@ export default function AdminMarketplacePage() {
               }
               className="w-full px-3 py-2 border mb-3 rounded border-gray-500"
             >
-              {Object.values(MarketplaceCategory).map((cat) => (
+              {Object.values(MarketplaceCategory).map((cat: string) => (
                 <option key={cat} value={cat}>
                   {cat}
                 </option>

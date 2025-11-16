@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { trpc } from "@/trpc/client";
+import { MarketplaceItem } from "@/types";
 
 export default function Marketplace({ limit }: { limit?: number }) {
   const [selectedCategory, setSelectedCategory] = useState("Semua");
@@ -47,7 +48,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
 
         {/* Filter kategori */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((cat) => (
+          {categories.map((cat: string) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
@@ -65,7 +66,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
 
         {/* Card List */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {finalData.map((item, i) => (
+          {finalData.map((item: MarketplaceItem, i: number) => (
             <div
               key={item.id}
               className={`
