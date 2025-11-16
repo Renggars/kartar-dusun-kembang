@@ -1,15 +1,15 @@
-import type { Context } from "@/server/context";
+import { prisma } from "@/lib/prisma";
 import { MarketplaceCategory, MarketplaceInput } from "@/types";
 import { TRPCError } from "@trpc/server";
 
-export const listMarketplace = (ctx: Context) => {
-  return ctx.prisma.marketplaceItem.findMany({
+export const listMarketplace = async () => {
+  return await prisma.marketplaceItem.findMany({
     orderBy: { createdAt: "desc" },
   });
 };
 
-export const getMarketplaceBySlug = async (ctx: Context, slug: string) => {
-  const item = await ctx.prisma.marketplaceItem.findUnique({
+export const getMarketplaceBySlug = async (slug: string) => {
+  const item = await prisma.marketplaceItem.findUnique({
     where: { slug },
   });
 
@@ -20,11 +20,11 @@ export const getMarketplaceBySlug = async (ctx: Context, slug: string) => {
   return item;
 };
 
-export const getRelatedMarketplace = (
-  ctx: Context,
-  input: { category?: MarketplaceCategory; excludeSlug?: string }
-) => {
-  return ctx.prisma.marketplaceItem.findMany({
+export const getRelatedMarketplace = async (input: {
+  category?: MarketplaceCategory;
+  excludeSlug?: string;
+}) => {
+  return await prisma.marketplaceItem.findMany({
     where: {
       category: input.category,
       slug: { not: input.excludeSlug },
@@ -40,13 +40,13 @@ export const getRelatedMarketplace = (
   });
 };
 
-export const createMarketplace = (ctx: Context, input: MarketplaceInput) => {
+export const createMarketplace = async (input: MarketplaceInput) => {
   const cleanSlug = input.slug
     .toLowerCase()
     .replace(/ /g, "-")
     .replace(/[^a-z0-9-]/g, "");
 
-  return ctx.prisma.marketplaceItem.create({
+  return await prisma.marketplaceItem.create({
     data: {
       title: input.title,
       slug: cleanSlug,
@@ -57,13 +57,20 @@ export const createMarketplace = (ctx: Context, input: MarketplaceInput) => {
   });
 };
 
-export const updateMarketplace = (ctx: Context, input: MarketplaceInput) => {
+export const updateMarketplace = async (input: MarketplaceInput) => {
+  if (!input.id) {
+    throw new TRPCError({
+      code: "BAD_REQUEST",
+      message: "ID is required for update",
+    });
+  }
+
   const cleanSlug = input.slug
     .toLowerCase()
     .replace(/ /g, "-")
     .replace(/[^a-z0-9-]/g, "");
 
-  return ctx.prisma.marketplaceItem.update({
+  return await prisma.marketplaceItem.update({
     where: { id: input.id },
     data: {
       title: input.title,
@@ -75,8 +82,8 @@ export const updateMarketplace = (ctx: Context, input: MarketplaceInput) => {
   });
 };
 
-export const deleteMarketplace = (ctx: Context, id: number) => {
-  return ctx.prisma.marketplaceItem.delete({
+export const deleteMarketplace = async (id: number) => {
+  return await prisma.marketplaceItem.delete({
     where: { id },
   });
 };
