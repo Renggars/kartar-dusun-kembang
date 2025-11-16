@@ -9,7 +9,7 @@ import {
   updateMarketplace,
   deleteMarketplace,
 } from "@/server/service/marketplaceService";
-import { MarketplaceInput } from "@/types";
+import { MarketplaceCategory, MarketplaceInput } from "@/types";
 
 export const marketplaceRouter = router({
   list: publicProcedure.query(() => {
@@ -25,12 +25,12 @@ export const marketplaceRouter = router({
   getRelated: publicProcedure
     .input(
       z.object({
-        category: z.string().optional(),
+        category: z.enum(MarketplaceCategory).optional(),
         excludeSlug: z.string().optional(),
       })
     )
     .query(({ input }) => {
-      return getRelatedMarketplace(input);
+      return getRelatedMarketplace(input as MarketplaceInput);
     }),
 
   create: publicProcedure
@@ -38,7 +38,7 @@ export const marketplaceRouter = router({
       z.object({
         title: z.string(),
         slug: z.string(),
-        category: z.enum(["UMKM", "Wisata", "Cafe", "Event"]),
+        category: z.enum(MarketplaceCategory),
         description: z.string(),
         imageUrl: z.string().nullable().optional(),
       })
@@ -51,7 +51,7 @@ export const marketplaceRouter = router({
         id: z.number(),
         title: z.string(),
         slug: z.string(),
-        category: z.enum(["UMKM", "Wisata", "Cafe", "Event"]),
+        category: z.enum(MarketplaceCategory),
         description: z.string(),
         imageUrl: z.string().nullable().optional(),
       })

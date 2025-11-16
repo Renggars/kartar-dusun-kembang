@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaInstagram } from "react-icons/fa";
 import { trpc } from "@/trpc/client";
-import { MarketplaceItem } from "@/types";
 
 type RelatedItem = {
   slug: string;
