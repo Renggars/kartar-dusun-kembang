@@ -6,8 +6,11 @@ import Link from "next/link";
 import { trpc } from "@/trpc/client";
 import { MarketplaceItem } from "@/types";
 
+type CategoryFilter = "Semua" | "UMKM" | "Wisata" | "Cafe" | "Event";
+
 export default function Marketplace({ limit }: { limit?: number }) {
-  const [selectedCategory, setSelectedCategory] = useState("Semua");
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryFilter>("Semua");
 
   // Ambil data dari server
   const { data: items = [], isLoading } = trpc.marketplace.list.useQuery();
