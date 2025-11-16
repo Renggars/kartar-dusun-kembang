@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaFacebook, FaTwitter, FaWhatsapp, FaInstagram } from "react-icons/fa";
 import { trpc } from "@/trpc/client";
+import { MarketplaceCategory } from "@/types";
 
 type RelatedItem = {
   slug: string;
@@ -21,7 +22,7 @@ export default function MarketplaceDetailPage() {
   });
 
   const { data: related } = trpc.marketplace.getRelated.useQuery({
-    category: item?.category,
+    category: item?.category as unknown as MarketplaceCategory,
     excludeSlug: slug,
   });
 
