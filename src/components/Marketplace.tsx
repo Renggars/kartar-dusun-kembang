@@ -27,10 +27,12 @@ export default function Marketplace({ limit }: { limit?: number }) {
   const categories = ["Semua", "UMKM", "Wisata", "Cafe", "Event"];
 
   // Filter kategori
-  const filtered =
+  const filtered: MarketplaceItem[] =
     selectedCategory === "Semua"
       ? items
-      : items.filter((item) => item.category === selectedCategory);
+      : items.filter(
+          (item: MarketplaceItem) => item.category === selectedCategory
+        );
 
   // Homepage → tampilkan maksimal 6 item
   const finalData = limit ? filtered.slice(0, limit) : filtered;
@@ -54,7 +56,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
           {categories.map((cat: string) => (
             <button
               key={cat}
-              onClick={() => setSelectedCategory(cat)}
+              onClick={() => setSelectedCategory(cat as CategoryFilter)}
               className={`px-5 py-2 rounded-full text-sm font-semibold border transition-all duration-300
                 ${
                   selectedCategory === cat
