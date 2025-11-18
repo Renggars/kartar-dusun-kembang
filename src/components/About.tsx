@@ -1,29 +1,32 @@
+// src/components/About.tsx
+
 "use client";
 
 import Image from "next/image";
 import aboutImage from "../assets/about.png";
 import { trpc } from "@/trpc/client";
+import { useEffect } from "react";
+import { useLoadingContext } from "@/context/LoadingContext";
 
 export default function About() {
-  // Ambil data dari tRPC
+  const { setAboutReady } = useLoadingContext();
   const { data: about, isLoading } = trpc.about.get.useQuery();
 
+  useEffect(() => {
+    if (!isLoading) {
+      setAboutReady(true);
+    }
+  }, [isLoading, setAboutReady]);
+
+  // Hapus loading spinner intenal, ganti dengan placeholder tak terlihat
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-600 animate-pulse">Memuat data...</p>
+      <div className="bg-white font-sans min-h-screen invisible" id="about">
+        {/* Placeholder untuk menjaga layout */}
+        <div className="h-screen"></div>
       </div>
     );
   }
-
-  // // Jika belum ada data, tampilkan fallback
-  // if (!about) {
-  //   return (
-  //     <div className="flex justify-center items-center min-h-screen">
-  //       <p className="text-gray-600">Data belum tersedia.</p>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="bg-white font-sans" id="about">
@@ -46,7 +49,7 @@ export default function About() {
             {/* Judul */}
             <h1 className="text-4xl md:text-5xl font-serif text-gray-800 leading-tight">
               Tentang Karang Taruna <br />
-              <span className="font-bold">Dusun Kembang</span>
+              <span className="font-bold text-gray-900">Dusun Kembang</span>
             </h1>
 
             {/* Isi */}

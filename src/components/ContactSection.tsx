@@ -5,7 +5,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 const ContactSection = () => {
   return (
     <section className="w-full bg-white lg:py-16">
-      <div className="container mx-auto px-2 md:px-20">
+      <div className="container mx-auto px-2">
         {/* Grid Layout */}
         <div className="grid grid-cols-1  gap-10 md:gap-16 items-start">
           {/* LEFT - MAPS (mobile first = tampil di atas) */}
@@ -39,14 +39,14 @@ const ContactSection = () => {
 
                 <a
                   href="#"
-                  className="inline-block bg-[#1581bc] text-white px-5 py-2 mt-4 rounded-full text-sm font-medium hover:bg-blue-500 transition"
+                  className="inline-block bg-[#1581bc] text-white px-4 py-1.5 mt-4 rounded-full font-bold hover:bg-[#1895d9] transition"
                 >
                   GET DIRECTIONS
                 </a>
               </div>
 
               {/* Email */}
-              <div className="flex items-center gap-3 text-[#1581bc]  hover:text-[#3BABEC] transition">
+              <div className="flex items-center gap-3 text-[#1581bc]  hover:text-[#1895d9] transition">
                 <MdOutlineEmail className="text-2xl shrink-0" />
                 <Link
                   href="mailto:info.ktdusunkembang@email.com"
@@ -57,7 +57,7 @@ const ContactSection = () => {
               </div>
 
               {/* Telepon */}
-              <div className="flex items-center gap-3 text-[#1581bc] hover:text-[#3BABEC] transition">
+              <div className="flex items-center gap-3 text-[#1581bc] hover:text-[#1895d9] transition">
                 <FaPhoneAlt className="text-xl shrink-0" />
                 <Link href="tel:0123456789" className="text-lg font-semibold">
                   +62 812-3456-7890 (Chat Only)

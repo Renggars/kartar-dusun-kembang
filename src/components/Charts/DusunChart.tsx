@@ -1,4 +1,8 @@
+// src/components/Charts/DusunChart.tsx
 "use client";
+
+import { motion } from "motion/react";
+
 const dusunData = {
   kepalaDusun: { position: "Kepala Dusun", name: "Murtaji" },
   DataRt: [
@@ -24,105 +28,118 @@ const MemberCard = ({
   </div>
 );
 
+const fadeIn = (delay: number) => ({
+  initial: { y: 20, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  transition: { duration: 0.3, delay: delay / 1000 },
+});
+
 export default function DusunChart() {
+  const BASE_DELAY = 50;
+  let currentDelay = BASE_DELAY;
+
   return (
     <section
       id="dusun"
-      className="w-full bg-black text-white flex flex-col items-center "
+      className="w-full text-balbg-black flex flex-col items-center "
     >
       <div className="flex flex-col items-center">
-        <div
-          className="text-white mb-2"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
+        {/* Start: 50ms */}
+        <motion.div {...fadeIn(currentDelay)} className="text-black mb-2">
           Kepala Dusun
-        </div>
-        <div data-aos="fade-up" data-aos-delay="150">
+        </motion.div>
+        {/* 50 + 50 = 100ms */}
+        <motion.div {...fadeIn((currentDelay += 50))}>
           <MemberCard name={dusunData.kepalaDusun.name} />
-        </div>
-        <div
-          className="w-0.5 h-6 bg-white"
-          data-aos="fade-up"
-          data-aos-delay="200"
+        </motion.div>
+        {/* 100 + 50 = 150ms */}
+        <motion.div
+          {...fadeIn((currentDelay += 50))}
+          className="w-0.5 h-6 bg-black"
         />
+
+        {/* Garis horizontal antara Kepala Dusun dan Ketua RT */}
         <div className="flex w-full justify-center max-w-7xl">
-          {/* Horizontal line */}
-          <div
-            className="w-0.5 h-5 bg-white relative"
-            data-aos="fade-up"
-            data-aos-delay="300"
+          {/* Horizontal line: Kiri 200ms */}
+          <motion.div
+            {...fadeIn((currentDelay += 50))}
+            className="w-0.5 h-5 bg-black relative"
           />
-          {/* Vertical line */}
-          <div
-            className="h-0.5 w-[180px] sm:w-[274px] md:w-[246px] lg:w-[440px] xl:w-[466px] bg-white"
-            data-aos="fade-up"
-            data-aos-delay="250"
+          {/* Vertical line: Tengah 300ms */}
+          <motion.div
+            {...fadeIn((currentDelay += 100))}
+            className="h-0.5 w-[180px] sm:w-[274px] md:w-[246px] lg:w-[440px] xl:w-[466px] bg-black"
           />
-          {/* Horizontal line */}
-          <div
-            className="w-0.5 h-5 bg-white relative"
-            data-aos="fade-up"
-            data-aos-delay="300"
+          {/* Horizontal line: Kanan 250ms*/}
+          <motion.div
+            {...fadeIn(currentDelay)}
+            className="w-0.5 h-5 bg-black relative"
           />
         </div>
 
         {/* Ketua RT 1 & Ketua RT 2 */}
         <div className="flex justify-center items-center gap-x-[105px] sm:gap-x-[202px] md:gap-x-[172px] lg:gap-x-[366px] xl:gap-[396px]">
-          <div
-            className="text-white my-1"
-            data-aos="fade-up"
-            data-aos-delay="350"
+          {/* 350ms */}
+          <motion.div
+            {...fadeIn(currentDelay + 50)}
+            className="text-balbg-black my-1"
           >
             Ketua RT 1
-          </div>
-          <div className="text-white" data-aos="fade-up" data-aos-delay="350">
+          </motion.div>
+          {/* 350ms */}
+          <motion.div
+            {...fadeIn(currentDelay + 50)}
+            className="text-balbg-black"
+          >
             Ketua RT 2
-          </div>
+          </motion.div>
         </div>
+
+        {/* currentDelay sekarang 300ms. Tambahkan 50ms (350ms) dan 50ms per iterasi */}
         <div className="flex justify-center items-start gap-x-[54px] sm:gap-x-[150px] md:gap-x-[120px] lg:gap-x-[314px] xl:gap-[340px]">
           {dusunData.DataRt.map((member, index) => (
-            <div
+            <motion.div
               key={`rt-${index}`}
               className="flex flex-col items-center"
-              data-aos="fade-up"
-              data-aos-delay={350 + index * 50}
+              {...fadeIn(currentDelay + 50 + index * 100)}
             >
               <MemberCard name={member.name} />
-              {/* Garis vertikal di bawah masing-masing MemberCard */}
-              <div
-                className="w-0.5 h-5 md:h-6 lg:h-8 xl:h-10 bg-white"
-                data-aos="fade-up"
-                data-aos-delay={400 + index * 50}
+              {/* Garis vertikal 50ms setelah setiap member */}
+              <motion.div
+                {...fadeIn(currentDelay + 100 + index * 100)}
+                className="w-0.5 h-5 md:h-6 lg:h-8 xl:h-10 bg-black"
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
+      {/* Ketua RT 3 & Ketua RT 4 */}
+      {/* 550ms */}
       <div className="flex justify-center items-center gap-x-[105px] sm:gap-x-[202px] md:gap-x-[200px] lg:gap-x-[366px] xl:gap-[396px]">
-        <div
-          className="text-white my-1 xl:ml-4"
-          data-aos="fade-up"
-          data-aos-delay="450"
+        {/* 600ms */}
+        <motion.div
+          {...fadeIn(currentDelay + 50)}
+          className="text-balbg-black my-1 xl:ml-4"
         >
           Ketua RT 3
-        </div>
-        <div className="text-white" data-aos="fade-up" data-aos-delay="450">
+        </motion.div>
+        {/* 600ms */}
+        <motion.div {...fadeIn(currentDelay + 50)} className="text-balbg-black">
           Ketua RT 4
-        </div>
+        </motion.div>
       </div>
 
+      {/* currentDelay sekarang 550ms. Tambahkan 50ms (600ms) dan 50ms per iterasi */}
       <div className="flex justify-center items-start gap-x-[54px] sm:gap-x-[150px] md:gap-x-[120px] lg:gap-x-[314px] xl:gap-[340px]">
         {dusunData.DataRt.map((member, index) => (
-          <div
+          <motion.div
             key={`rt-${index}`}
-            data-aos="fade-up"
-            data-aos-delay={500 + index * 50}
+            {...fadeIn(currentDelay + 50 + index * 100)}
           >
             <MemberCard name={member.name} />
             {/* Garis vertikal di bawah masing-masing MemberCard */}
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

@@ -1,42 +1,78 @@
-// pages/structure.jsx
+// src/components/Structure.tsx
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import KarangTarunaChart from "./Charts/KarangTarunaChart";
 import DusunChart from "./Charts/DusunChart";
+import { AnimatePresence, motion } from "motion/react";
 
 const StructurePage = () => {
   const [selected, setSelected] = useState<"karangTaruna" | "dusun">(
     "karangTaruna"
   );
   return (
-    <div className="min-h-screen text-white bg-white">
-      {/* Konten Halaman */}
+    <div className="min-h-screen text-white bg-gray-50">
       <div className="pt-16 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-5xl font-extrabold text-center text-black">
+        <motion.h1 // <<< MENGGUNAKAN motion.h1
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-5xl font-extrabold text-center text-[#282B33]"
+        >
           Structure
-        </h1>
+        </motion.h1>
       </div>
-
-      {/* Tampilkan Struktur yang Aktif */}
-      <div className="w-full flex flex-col items-center  bg-black text-white min-h-screen py-10">
-        <div className="flex gap-4 mb-8">
-          <Button
-            variant={selected === "karangTaruna" ? "default" : "outline"}
+      <div className="w-full flex flex-col items-center text-gray-950 min-h-screen py-10">
+        <div className="flex gap-4 mb-8 ">
+          <button
             onClick={() => setSelected("karangTaruna")}
+            className={`px-4 py-2 rounded-xl font-medium transition-all duration-200 min-w-32 cursor-pointer
+ ${
+   selected === "karangTaruna"
+     ? "bg-[#1581bc] text-white hover:bg-[#1895d9]"
+     : "bg-transparent border border-blue-300 text-[#1581bc] hover:bg-blue-100"
+ }
+`}
           >
             Karang Taruna
-          </Button>
-          <Button
-            variant={selected === "dusun" ? "default" : "outline"}
+          </button>
+          <button
             onClick={() => setSelected("dusun")}
+            className={`px-4 py-2 rounded-xl font-medium transition-all duration-200 min-w-32 cursor-pointer
+ ${
+   selected === "dusun"
+     ? "bg-[#1581bc] text-white hover:bg-[#1895d9]"
+     : "bg-transparent border border-blue-300 text-[#1581bc] hover:bg-blue-100"
+ }
+`}
           >
             Dusun
-          </Button>
+          </button>
         </div>
-
-        {selected === "karangTaruna" ? <KarangTarunaChart /> : <DusunChart />}
+        <AnimatePresence mode="wait">
+          {selected === "karangTaruna" && (
+            <motion.div
+              key="karangTaruna"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <KarangTarunaChart />
+            </motion.div>
+          )}
+          {selected === "dusun" && (
+            <motion.div
+              key="dusun"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+            >
+              <DusunChart />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

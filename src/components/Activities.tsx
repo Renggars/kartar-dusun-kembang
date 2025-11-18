@@ -1,19 +1,30 @@
+// app/components/Activities.tsx
+
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
 import { trpc } from "@/trpc/client";
 import { ProgramItem } from "@/types";
+import { useLoadingContext } from "@/context/LoadingContext";
+import { useEffect } from "react";
 
 export default function Activities() {
+  const { setActivitiesReady } = useLoadingContext();
   const { data: programs, isLoading } = trpc.program.list.useQuery({
     take: 3,
   });
 
+  useEffect(() => {
+    if (!isLoading) {
+      setActivitiesReady(true);
+    }
+  }, [isLoading, setActivitiesReady]);
+
   if (isLoading) {
     return (
-      <section className="pt-20 pb-10 bg-gray-50">
-        <div className="container mx-auto px-6 text-center">Loading...</div>
+      <section className="pt-20 pb-10 bg-gray-50 invisible h-40">
+        <div className="container mx-auto px-6 text-center"></div>
       </section>
     );
   }
@@ -29,7 +40,7 @@ export default function Activities() {
           <p className="text-lg text-gray-600 mt-2">
             Semua program dan kegiatan kerja unggulan yang kami selenggarakan.
           </p>
-          <div className="w-24 h-1 bg-blue-600 mx-auto mt-4" />
+          <div className="w-24 h-1 bg-[#1581bc] mx-auto mt-4" />
         </div>
 
         {/* Kartu Kegiatan */}
@@ -59,7 +70,7 @@ export default function Activities() {
                 </p>
                 <Link
                   href={`/program/${item.slug}`}
-                  className="bg-blue-500 text-white py-1 px-2 rounded-md font-semibold hover:bg-blue-600 cursor-pointer"
+                  className="bg-[#1581bc] text-white py-1 px-3 rounded-xl font-semibold hover:bg-[#1581bc] cursor-pointer"
                 >
                   Lihat Detail
                 </Link>
@@ -72,7 +83,7 @@ export default function Activities() {
         <div className="text-center mt-8">
           <Link
             href="/program"
-            className="inline-block bg-blue-600 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:bg-blue-700 hover:-translate-y-1 transition-all duration-300"
+            className="inline-block bg-[#1581bc] text-white font-semibold px-8 py-3 rounded-full shadow-md hover:bg-[#1581bc] hover:-translate-y-1 transition-all duration-300"
           >
             Lihat Semua Program
           </Link>

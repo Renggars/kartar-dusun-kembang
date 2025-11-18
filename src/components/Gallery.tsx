@@ -26,28 +26,28 @@ export default function GalleryPage() {
   const itemStyles = [
     {
       transform: "rotate-[-12deg] translate-y-6 sm:translate-y-15",
-      zIndex: "z-10",
+      zIndex: "z-5",
     },
     {
       transform: "rotate-[-8deg] translate-y-3 sm:translate-y-7",
-      zIndex: "z-20",
+      zIndex: "z-10",
     },
     {
       transform: "rotate-[-4deg] translate-y-1 sm:translate-y-3",
-      zIndex: "z-30",
+      zIndex: "z-15",
     },
-    { transform: "rotate-0 translate-y-0", zIndex: "z-40" },
+    { transform: "rotate-0 translate-y-0", zIndex: "z-20" },
     {
       transform: "rotate-[4deg] translate-y-1 sm:translate-y-3",
-      zIndex: "z-30",
+      zIndex: "z-15",
     },
     {
       transform: "rotate-[8deg] translate-y-3 sm:translate-y-7",
-      zIndex: "z-20",
+      zIndex: "z-10",
     },
     {
       transform: "rotate-[12deg] translate-y-6 sm:translate-y-15",
-      zIndex: "z-10",
+      zIndex: "z-5",
     },
   ];
 
@@ -91,7 +91,7 @@ export default function GalleryPage() {
       {/* Tombol "Lihat Semua Galeri" */}
       <Link
         href="/gallery"
-        className="mt-16 px-6 py-3 bg-lime-600 hover:bg-lime-700 text-white text-sm md:text-base font-semibold rounded-full shadow-lg transition-all duration-300"
+        className="mt-16 px-6 py-3 bg-[#1581bc] hover:bg-[#1895d9]  text-white text-sm md:text-base font-semibold rounded-full shadow-lg transition-all duration-300"
       >
         Lihat Semua Galeri
       </Link>
