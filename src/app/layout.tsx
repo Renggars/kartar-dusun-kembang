@@ -6,7 +6,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
 import { TRPCProvider } from "@/components/providers/trpc-provider";
-import AosInitializer from "@/components/AosInitializer";
 import LoadingScreen from "@/components/LoadingScreen"; // <<< IMPORT LOADING SCREEN
 
 import { Toaster } from "react-hot-toast";
@@ -48,12 +47,10 @@ const LayoutWithLoadingControl = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isHeroReady, isAboutReady, isActivitiesReady, isMarketplaceReady } =
-    useLoadingContext();
+  const { isMarketplaceReady } = useLoadingContext();
   const [isLoading, setIsLoading] = useState(true);
 
-  const allDataReady =
-    isHeroReady && isAboutReady && isActivitiesReady && isMarketplaceReady;
+  const allDataReady = isMarketplaceReady;
 
   // LOGIKA UTAMA: Gabungkan Waktu Minimum dan Kesiapan Data
   useEffect(() => {
@@ -68,15 +65,10 @@ const LayoutWithLoadingControl = ({
     }, MIN_DISPLAY_TIME);
 
     // Cek jika data siap lebih cepat dari waktu minimum
-    if (allDataReady && !isLoading) {
-      // Data sudah siap, loading harus hilang
-      setIsLoading(false);
-    }
-
-    // Ini menangani kasus jika data sangat lama dimuat (melebihi MIN_DISPLAY_TIME)
     if (allDataReady && isLoading) {
-      // Data ready sudah true, tapi timer sudah clear, jadi hilangkan loading segera.
+      // Data sudah siap, tapi timer belum habis, hilangkan loading segera
       setIsLoading(false);
+      clearTimeout(minTimeTimer); // Hentikan timer jika data sudah ready
     }
 
     return () => clearTimeout(minTimeTimer);
@@ -107,7 +99,6 @@ const LayoutWithLoadingControl = ({
         >
           <TRPCProvider>
             <LayoutWithConditionalComponents>
-              <AosInitializer />
               {children}
             </LayoutWithConditionalComponents>
           </TRPCProvider>

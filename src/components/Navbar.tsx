@@ -13,14 +13,13 @@ import kegiatan3 from "../assets/gallery3.png";
 import kegiatan4 from "../assets/gallery4.png";
 
 const navLinks = [
-  { name: "Home", href: "#" },
-  { name: "Activities", href: "#" },
-  { name: "About", href: "#" },
-  { name: "Structure", href: "#" },
-  { name: "UMKM", href: "#" },
-  { name: "Gallery", href: "#" },
-  { name: "Marketplace", href: "#" },
-  { name: "Contact", href: "#" },
+  { name: "Home", href: "#home" },
+  { name: "Activities", href: "#activities" },
+  { name: "About", href: "#about" },
+  { name: "Structure", href: "#structure" },
+  { name: "Gallery", href: "#gallery" },
+  { name: "Marketplace", href: "#marketplace" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {

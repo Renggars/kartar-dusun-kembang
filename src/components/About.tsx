@@ -1,76 +1,115 @@
 // src/components/About.tsx
-
 "use client";
 
 import Image from "next/image";
-import aboutImage from "../assets/about.png";
-import { trpc } from "@/trpc/client";
-import { useEffect } from "react";
-import { useLoadingContext } from "@/context/LoadingContext";
+import aboutImage from "../assets/tes.webp";
+import { motion } from "framer-motion";
+import { easeOut } from "framer-motion";
+import { spring } from "framer-motion";
+
+// 1. Animasi untuk Gambar (Muncul dari kiri)
+const imageVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: easeOut },
+  },
+};
+
+// 2. Animasi Container Teks (Mengatur urutan muncul anak-anaknya)
+const textContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Jeda 0.2 detik antara Judul -> Visi -> Misi
+      delayChildren: 0.3, // Mulai animasi sedikit setelah gambar mulai masuk
+    },
+  },
+};
+
+// 3. Animasi Item Teks (Muncul dari bawah)
+const textItemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: spring, stiffness: 50, damping: 20 },
+  },
+};
 
 export default function About() {
-  const { setAboutReady } = useLoadingContext();
-  const { data: about, isLoading } = trpc.about.get.useQuery();
+  const visiText = "Bertujuan untuk berkontribusi positif bagi masyarakat.";
 
-  useEffect(() => {
-    if (!isLoading) {
-      setAboutReady(true);
-    }
-  }, [isLoading, setAboutReady]);
-
-  // Hapus loading spinner intenal, ganti dengan placeholder tak terlihat
-  if (isLoading) {
-    return (
-      <div className="bg-white font-sans min-h-screen invisible" id="about">
-        {/* Placeholder untuk menjaga layout */}
-        <div className="h-screen"></div>
-      </div>
-    );
-  }
+  const misiText =
+    "Meningkatkan kepedulian terhadap lingkungan sosial masyarakat.";
 
   return (
-    <div className="bg-white font-sans" id="about">
+    <div className="bg-white font-sans overflow-hidden" id="about">
       <main className="flex flex-col md:flex-row min-h-screen">
-        {/* Bagian Gambar */}
-        <div className="w-full md:w-1/2 h-64 md:h-screen relative">
+        {/* --- BAGIAN GAMBAR (KIRI) --- */}
+        <motion.div
+          className="w-full md:w-1/2 h-64 md:h-screen relative"
+          variants={imageVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }} // Animasi jalan saat 30% elemen terlihat
+        >
           <Image
-            src={about?.imageUrl || aboutImage}
+            src={aboutImage}
             alt="Foto kegiatan Karang Taruna Dusun Kembang"
             className="absolute inset-0 w-full h-full object-cover"
-            loading="eager"
-            width={2070}
-            height={1380}
+            priority
           />
-        </div>
+          {/* Overlay gradient tipis agar gambar lebih menyatu dengan putih jika diperlukan */}
+          <div className="absolute inset-0 bg-linear-to-r from-black/10 to-transparent md:hidden" />
+        </motion.div>
 
-        {/* Bagian Konten */}
-        <div className="w-full md:w-1/2 bg-gray-50 flex items-center justify-center px-8 py-6 sm:p-12 md:p-16">
-          <div className="max-w-lg w-full">
+        {/* --- BAGIAN KONTEN (KANAN) --- */}
+        <div className="w-full md:w-1/2 bg-gray-50 flex items-center justify-center px-8 py-12 sm:p-12 md:p-16">
+          <motion.div
+            className="max-w-lg w-full"
+            variants={textContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
             {/* Judul */}
-            <h1 className="text-4xl md:text-5xl font-serif text-gray-800 leading-tight">
-              Tentang Karang Taruna <br />
-              <span className="font-bold text-gray-900">Dusun Kembang</span>
-            </h1>
+            <motion.div variants={textItemVariants}>
+              <h1 className="text-4xl md:text-5xl font-serif text-gray-800 leading-tight mb-2">
+                Tentang Karang Taruna <br />
+                <span className="text-[#1581bc] font-bold">Dusun Kembang</span>
+              </h1>
+            </motion.div>
 
             {/* Isi */}
-            <div className="mt-6 space-y-8">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">VISI</h2>
-                <p className="mt-3 text-gray-600 leading-relaxed whitespace-pre-line">
-                  {about?.visi ||
-                    "Bertujuan untuk berkontribusi positif bagi masyarakat."}
+            <div className="mt-8 space-y-8">
+              {/* VISI */}
+              <motion.div variants={textItemVariants}>
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-xl font-bold text-gray-900 tracking-wide">
+                    VISI
+                  </h2>
+                </div>
+                <p className="text-gray-600 leading-relaxed text-lg">
+                  {visiText}
                 </p>
-              </div>
+              </motion.div>
 
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">MISI</h2>
-                <p className="mt-3 text-gray-600 leading-relaxed whitespace-pre-line">
-                  {about?.misi ||
-                    "Meningkatkan kepedulian terhadap lingkungan sosial masyarakat."}
+              {/* MISI */}
+              <motion.div variants={textItemVariants}>
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-xl font-bold text-gray-900 tracking-wide">
+                    MISI
+                  </h2>
+                </div>
+                <p className="text-gray-600 leading-relaxed whitespace-pre-line text-lg">
+                  {misiText}
                 </p>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </main>
     </div>

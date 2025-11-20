@@ -4,15 +4,8 @@
 import React, { createContext, useContext, useState, useMemo } from "react";
 
 interface LoadingContextType {
-  isHeroReady: boolean;
-  isAboutReady: boolean;
-  isActivitiesReady: boolean;
   isMarketplaceReady: boolean;
 
-  // Fungsi Setter
-  setHeroReady: (ready: boolean) => void;
-  setAboutReady: (ready: boolean) => void;
-  setActivitiesReady: (ready: boolean) => void;
   setMarketplaceReady: (ready: boolean) => void;
 }
 
@@ -23,23 +16,14 @@ export const LoadingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isHeroReady, setIsHeroReady] = useState(false);
-  const [isAboutReady, setIsAboutReady] = useState(false);
-  const [isActivitiesReady, setIsActivitiesReady] = useState(false);
-  const [isMarketplaceReady, setIsMarketplaceReady] = useState(false); // <<< BARU
+  const [isMarketplaceReady, setIsMarketplaceReady] = useState(false);
 
   const contextValue = useMemo(
     () => ({
-      isHeroReady,
-      isAboutReady,
-      isActivitiesReady,
       isMarketplaceReady,
-      setHeroReady: setIsHeroReady,
-      setAboutReady: setIsAboutReady,
-      setActivitiesReady: setIsActivitiesReady,
       setMarketplaceReady: setIsMarketplaceReady,
     }),
-    [isHeroReady, isAboutReady, isActivitiesReady, isMarketplaceReady]
+    [isMarketplaceReady] // Dependency array diperbarui
   );
 
   return (

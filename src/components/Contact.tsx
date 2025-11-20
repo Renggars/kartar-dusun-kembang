@@ -1,34 +1,57 @@
+// import React from "react"; // Sudah tidak perlu karena sudah diimpor di file ContactSection
+"use client";
+
 import React from "react";
 import ContactSection from "./ContactSection";
 import { CommentForm } from "./CommentForm";
+import { motion } from "framer-motion"; // <-- Tambahkan ini
 
 const Contact = () => {
+  // Variasi untuk Title dan Content Grid
+  const variants = {
+    title: {
+      initial: { opacity: 0, y: -30 },
+      animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    },
+    content: {
+      initial: { opacity: 0, y: 50 },
+      animate: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } },
+    },
+  };
+
   return (
     <section
       id="contact"
-      className="w-full bg-gray-50 text-gray-800 min-h-screen flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16 lg:px-24"
+      className="w-full bg-gray-50 text-gray-800 min-h-screen flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden"
     >
       {/* Title Section */}
-      <h2
-        className="text-4xl md:text-5xl font-bold bg-linear-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent text-center mb-6"
-        data-aos="fade-up"
+      <motion.h2
+        className="text-4xl md:text-5xl font-bold text-center mb-12" // Ubah margin agar lebih lega
+        variants={variants.title}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.5 }}
       >
         Contact Us
-      </h2>
+      </motion.h2>
 
       {/* Content Grid */}
-      <div
-        className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-        data-aos="fade-up"
-        data-aos-delay="150"
+      <motion.div
+        className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-start max-w-7xl" // Tambah max-w-7xl untuk batasan lebar
+        variants={variants.content}
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.3 }}
       >
+        {/* ContactSection (LEFT) */}
         <div className="flex justify-center">
           <ContactSection />
         </div>
+        {/* CommentForm (RIGHT) */}
         <div className="flex justify-center">
           <CommentForm />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

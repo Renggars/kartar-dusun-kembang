@@ -1,12 +1,10 @@
-// components/Hero.jsx (Diperbarui dengan Framer Motion)
+// components/Hero.jsx
 "use client";
 
-import { useLoadingContext } from "@/context/LoadingContext";
-import { trpc } from "@/trpc/client";
 import Link from "next/link";
-import { useEffect } from "react";
 import { motion, Variants } from "motion/react";
 
+// --- VARIAN ANIMASI ---
 const itemVariants: Variants = {
   initial: { y: 20, opacity: 0 },
   animate: {
@@ -16,40 +14,21 @@ const itemVariants: Variants = {
   },
 };
 
-// Definisikan Varian untuk Container (Stagger Effect)
-// Ini memastikan elemen anak (Judul, Deskripsi, Tombol) muncul secara berurutan
 const containerVariants: Variants = {
   animate: {
     transition: {
-      staggerChildren: 0.2, // Jeda 0.2 detik antar elemen
-      delayChildren: 0.1, // Mulai animasi 0.1 detik setelah Hero Section muncul
+      staggerChildren: 0.2,
+      delayChildren: 0.1,
     },
   },
 };
 
 export default function Hero() {
-  const { setHeroReady } = useLoadingContext();
-
-  const { data: hero, isLoading } = trpc.hero.get.useQuery();
-
-  useEffect(() => {
-    if (!isLoading) {
-      setHeroReady(true);
-    }
-  }, [isLoading, setHeroReady]);
-
-  // Jika data masih loading (sebelum splash screen hilang), tampilkan placeholder tak terlihat
-  if (isLoading)
-    return <section id="beranda" className="h-screen invisible"></section>;
-
-  // Jika data kosong setelah loading selesai, tampilkan null (atau fallback)
-  if (!hero) return null;
-
-  const title = hero?.title || "Karang Taruna Bhakti Pertiwi";
+  // --- DATA STATIC ---
+  const title = "Karang Taruna Bhakti Pertiwi";
   const description =
-    hero?.description ||
     "Membangun Generasi Muda Dusun Kembang yang Kreatif, Inovatif, dan Berkarakter.";
-  const imageUrl = hero?.imageUrl || "/hero.jpg";
+  const imageUrl = "/hero.jpg";
 
   const heroStyle = {
     backgroundImage: `linear-gradient(to top, rgba(18,18,18,0.8), rgba(138,43,226,0.3), rgba(255,20,147,0.3)), url('${imageUrl}')`,
@@ -57,18 +36,18 @@ export default function Hero() {
 
   return (
     <section
-      id="beranda"
+      id="home"
       className="relative h-screen flex items-center justify-center text-center bg-cover bg-center px-4"
       style={heroStyle}
     >
-      {/* Menggunakan motion.div sebagai Container untuk Stagger Effect */}
+      {/* Container Animasi */}
       <motion.div
         className="relative z-10"
         variants={containerVariants}
         initial="initial"
         animate="animate"
       >
-        {/* JUDUL: Menggunakan motion.h1 dengan Varian Item */}
+        {/* JUDUL */}
         <motion.h1
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4"
           variants={itemVariants}
@@ -76,7 +55,7 @@ export default function Hero() {
           {title}
         </motion.h1>
 
-        {/* DESKRIPSI: Menggunakan motion.p dengan Varian Item (akan muncul setelah Judul karena Stagger) */}
+        {/* DESKRIPSI */}
         <motion.p
           className="text-lg text-gray-200 mb-8 max-w-3xl mx-auto"
           variants={itemVariants}
@@ -84,7 +63,7 @@ export default function Hero() {
           {description}
         </motion.p>
 
-        {/* TOMBOL: Menggunakan Link yang dibungkus motion.div dengan Varian Item (akan muncul terakhir) */}
+        {/* TOMBOL */}
         <motion.div variants={itemVariants}>
           <Link
             href="#about"

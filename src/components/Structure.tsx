@@ -11,7 +11,7 @@ const StructurePage = () => {
     "karangTaruna"
   );
   return (
-    <div className="min-h-screen text-white bg-gray-50">
+    <section id="structure" className="min-h-screen text-white bg-gray-50">
       <div className="pt-16 px-4 sm:px-6 lg:px-8">
         <motion.h1 // <<< MENGGUNAKAN motion.h1
           initial={{ y: 50, opacity: 0 }}
@@ -74,7 +74,7 @@ const StructurePage = () => {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </section>
   );
 };
 
