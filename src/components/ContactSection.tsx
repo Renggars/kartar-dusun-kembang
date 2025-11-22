@@ -61,11 +61,13 @@ const ContactSection = () => {
 
                 <Link
                   href="https://maps.app.goo.gl/ikT4tfZHGXgikBT29"
-                  className="inline-block bg-[#1581bc] text-white px-5 py-2 mt-4 rounded-full font-bold hover:bg-[#1895d9] transition shadow-md hover:shadow-lg"
+                  className="relative inline-block bg-[#1581bc] text-white px-5 py-2 mt-4 rounded-full font-bold transition shadow-md hover:shadow-lg overflow-hidden group"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  GET DIRECTIONS
+                  <div className="absolute bg-white/20 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+
+                  <span className="relative z-10">GET DIRECTIONS</span>
                 </Link>
               </motion.div>
 

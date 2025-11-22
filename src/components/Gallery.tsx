@@ -56,7 +56,6 @@ export default function GalleryPage() {
           Karang Taruna
         </span>
       </motion.h2>
-
       {/* Container Kartu */}
       <div className="flex justify-center items-end pb-12 relative">
         {items.map((item, index) => {
@@ -126,18 +125,20 @@ export default function GalleryPage() {
         })}
       </div>
 
-      {/* Tombol Lihat Semua */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.8, duration: 0.5 }}
+        className="mt-16"
       >
         <Link
           href="/gallery"
-          className="mt-16 px-8 py-4 bg-[#1581bc] hover:bg-[#1895d9] text-white text-sm md:text-base font-semibold rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+          className="relative inline-block px-8 py-4 bg-[#1581bc] text-white text-sm md:text-base font-semibold rounded-full shadow-lg transition-all duration-300 overflow-hidden group"
         >
-          Lihat Semua Galeri
+          <div className="absolute bg-white/10 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+
+          <span className="relative z-10">Lihat Semua Galeri</span>
         </Link>
       </motion.div>
     </section>

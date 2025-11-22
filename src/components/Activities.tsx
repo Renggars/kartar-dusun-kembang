@@ -158,7 +158,6 @@ export default function Activities() {
           ))}
         </motion.div>
 
-        {/* Tombol Lihat Semua (Dengan Animasi) */}
         <motion.div
           className="text-center mt-12"
           variants={buttonVariants}
@@ -168,9 +167,11 @@ export default function Activities() {
         >
           <Link
             href="/program"
-            className="inline-block bg-[#1581bc] text-white font-semibold px-10 py-4 rounded-full shadow-md hover:bg-opacity-90 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 text-lg"
+            className="relative inline-block bg-[#1581bc] text-white font-semibold px-10 py-4 rounded-full shadow-md hover:-translate-y-1 hover:shadow-lg transition-all duration-300 text-lg overflow-hidden group"
           >
-            Lihat Semua Program
+            <div className="absolute bg-white/20 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+
+            <span className="relative z-10">Lihat Semua Program</span>
           </Link>
         </motion.div>
       </div>

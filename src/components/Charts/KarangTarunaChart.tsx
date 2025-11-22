@@ -123,7 +123,7 @@ export default function KarangTarunaChart() {
         <div className="flex justify-center items-center gap-x-[115px] sm:gap-x-[216px] md:gap-x-[190px] lg:gap-x-[380px] xl:gap-[410px]">
           <motion.div
             {...fadeIn(currentDelay + STEP)}
-            className="text-bbg-black my-1 ml-5 sm:ml-6 md:ml-5 lg:ml-4 xl:ml-10"
+            className="text-bbg-black my-1 sm:ml-6 md:ml-5 lg:ml-4 xl:ml-10"
           >
             Ketua
           </motion.div>

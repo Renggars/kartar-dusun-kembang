@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <>
+    <div>
       <Hero />
       <Activities />
       <About />
@@ -16,6 +16,6 @@ export default function Home() {
       <Gallery />
       <Marketplace limit={6} />
       <Contact />
-    </>
+    </div>
   );
 }

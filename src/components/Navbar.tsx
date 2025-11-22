@@ -18,7 +18,6 @@ const navLinks = [
   { name: "About", href: "#about" },
   { name: "Structure", href: "#structure" },
   { name: "Gallery", href: "#gallery" },
-  { name: "Marketplace", href: "#marketplace" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -54,13 +53,17 @@ export default function Navbar() {
           <Image src="/logo.png" alt="Logo" fill className="object-contain" />
         </Link>
 
-        <div className="flex items-center gap-4 z-100">
+        <div className="flex items-center gap-2 md:gap-4 z-100">
           <Link
             href="/marketplace"
-            className="hidden md:flex items-center gap-2 bg-[#1581bc] text-white font-bold px-4 py-3 rounded-md hover:bg-[#1895d9] transition"
+            className="relative flex items-center gap-2 bg-[#1581bc] text-white font-bold px-4 py-3 rounded-md transition overflow-hidden group"
           >
-            <FaShop className="w-5 h-5" />
-            STORE
+            <div className="absolute bg-white/20 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+
+            <span className="relative z-10 flex items-center gap-2">
+              <FaShop className="w-5 h-5" />
+              STORE
+            </span>
           </Link>
 
           <button

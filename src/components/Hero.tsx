@@ -63,13 +63,14 @@ export default function Hero() {
           {description}
         </motion.p>
 
-        {/* TOMBOL */}
         <motion.div variants={itemVariants}>
           <Link
             href="#about"
-            className="inline-block rounded-xl bg-[#1581bc] text-white px-8 py-4 font-bold hover:-translate-y-1 transition-transform duration-300 hover:shadow-xl hover:shadow-[#1581bc]/30"
+            className="relative inline-block rounded-xl bg-[#1581bc] text-white px-8 py-4 font-bold overflow-hidden group hover:-translate-y-1 transition-transform duration-300 hover:shadow-xl hover:shadow-[#1581bc]/30"
           >
-            Lihat profil
+            <div className="absolute bg-white/1]20 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+
+            <span className="relative z-10">Lihat profil</span>
           </Link>
         </motion.div>
       </motion.div>

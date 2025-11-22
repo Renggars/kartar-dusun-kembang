@@ -11,14 +11,19 @@ export default function LayoutWithConditionalComponents({
 }) {
   const pathname = usePathname();
 
-  const isExcludedPage =
+  const isExcludedNavbar =
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/marketplace");
+
+  const isExcludeFooter =
     pathname.startsWith("/admin") || pathname.startsWith("/auth");
 
   return (
     <>
-      {!isExcludedPage && <Navbar />}
+      {!isExcludedNavbar && <Navbar />}
       <main className="flex-1">{children}</main>
-      {!isExcludedPage && <Footer />}
+      {!isExcludeFooter && <Footer />}
     </>
   );
 }

@@ -29,7 +29,7 @@ const StructurePage = () => {
             className={`px-4 py-2 rounded-xl font-medium transition-all duration-200 min-w-32 cursor-pointer
  ${
    selected === "karangTaruna"
-     ? "bg-[#1581bc] text-white hover:bg-[#1895d9]"
+     ? "bg-[#1581bc] text-white hover:bg-[rgb(24,149,217)]"
      : "bg-transparent border border-blue-300 text-[#1581bc] hover:bg-blue-100"
  }
 `}

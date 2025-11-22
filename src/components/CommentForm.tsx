@@ -140,7 +140,7 @@ export const CommentForm = () => {
           transition={{ delay: 0.3 }}
           className="w-full relative h-12 bg-[#1581bc] text-white font-semibold rounded-2xl overflow-hidden group transition-all duration-250 cursor-pointer shadow-md hover:shadow-lg mt-3"
         >
-          <div className="absolute bg-white/30 inset-0 translate-y-12 group-hover:translate-y-0 transition-transform duration-500" />
+          <div className="absolute bg-white/20 inset-0 translate-y-12 group-hover:translate-y-0 transition-transform duration-500" />
           {loading ? (
             <div className="flex items-center justify-center gap-2">
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
