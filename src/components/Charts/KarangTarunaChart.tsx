@@ -153,7 +153,8 @@ export default function KarangTarunaChart() {
             {...fadeIn(currentDelay)} // 350ms
             className="flex flex-col items-center sm:mr-4 md:mr-3"
           >
-            <MemberCard name={KarangTarunaData.wakilKetua.name} /> {/* 400ms */}
+            <MemberCard name={KarangTarunaData.wakilKetua.name} />
+            {/* 400ms */}
             <motion.div
               {...fadeIn(currentDelay + STEP)}
               className="w-0.5 h-5 bg-black relative md:mr-[5px] lg:mr-[17px] xl:mr-3"
@@ -171,6 +172,7 @@ export default function KarangTarunaChart() {
           className="w-0.5 h-4 bg-black relative"
         />
       </div>
+
       {/* LEVEL 3 (Sekretaris & Bendahara) */}
       <div className="flex flex-col items-center justify-center">
         {/* Vertical line 550ms*/}
