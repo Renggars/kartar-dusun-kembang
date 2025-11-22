@@ -136,7 +136,7 @@ export default function GalleryPage() {
           href="/gallery"
           className="relative inline-block px-8 py-4 bg-[#1581bc] text-white text-sm md:text-base font-semibold rounded-full shadow-lg transition-all duration-300 overflow-hidden group"
         >
-          <div className="absolute bg-white/10 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+          <div className="absolute bg-white/20 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
 
           <span className="relative z-10">Lihat Semua Galeri</span>
         </Link>

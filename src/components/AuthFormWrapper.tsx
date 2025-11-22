@@ -1,5 +1,5 @@
 // src/components/auth/AuthFormWrapper.tsx
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 interface AuthFormWrapperProps {
   title: string;
