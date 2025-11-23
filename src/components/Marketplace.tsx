@@ -49,7 +49,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
       id="marketplace"
       className="pt-5 pb-10 md:py-24 bg-white min-h-screen text-black"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+      <div className="container mx-auto sm:px-6 lg:px-12">
         {/* --- HEADER SECTION (Style Lando Norris: Bold & Uppercase) --- */}
         <div className="text-center mb-10 md:mb-16">
           <motion.h2
@@ -65,7 +65,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-600 max-w-xl mx-auto text-sm md:text-base font-medium"
+            className="text-gray-600 max-w-xl mx-auto text-sm md:text-base font-medium px-4"
           >
             Jelajahi produk asli Dusun Kembang. Dari kerajinan tangan UMKM
             hingga tiket wisata dan kuliner.
@@ -74,7 +74,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
 
         {/* --- FILTER BAR (Horizontal Scroll) --- */}
         <div className="flex justify-center mb-10">
-          <div className="flex gap-2 overflow-x-auto pb-2 px-2 scrollbar-hide mask-linear-fade">
+          <div className="flex gap-2 overflow-x-auto pb-2 scrol mask-linear-fade no-scrollbar px-4">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -97,7 +97,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
         {/* --- PRODUCT GRID (2 Col Mobile, 4 Col Desktop) --- */}
         <motion.div
           layout
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-8"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-8 px-4"
         >
           <AnimatePresence mode="popLayout">
             {finalData.map((item, i) => (

@@ -1,3 +1,9 @@
+export type MessageFormData = {
+  name: string;
+  email: string;
+  message: string;
+};
+
 export type ProgramItem = {
   id: number;
   title: string;

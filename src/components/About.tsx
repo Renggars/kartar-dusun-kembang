@@ -46,7 +46,7 @@ export default function About() {
     "Meningkatkan kepedulian terhadap lingkungan sosial masyarakat.";
 
   return (
-    <div className="bg-white font-sans overflow-hidden" id="about">
+    <div className="bg-white font-sans overflow-hidden min-h-screen" id="about">
       <main className="flex flex-col md:flex-row min-h-screen">
         {/* --- BAGIAN GAMBAR (KIRI) --- */}
         <motion.div
@@ -67,7 +67,7 @@ export default function About() {
         </motion.div>
 
         {/* --- BAGIAN KONTEN (KANAN) --- */}
-        <div className="w-full md:w-1/2 bg-gray-50 flex items-center justify-center px-8 py-12 sm:p-12 md:p-16">
+        <div className="w-full md:w-1/2 bg-white flex items-center justify-center px-8 py-12 sm:p-12 md:p-16">
           <motion.div
             className="max-w-lg w-full"
             variants={textContainerVariants}

@@ -5,12 +5,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuMessageCircleMore, LuSend } from "react-icons/lu";
 import { motion, Variants } from "framer-motion"; // <-- Tambahkan ini
-
-type MessageFormData = {
-  name: string;
-  email: string;
-  message: string;
-};
+import { MessageFormData } from "@/types";
+import toast from "react-hot-toast";
 
 // Variasi untuk keseluruhan form
 const formVariants: Variants = {
@@ -41,11 +37,11 @@ export const CommentForm = () => {
     onSuccess: () => {
       reset();
       setLoading(false);
-      alert("Pesan berhasil terkirim!"); // Feedback Sukses
+      toast.success("Pesan berhasil terkirim!");
     },
     onError: () => {
       setLoading(false);
-      alert("Gagal mengirim pesan, silakan coba lagi.");
+      toast.error("Gagal mengirim pesan. Coba lagi.");
     },
   });
 

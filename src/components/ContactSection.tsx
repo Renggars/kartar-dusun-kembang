@@ -29,7 +29,7 @@ const ContactSection = () => {
             className="order-1"
             variants={itemVariants} // Animasi Maps
           >
-            <h3 className="text-lg xl:text-2xl font-semibold text-gray-700 mb-4">
+            <h3 className="text-lg xl:text-2xl font-bold text-gray-800 mb-4">
               Maps Location
             </h3>
             <div className="rounded-2xl overflow-hidden shadow-xl border-4 border-white">

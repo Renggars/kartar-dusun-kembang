@@ -5,6 +5,36 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Ganti .custom-scrollbar dengan html */
+html::-webkit-scrollbar {
+  width: 8px; /* Lebar Scrollbar */
+}
+
+html::-webkit-scrollbar-track {
+  background: #2c2c2a;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #1581bc;
+  border-radius: 5px;
+  border: 2px solid #1e1e1c;
+}
+
+/* Untuk browser berbasis Webkit (Chrome, Safari, Edge) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Menyembunyikan tampilan scroll bar */
+}
+
+/* Untuk Internet Explorer dan Edge (versi lama) */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Untuk Firefox */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

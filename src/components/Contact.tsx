@@ -22,7 +22,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="w-full bg-gray-50 text-gray-800 min-h-screen flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden"
+      className="w-full bg-white text-gray-800 min-h-screen flex flex-col items-center justify-center py-20 px-4 sm:px-6 lg:px-12 overflow-hidden"
     >
       {/* Title Section */}
       <motion.h2

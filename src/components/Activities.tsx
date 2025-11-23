@@ -88,10 +88,10 @@ export default function Activities() {
   ];
 
   return (
-    <section id="activities" className="pt-20 pb-10 bg-gray-50 overflow-hidden">
+    <section id="activities" className="pt-20 pb-10 bg-white overflow-hidden">
       {" "}
       {/* overflow-hidden untuk animasi masuk */}
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 lg:px-12">
         {/* Judul Section (Animasi sederhana) */}
         <motion.div
           className="text-center mb-8 md:mb-12"

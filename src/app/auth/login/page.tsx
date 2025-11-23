@@ -4,10 +4,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"; // Pastikan ini terimpor
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,7 +19,10 @@ import {
 import { FaEye } from "react-icons/fa";
 import { IoIosEyeOff } from "react-icons/io";
 import { trpc } from "@/trpc/client";
+import { LuLogIn } from "react-icons/lu"; // Ikon baru untuk judul
+import Link from "next/link";
 
+// Definisikan skema Zod (Tidak Berubah)
 const loginSchema = z.object({
   email: z.string().email("Email tidak valid."),
   password: z.string().min(8, "Password minimal 8 karakter."),
@@ -38,11 +40,11 @@ export default function LoginPage() {
       email: "",
       password: "",
     },
-  });
+  }); // Gunakan useMutation untuk login (Toast sudah terintegrasi)
 
   const loginMutation = trpc.auth.login.useMutation({
     onSuccess: () => {
-      router.push("/");
+      router.push("/admin/dashboard");
       toast.success("Login berhasil!");
     },
     onError: (error) => {
@@ -55,26 +57,31 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-          Masuk ke akun Anda
-        </h2>
-
+    <main className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <div className="w-full max-w-sm md:max-w-md bg-white p-6 md:p-10 rounded-2xl shadow-2xl border border-gray-100">
+        <div className="flex flex-col items-center mb-8">
+          <div className="p-3 mb-3 rounded-full bg-blue-100">
+            <LuLogIn className="w-8 h-8 text-blue-500" />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-800 tracking-tight">
+            Login
+          </h1>
+        </div>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Email Field */}
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg text-black">Email</FormLabel>
+                  <FormLabel className="text-sm font-semibold text-gray-700">
+                    Email
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="email@example.com"
+                      placeholder="alamat@email.com"
                       type="email"
-                      className="text-gray-800"
+                      className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-gray-800"
                       {...field}
                     />
                   </FormControl>
@@ -82,26 +89,26 @@ export default function LoginPage() {
                 </FormItem>
               )}
             />
-
-            {/* Password Field */}
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg text-black">Password</FormLabel>
+                  <FormLabel className="text-sm font-semibold text-gray-700">
+                    Password
+                  </FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
-                        placeholder="********"
+                        placeholder="Minimal 8 karakter"
                         type={showPassword ? "text" : "password"}
-                        className="text-gray-800"
+                        className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-500 text-gray-800"
                         {...field}
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword((prev) => !prev)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition"
                         tabIndex={-1}
                       >
                         {showPassword ? (
@@ -117,30 +124,45 @@ export default function LoginPage() {
               )}
             />
 
-            {/* Remember Me + Forgot Password */}
-            <div className="flex items-center justify-between text-sm text-muted-foreground">
-              <Label className="flex items-center gap-2 cursor-pointer text-black">
-                <input
-                  type="checkbox"
-                  className="form-checkbox text-blue-600 rounded-sm"
-                />
-                Ingat saya
-              </Label>
-              <a
-                href="/auth/forgot-password"
-                className="text-blue-600 hover:underline"
-              >
-                Lupa Password?
-              </a>
-            </div>
+            <Link
+              href="/auth/forgot-password"
+              className="text-[#1581bc] text-sm font-medium hover:text-blue-500 transition"
+            >
+              Lupa Password?
+            </Link>
 
-            {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full text-white bg-blue-600 hover:bg-blue-700 cursor-pointer"
+              className="w-full h-11 text-white bg-[#1581bc] hover:bg-[#1895d9] font-semibold rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg mt-8"
               disabled={loginMutation.isPending}
             >
-              {loginMutation.isPending ? "Memproses..." : "Masuk"}
+              {loginMutation.isPending ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Memproses...
+                </span>
+              ) : (
+                "Masuk"
+              )}
             </Button>
           </form>
         </Form>
