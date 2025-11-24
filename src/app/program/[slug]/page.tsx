@@ -4,159 +4,144 @@ import { trpc } from "@/trpc/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaWhatsapp,
-  FaInstagram,
-  FaRegCalendarAlt,
-} from "react-icons/fa";
 
-type RelatedProgram = {
-  slug: string;
-  title: string;
-  imageUrl: string | null;
-};
+import { ArrowLeft, MapPin, Users, Calendar } from "lucide-react";
 
 export default function ProgramDetailPage() {
   const { slug } = useParams() as { slug: string };
 
   const { data: program, isLoading } = trpc.program.getBySlug.useQuery({
     slug,
-  });
+  }); // Asumsi trpc.program.getRelated mengembalikan data dengan tipe RelatedProgram[]
 
-  const { data: relatedPrograms } = trpc.program.getRelated.useQuery();
+  const { data: relatedPrograms = [] } = trpc.program.getRelated.useQuery();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600 text-lg font-medium">Memuat data...</p>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   if (!program) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-2xl font-bold text-gray-700">
-          Program tidak ditemukan
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white text-black">
+        <h1 className="text-4xl font-black uppercase mb-4">
+          Program Tidak Ditemukan
         </h1>
+        <Link href="/program" className="underline font-bold">
+          Kembali ke Halaman Program
+        </Link>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-blue-600 text-white py-16 px-6 text-center relative">
-        <div className="max-w-5xl mx-auto">
-          <nav className="text-sm mb-4">
-            <Link href="/" className="hover:underline">
-              Beranda
-            </Link>{" "}
-            /
-            <Link href="/program" className="hover:underline">
-              {" "}
-              Program
-            </Link>{" "}
-            /<span className="opacity-90"> {program.title}</span>
-          </nav>
+  const dummyLocation = "Balai Desa Kembang Sari";
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+  return (
+    <div className="bg-white text-black min-h-screen font-sans">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:min-h-[90vh]">
+        <div className="relative w-full h-[50vh] lg:h-auto bg-[#f4f4f4] lg:order-2">
+          <Link
+            href="/program"
+            className="md:hidden absolute top-4 left-4 z-10 p-2 bg-white/80 backdrop-blur rounded-full lg:hidden shadow-sm"
+          >
+            <ArrowLeft className="w-5 h-5 text-black" />
+          </Link>
+          <Image
+            src={program.imageUrl || "/placeholder.png"}
+            alt={program.title}
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </div>
+        <div className="flex flex-col justify-center px-6 py-10 lg:px-20 lg:py-24 lg:order-1">
+          <Link
+            href="/program"
+            className="hidden lg:flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider mb-6 hover:text-black transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" /> Kembali ke Semua Program
+          </Link>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4">
+            <span className="inline-block px-3 py-1 text-[10px] font-black tracking-widest uppercase bg-black text-white rounded-sm">
+              {(program as any).category || "KATEGORI"}
+            </span>
+            <p className="text-xs font-medium text-gray-500 flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              {new Date(program.date).toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </p>
+          </div>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter leading-[0.95] mb-6 text-gray-900">
             {program.title}
           </h1>
-
-          <p className="text-sm opacity-90">
-            Oleh{" "}
-            <span className="font-semibold">Karang Taruna Lorem Ipsum</span> ·
-            Diterbitkan pada {new Date(program.date).toDateString()}
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto mt-10 px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* MAIN CONTENT */}
-        <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl shadow-md overflow-hidden">
-            <Image
-              src={program.imageUrl!}
-              alt={program.title}
-              width={800}
-              height={400}
-              className="w-full h-72 object-cover"
-            />
-
-            <div className="p-8">
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-gray-700 font-semibold">Bagikan:</span>
-                <div className="flex gap-3 text-gray-600">
-                  <FaFacebook
-                    className="hover:text-blue-600 cursor-pointer"
-                    size={22}
-                  />
-                  <FaTwitter
-                    className="hover:text-black cursor-pointer"
-                    size={22}
-                  />
-                  <FaWhatsapp
-                    className="hover:text-green-500 cursor-pointer"
-                    size={22}
-                  />
-                  <FaInstagram
-                    className="hover:text-pink-500 cursor-pointer"
-                    size={22}
-                  />
-                  <FaRegCalendarAlt
-                    className="hover:text-blue-400 cursor-pointer"
-                    size={22}
-                  />
-                </div>
-              </div>
-
-              <p className="text-gray-700 leading-relaxed text-justify">
-                {program.description}
-              </p>
+          <div className="flex flex-wrap gap-y-2 gap-x-6 text-sm font-semibold text-gray-600 mb-8">
+            <span className="flex items-center gap-2">
+              <Users className="w-4 h-4 text-indigo-500" />
+              Oleh
+              <span className="font-bold text-gray-900">Karang Taruna</span>
+            </span>
+            <span className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-indigo-500" />
+              {dummyLocation}
+            </span>
+          </div>
+          <div className="border-t border-gray-200 py-6">
+            <h3 className="text-sm font-bold uppercase tracking-wider mb-3 text-gray-900">
+              Deskripsi Kegiatan
+            </h3>
+            <div className="prose prose-sm max-w-none text-gray-600 leading-relaxed text-justify">
+              <p>{program.description}</p>
             </div>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6 space-y-3">
             <Link
               href="/program"
-              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all duration-300"
+              className="group flex items-center justify-center gap-3 w-full bg-black text-white font-black uppercase tracking-widest py-4 rounded-lg hover:bg-gray-800 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 shadow-lg shadow-gray-300"
             >
-              Kembali ke Semua Program
+              <ArrowLeft className="w-5 h-5" />
+              <span>Kembali ke Semua Program</span>
             </Link>
           </div>
         </div>
-
-        {/* RELATED PROGRAMS */}
-        <aside className="space-y-4 mb-5">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">
-            Program Terkait
+      </div>
+      {relatedPrograms && relatedPrograms.length > 0 && (
+        <div className="py-16 px-6 lg:px-20 border-t border-gray-100">
+          <h3 className="text-2xl font-black uppercase tracking-tighter mb-8 text-left">
+            Program Lainnya
           </h3>
-
-          <div className="space-y-4">
-            {relatedPrograms?.map((related: RelatedProgram) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10">
+            {relatedPrograms.map((r) => (
               <Link
-                key={related.slug}
-                href={`/program/${related.slug}`}
-                className="flex items-center gap-4 bg-white p-4 rounded-lg shadow hover:shadow-md transition-all"
+                key={r.slug}
+                href={`/program/${r.slug}`}
+                className="group block"
               >
-                <Image
-                  src={related.imageUrl!}
-                  alt={related.title}
-                  width={64}
-                  height={64}
-                  className="w-16 h-16 rounded-md object-cover"
-                />
-
-                <p className="font-semibold text-gray-800 text-sm">
-                  {related.title}
+                <div className="relative aspect-4/5 bg-[#f4f4f4] mb-4 overflow-hidden rounded-sm">
+                  <Image
+                    src={r.imageUrl || "/placeholder.png"}
+                    alt={r.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <h4 className="font-bold uppercase text-sm leading-tight group-hover:underline decoration-1 underline-offset-2">
+                  {r.title}
+                </h4>
+                <p className="text-xs text-gray-500 mt-1">
+                  {r.category || "Kegiatan"}
                 </p>
               </Link>
             ))}
           </div>
-        </aside>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
