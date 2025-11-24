@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FaChevronLeft } from "react-icons/fa"; // Menambahkan FaChevronLeft untuk tombol collapse
-import { FiUsers, FiImage } from "react-icons/fi";
+import { FiImage } from "react-icons/fi";
 import { LuNewspaper } from "react-icons/lu";
 import { MdMailOutline, MdOutlineDashboard, MdMenu } from "react-icons/md"; // Menambahkan MdMenu
 import { IoIosClose } from "react-icons/io";

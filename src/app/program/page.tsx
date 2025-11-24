@@ -3,11 +3,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import { trpc } from "@/trpc/client";
-import { ProgramItem } from "@/types";
 // Import Lucide icons
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+
+export type ProgramItem = {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  imageUrl: string | null;
+  date: string; // Tipe string untuk date, akan diolah saat display
+  category: "Sosial" | "Budaya" | "Pendidikan" | "Lingkungan" | string; // Tambahkan properti category
+};
 
 // Tipe Program untuk Filter (Opsional, tapi baik untuk kejelasan)
 type ProgramCategoryFilter =
@@ -27,7 +36,10 @@ const programCategories = [
 ];
 
 export default function ProgramPage() {
-  const { data: programs = [], isLoading } = trpc.program.list.useQuery();
+  const { data: programs = [], isLoading } = trpc.program.list.useQuery() as {
+    data: ProgramItem[] | undefined;
+    isLoading: boolean;
+  };
   const [selectedCategory, setSelectedCategory] =
     useState<ProgramCategoryFilter>("Semua");
 
@@ -35,9 +47,7 @@ export default function ProgramPage() {
   const filteredPrograms =
     selectedCategory === "Semua"
       ? programs
-      : programs.filter(
-          (program) => (program as any).category === selectedCategory
-        );
+      : programs.filter((program) => program.category === selectedCategory);
 
   if (isLoading) {
     return (

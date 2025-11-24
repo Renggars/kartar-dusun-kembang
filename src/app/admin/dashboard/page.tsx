@@ -12,7 +12,15 @@ import {
   Activity,
   MessageSquare,
   ArrowRight,
+  LucideIcon,
 } from "lucide-react";
+
+interface StatCardProps {
+  icon: LucideIcon; // icon harus bertipe LucideIcon
+  count: number;
+  label: string;
+  color: string;
+}
 
 // Data Dummy untuk Card Statistik
 const statsData = [
@@ -74,7 +82,7 @@ const newsData = [
 ];
 
 // Komponen Card Statistik
-const StatCard = ({ icon: Icon, count, label, color }) => (
+const StatCard = ({ icon: Icon, count, label, color }: StatCardProps) => (
   <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 bg-white p-4 md:p-6 justify-center items-center md:justify-normal md:items-start rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
     <div className="flex items-center space-x-4">
       <div className={`p-3 rounded-full ${color} shrink-0`}>
@@ -95,7 +103,7 @@ const StatCard = ({ icon: Icon, count, label, color }) => (
 
 export default function DashboardPage() {
   const today = new Date();
-  const options = {
+  const options: Intl.DateTimeFormatOptions = {
     weekday: "long",
     year: "numeric",
     month: "long",

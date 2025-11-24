@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 // Import Lucide icons untuk modal
 import { X, ArrowLeft, Image as ImageIcon } from "lucide-react";
 
 // Import asset lokal (sesuaikan path)
-import rectangle from "../../assets/rectangle.png"; // Tidak digunakan, tapi dipertahankan import-nya
 import gallery1 from "../../assets/gallery1.png";
 import gallery2 from "../../assets/gallery2.png";
 import gallery3 from "../../assets/gallery3.png";
@@ -17,7 +16,7 @@ import gallery6 from "../../assets/gallery6.png";
 
 // Tipe Item Galeri untuk kejelasan
 type GalleryItem = {
-  image: any; // Atau ImageModule jika Anda tahu tipe yang benar dari next/image import
+  image: StaticImageData;
   title: string;
   category: string;
   desc: string;
@@ -64,10 +63,12 @@ export default function GalleryPage() {
   ]; // --- STATE UNTUK MODAL ---
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const [selectedImage, setSelectedImage] = useState<StaticImageData | null>(
+    null
+  );
   const [selectedTitle, setSelectedTitle] = useState("");
 
-  const openModal = (image: any, title: string) => {
+  const openModal = (image: StaticImageData, title: string) => {
     setSelectedImage(image);
     setSelectedTitle(title);
     setModalOpen(true);
@@ -158,14 +159,16 @@ export default function GalleryPage() {
 
             {/* Modal Card */}
             <div className="bg-white/90 backdrop-blur-xl rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden">
-              {/* Image Container */}
               <div className="relative w-full h-[50vh] sm:h-[65vh] lg:h-[75vh] bg-gray-100">
-                <Image
-                  src={selectedImage}
-                  alt={selectedTitle}
-                  fill
-                  className="object-contain"
-                />
+                {/* selectedImage pasti bertipe StaticImageData */}
+                {selectedImage && (
+                  <Image
+                    src={selectedImage}
+                    alt={selectedTitle}
+                    fill
+                    className="object-contain"
+                  />
+                )}
               </div>
 
               {/* Title Section */}

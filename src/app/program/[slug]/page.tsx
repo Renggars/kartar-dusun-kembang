@@ -65,9 +65,9 @@ export default function ProgramDetailPage() {
             <ArrowLeft className="w-4 h-4" /> Kembali ke Semua Program
           </Link>
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4">
-            <span className="inline-block px-3 py-1 text-[10px] font-black tracking-widest uppercase bg-black text-white rounded-sm">
-              {(program as any).category || "KATEGORI"}
-            </span>
+            {/* <span className="inline-block px-3 py-1 text-[10px] font-black tracking-widest uppercase bg-black text-white rounded-sm">
+              {(program as ProgramItem).category || "KATEGORI"}
+            </span> */}
             <p className="text-xs font-medium text-gray-500 flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               {new Date(program.date).toLocaleDateString("id-ID", {
@@ -134,9 +134,9 @@ export default function ProgramDetailPage() {
                 <h4 className="font-bold uppercase text-sm leading-tight group-hover:underline decoration-1 underline-offset-2">
                   {r.title}
                 </h4>
-                <p className="text-xs text-gray-500 mt-1">
+                {/* <p className="text-xs text-gray-500 mt-1">
                   {r.category || "Kegiatan"}
-                </p>
+                </p> */}
               </Link>
             ))}
           </div>
