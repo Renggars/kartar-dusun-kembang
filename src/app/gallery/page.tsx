@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+// Import Lucide icons untuk modal
+import { X, ArrowLeft, Image as ImageIcon } from "lucide-react";
 
-import rectangle from "../../assets/rectangle.png";
+// Import asset lokal (sesuaikan path)
+import rectangle from "../../assets/rectangle.png"; // Tidak digunakan, tapi dipertahankan import-nya
 import gallery1 from "../../assets/gallery1.png";
 import gallery2 from "../../assets/gallery2.png";
 import gallery3 from "../../assets/gallery3.png";
@@ -11,8 +15,16 @@ import gallery4 from "../../assets/gallery4.png";
 import gallery5 from "../../assets/gallery5.png";
 import gallery6 from "../../assets/gallery6.png";
 
+// Tipe Item Galeri untuk kejelasan
+type GalleryItem = {
+  image: any; // Atau ImageModule jika Anda tahu tipe yang benar dari next/image import
+  title: string;
+  category: string;
+  desc: string;
+};
+
 export default function GalleryPage() {
-  const galleries = [
+  const galleries: GalleryItem[] = [
     {
       image: gallery1,
       title: "UMKM Kopi Kembang",
@@ -49,75 +61,123 @@ export default function GalleryPage() {
       category: "UMKM",
       desc: "Pameran produk lokal karya pemuda Dusun Kembang.",
     },
-  ];
+  ]; // --- STATE UNTUK MODAL ---
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const [selectedTitle, setSelectedTitle] = useState("");
+
+  const openModal = (image: any, title: string) => {
+    setSelectedImage(image);
+    setSelectedTitle(title);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedImage(null);
+    setSelectedTitle("");
+  };
 
   return (
-    <section className="py-20 bg-gray-950 min-h-screen">
-      <div className="container mx-auto px-4 sm:px-10 xl:px-20">
-        {/* Judul Halaman */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-100">
-            Galeri Kegiatan & UMKM Dusun Kembang
-          </h1>
-          <p className="text-md md:text-lg text-gray-400 mt-2">
-            Dokumentasi lengkap kegiatan sosial, event, dan karya UMKM warga
-            Dusun Kembang.
-          </p>
-          <div className="w-24 h-1 bg-lime-500 mx-auto mt-4 rounded-full"></div>
-        </div>
+    <section className="pt-20 pb-24 bg-white min-h-screen text-black">
+      <div className="container mx-auto sm:px-6 lg:px-12">
+        {/*  HEADER SECTION (Style Marketplace: Bold & Uppercase) */}
 
-        {/* Grid Galeri */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="text-center mb-10 md:mb-16">
+          <h1 className="text-4xl md:text-6xl font-extrabold uppercase tracking-tighter text-black mb-4">
+            GALERI KEGIATAN & UMKM
+          </h1>
+          <p className="text-gray-600 max-w-xl mx-auto text-sm md:text-base font-medium px-4">
+            Dokumentasi kegiatan karang taruna dusun Kembang.
+          </p>
+        </div>
+        {/* GALLERY GRID (3 Col Desktop) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 md:gap-12 px-4">
           {galleries.map((item, index) => (
             <div
               key={index}
-              className="relative group transition-transform duration-500 hover:-translate-y-2"
+              className="group flex flex-col h-full cursor-pointer"
+              onClick={() => openModal(item.image, item.title)}
             >
-              {/* Background Rectangle */}
-              <div className="relative w-full h-[380px] sm:h-[400px]">
-                <Image
-                  src={rectangle}
-                  alt="Card background"
-                  fill
-                  className="object-contain z-0"
-                />
-
-                {/* Isi kartu */}
-                <div className="absolute inset-0 z-10 flex flex-col items-center justify-start p-5">
-                  <div className="relative w-full h-48 overflow-hidden rounded-xl mt-2">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-
-                  <div className="mt-4 text-center">
-                    <h3 className="text-lg font-bold text-gray-100">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-gray-400 mt-1">{item.desc}</p>
-                    <span className="inline-block mt-2 px-3 py-1 text-xs font-semibold bg-lime-100 text-lime-700 rounded-full">
-                      {item.category}
-                    </span>
-                  </div>
+              <div className="relative bg-[#F4F4F4] aspect-4/3 w-full overflow-hidden rounded-xl mb-4 shadow-lg">
+                <div className="absolute top-3 right-3 z-10">
+                  <span className="inline-block px-3 py-1 text-[10px] font-black tracking-widest uppercase bg-black text-white rounded-sm">
+                    {item.category}
+                  </span>
                 </div>
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <ImageIcon className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              <div className="flex flex-col items-start">
+                <h3 className="text-md md:text-lg font-bold text-black uppercase leading-tight group-hover:underline decoration-1 underline-offset-4 mb-1">
+                  {item.title}
+                </h3>
+
+                <p className="text-xs text-gray-500 line-clamp-2">
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}
         </div>
-
-        {/* Tombol Kembali */}
         <div className="text-center mt-16">
           <Link
-            href="/#galeri"
-            className="inline-block bg-lime-500 text-gray-900 font-semibold px-6 py-3 rounded-full shadow-md hover:bg-lime-400 hover:-translate-y-1 transition-all duration-300"
+            href="/"
+            className="inline-flex items-center gap-2 bg-black text-white font-bold px-8 py-3 rounded-full shadow-lg hover:bg-gray-800 hover:-translate-y-0.5 transition-all duration-300 uppercase tracking-wider"
           >
-            ← Kembali ke Beranda
+            <ArrowLeft className="w-4 h-4" /> Kembali ke Beranda
           </Link>
         </div>
       </div>
+
+      {/* --- MODAL COMPONENT (Pop-up Gambar) --- */}
+      {modalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/10 backdrop-blur-sm backdrop-brightness-90 p-2 sm:p-4"
+          onClick={closeModal}
+        >
+          <div
+            className="relative w-full max-w-md sm:max-w-2xl lg:max-w-4xl"
+            onClick={(e) => e.stopPropagation()} // Cegah penutupan saat klik di dalam modal
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-1 right-1 sm:-top-4 sm:-right-4 z-50 p-2 sm:p-3 bg-white text-black rounded-full shadow-lg hover:scale-110 transition cursor-pointer"
+            >
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
+            {/* Modal Card */}
+            <div className="bg-white/90 backdrop-blur-xl rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden">
+              {/* Image Container */}
+              <div className="relative w-full h-[50vh] sm:h-[65vh] lg:h-[75vh] bg-gray-100">
+                <Image
+                  src={selectedImage}
+                  alt={selectedTitle}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+
+              {/* Title Section */}
+              <div className="px-4 sm:px-6 py-3 sm:py-4 text-center bg-white">
+                <h3 className="text-sm sm:text-lg md:text-xl font-bold uppercase tracking-wider text-gray-800">
+                  {selectedTitle}
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
