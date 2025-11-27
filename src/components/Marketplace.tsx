@@ -9,7 +9,15 @@ import { MarketplaceItem } from "@/types";
 import { useLoadingContext } from "@/context/LoadingContext";
 import { motion, AnimatePresence } from "motion/react";
 
-type CategoryFilter = "Semua" | "UMKM" | "Wisata" | "Cafe" | "Event";
+import placeholder from "../assets/placeholder.png";
+
+type CategoryFilter =
+  | "Semua"
+  | "UMKM"
+  | "Wisata"
+  | "Cafe"
+  | "Event"
+  | "Accommodation";
 
 export default function Marketplace({ limit }: { limit?: number }) {
   const { setMarketplaceReady } = useLoadingContext();
@@ -34,7 +42,14 @@ export default function Marketplace({ limit }: { limit?: number }) {
     );
   }
 
-  const categories = ["Semua", "UMKM", "Wisata", "Cafe", "Event"];
+  const categories = [
+    "Semua",
+    "UMKM",
+    "Wisata",
+    "Cafe",
+    "Event",
+    "Accommodation",
+  ];
 
   // Filter Logic
   const filtered: MarketplaceItem[] =
@@ -80,7 +95,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
                 key={cat}
                 onClick={() => setSelectedCategory(cat as CategoryFilter)}
                 className={`
-                  px-6 py-2.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wide border transition-all duration-300 whitespace-nowrap
+                  cursor-pointer px-6 py-2.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wide border transition-all duration-300 whitespace-nowrap
                   ${
                     selectedCategory === cat
                       ? "bg-black text-white border-black shadow-lg"
@@ -100,26 +115,31 @@ export default function Marketplace({ limit }: { limit?: number }) {
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-8 px-4"
         >
           <AnimatePresence mode="popLayout">
-            {finalData.map((item, i) => (
-              <motion.div
-                layout
-                key={item.slug || i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="group flex flex-col h-full"
-              >
-                <Link
-                  href={`/marketplace/${item.slug}`}
-                  className="block h-full"
+            {finalData.map((item, i) => {
+              const isPlaceholder = !item.imageUrl;
+              const imageSource = isPlaceholder
+                ? placeholder
+                : (item.imageUrl as string);
+              return (
+                <motion.div
+                  layout
+                  key={item.slug || i}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="group flex flex-col h-full"
                 >
-                  {/* --- CARD IMAGE AREA (Inspirasi: Gray Background Box) --- */}
-                  <div className="relative bg-[#F4F4F4] aspect-4/5 w-full overflow-hidden rounded-xl mb-4">
-                    {/* Label Kategori (Inspirasi: Tag Neon/Color di pojok kiri) */}
-                    <div className="absolute top-3 left-3 z-10">
-                      <span
-                        className={`
+                  <Link
+                    href={`/marketplace/${item.slug}`}
+                    className="block h-full"
+                  >
+                    {/* --- CARD IMAGE AREA (Inspirasi: Gray Background Box) --- */}
+                    <div className="relative bg-[#F4F4F4] aspect-4/5 w-full overflow-hidden rounded-xl mb-4">
+                      {/* Label Kategori (Inspirasi: Tag Neon/Color di pojok kiri) */}
+                      <div className="absolute top-3 left-3 z-10">
+                        <span
+                          className={`
                         inline-block px-2 py-1 text-[10px] font-bold uppercase tracking-wider
                         ${
                           item.category === "Event"
@@ -127,36 +147,37 @@ export default function Marketplace({ limit }: { limit?: number }) {
                             : "bg-white text-black"
                         }
                       `}
-                      >
-                        {item.category}
-                      </span>
+                        >
+                          {item.category}
+                        </span>
+                      </div>
+
+                      <Image
+                        src={imageSource}
+                        alt={item.title}
+                        fill
+                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+
+                      {/* Overlay "View" (Optional modern touch) */}
+                      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
 
-                    <Image
-                      src={item.imageUrl ?? "/placeholder.png"}
-                      alt={item.title}
-                      fill
-                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
+                    {/* --- PRODUCT INFO (Minimalist Text) --- */}
+                    <div className="flex flex-col items-start">
+                      <h3 className="text-sm md:text-base font-bold text-black uppercase leading-tight group-hover:underline decoration-1 underline-offset-4">
+                        {item.title}
+                      </h3>
 
-                    {/* Overlay "View" (Optional modern touch) */}
-                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-
-                  {/* --- PRODUCT INFO (Minimalist Text) --- */}
-                  <div className="flex flex-col items-start">
-                    <h3 className="text-sm md:text-base font-bold text-black uppercase leading-tight group-hover:underline decoration-1 underline-offset-4">
-                      {item.title}
-                    </h3>
-
-                    {/* Deskripsi Pendek (Opsional, jika ingin tampilan sangat bersih bisa dihilangkan) */}
-                    <p className="text-[11px] text-gray-400 mt-1 line-clamp-1">
-                      {item.description}
-                    </p>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                      {/* Deskripsi Pendek (Opsional, jika ingin tampilan sangat bersih bisa dihilangkan) */}
+                      <p className="text-[11px] text-gray-400 mt-1 line-clamp-1">
+                        {item.description}
+                      </p>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
 

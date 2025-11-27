@@ -36,14 +36,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       href: "/admin/gallery",
     },
     {
-      name: "Pesan Masuk",
-      icon: <MdMailOutline size={20} />,
-      href: "/admin/pesan",
-    },
-    {
       name: "Marketplace",
       icon: <FaShop size={20} />,
       href: "/admin/marketplace",
+    },
+    {
+      name: "Pesan Masuk",
+      icon: <MdMailOutline size={20} />,
+      href: "/admin/pesan",
     },
   ];
 

@@ -2,7 +2,8 @@
 "use client";
 
 import Image from "next/image";
-import aboutImage from "../assets/tes.webp";
+// import aboutImage from "../assets/tes.webp";
+import aboutImage from "../assets/about.jpg";
 import { motion } from "framer-motion";
 import { easeOut } from "framer-motion";
 import { spring } from "framer-motion";

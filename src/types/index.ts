@@ -20,6 +20,7 @@ export type MarketplaceItem = {
   slug: string;
   title: string;
   category: string;
+  noHp: string | null;
   description: string;
   imageUrl: string | null;
   createdAt: Date;
@@ -33,6 +34,7 @@ export type MarketplaceInput = {
   category: MarketplaceCategory;
   description: string;
   imageUrl?: string | null;
+  noHp?: string | null;
 };
 
 export enum MarketplaceCategory {
@@ -40,6 +42,7 @@ export enum MarketplaceCategory {
   Wisata = "Wisata",
   Cafe = "Cafe",
   Event = "Event",
+  Accommodation = "Accommodation",
 }
 
 export type MarketplaceCategoryType = keyof typeof MarketplaceCategory;

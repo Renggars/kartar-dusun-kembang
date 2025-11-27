@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 
 export const listMarketplace = async () => {
   return await prisma.marketplaceItem.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { createdAt: "asc" },
   });
 };
 
@@ -53,6 +53,7 @@ export const createMarketplace = async (input: MarketplaceInput) => {
       category: input.category,
       description: input.description,
       imageUrl: input.imageUrl ?? null,
+      noHp: input.noHp ?? null,
     },
   });
 };
@@ -78,6 +79,7 @@ export const updateMarketplace = async (input: MarketplaceInput) => {
       category: input.category,
       description: input.description,
       imageUrl: input.imageUrl ?? null,
+      noHp: input.noHp ?? null,
     },
   });
 };

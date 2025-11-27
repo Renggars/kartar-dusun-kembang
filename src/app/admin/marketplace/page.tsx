@@ -35,6 +35,7 @@ export default function AdminMarketplacePage() {
     category: MarketplaceCategory;
     description: string;
     imageUrl?: string;
+    noHp?: string | null;
   }>(null);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -107,6 +108,7 @@ export default function AdminMarketplacePage() {
                     category: item.category as MarketplaceCategory,
                     description: item.description,
                     imageUrl: item.imageUrl ?? undefined,
+                    noHp: "",
                   })
                 }
                 className="px-3 py-1 bg-yellow-500 text-white rounded-md"
@@ -182,6 +184,15 @@ export default function AdminMarketplacePage() {
               ))}
             </select>
 
+            {/* No HP */}
+            <label className="block mb-2 text-sm">Nomor HP (opsional)</label>
+            <input
+              value={editing.noHp ?? ""}
+              onChange={(e) => setEditing({ ...editing, noHp: e.target.value })}
+              placeholder="08xxxxxxxxxx"
+              className="w-full px-3 py-2 border rounded mb-3 border-gray-500"
+            />
+
             {/* Description */}
             <label className="block mb-2 text-sm">Deskripsi</label>
             <textarea
@@ -252,6 +263,7 @@ export default function AdminMarketplacePage() {
                     category: editing.category,
                     description: editing.description,
                     imageUrl: finalImageUrl,
+                    noHp: editing.noHp || null,
                   };
 
                   if (editing.id) {

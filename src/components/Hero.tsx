@@ -33,6 +33,9 @@ export default function Hero() {
   const heroStyle = {
     backgroundImage: `linear-gradient(to top, rgba(18,18,18,0.8), rgba(138,43,226,0.3), rgba(255,20,147,0.3)), url('${imageUrl}')`,
   };
+  // const heroStyle = {
+  //   backgroundImage: `url('${imageUrl}'`,
+  // };
 
   return (
     <section

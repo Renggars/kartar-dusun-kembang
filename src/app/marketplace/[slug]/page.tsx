@@ -119,20 +119,22 @@ export default function MarketplaceDetailPage() {
             </div>
 
             {/* --- ACTION BUTTON (WHATSAPP) --- */}
-            <div className="mt-6">
-              <Link
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-center gap-3 w-full bg-[#1581bc] text-white font-black uppercase tracking-widest py-5 rounded-lg hover:bg-[#1895d9] hover:-translate-y-1 active:translate-y-0 transition-all duration-200 shadow-lg shadow-blue-200"
-              >
-                <FaWhatsapp className="w-6 h-6" />
-                <span>Hubungi Penjual</span>
-              </Link>
-              <p className="text-center text-[10px] text-gray-400 mt-5 uppercase tracking-wide">
-                Anda akan diarahkan ke WhatsApp Penjual
-              </p>
-            </div>
+            {item.noHp && (
+              <div className="mt-6">
+                <Link
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-center gap-3 w-full bg-[#1581bc] text-white font-black uppercase tracking-widest py-5 rounded-lg hover:bg-[#1895d9] hover:-translate-y-1 active:translate-y-0 transition-all duration-200 shadow-lg shadow-blue-200"
+                >
+                  <FaWhatsapp className="w-6 h-6" />
+                  <span>Hubungi Penjual</span>
+                </Link>
+                <p className="text-center text-[10px] text-gray-400 mt-5 uppercase tracking-wide">
+                  Anda akan diarahkan ke WhatsApp Penjual
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
