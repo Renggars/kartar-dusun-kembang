@@ -4,6 +4,27 @@ export type MessageFormData = {
   message: string;
 };
 
+export type ProgramInput = {
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  imageUrl?: string | null;
+  category: ProgramCategory;
+  location?: string | null;
+};
+
+export type ProgramUpdateInput = {
+  id: number;
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  imageUrl?: string | null;
+  category: ProgramCategory;
+  location?: string | null;
+};
+
 export type ProgramItem = {
   id: number;
   title: string;
@@ -11,6 +32,8 @@ export type ProgramItem = {
   slug: string;
   imageUrl: string | null;
   date: Date;
+  category: string;
+  location: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -45,4 +68,12 @@ export enum MarketplaceCategory {
   Accommodation = "Accommodation",
 }
 
+export enum ProgramCategory {
+  SOSIAL = "SOSIAL",
+  BUDAYA = "BUDAYA",
+  PENDIDIKAN = "PENDIDIKAN",
+  LINGKUNGAN = "LINGKUNGAN",
+}
+
 export type MarketplaceCategoryType = keyof typeof MarketplaceCategory;
+export type ProgramCategoryType = keyof typeof ProgramCategory;

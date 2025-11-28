@@ -26,28 +26,30 @@ type ProgramCategoryFilter =
   | "Pendidikan"
   | "Lingkungan";
 
-// Tambahkan data kategori dummy untuk keperluan filter
-const programCategories = [
-  "Semua",
-  "Sosial",
-  "Budaya",
-  "Pendidikan",
-  "Lingkungan",
-];
-
 export default function ProgramPage() {
+  const [selectedCategory, setSelectedCategory] =
+    useState<ProgramCategoryFilter>("Semua");
+
   const { data: programs = [], isLoading } = trpc.program.list.useQuery() as {
     data: ProgramItem[] | undefined;
     isLoading: boolean;
   };
-  const [selectedCategory, setSelectedCategory] =
-    useState<ProgramCategoryFilter>("Semua");
+  // Tambahkan data kategori dummy untuk keperluan filter
+  const programCategories = [
+    "Semua",
+    "Sosial",
+    "Budaya",
+    "Pendidikan",
+    "Lingkungan",
+  ];
 
   // State untuk filtering (asumsi setiap program memiliki properti category)
-  const filteredPrograms =
+  const filteredPrograms: ProgramItem[] =
     selectedCategory === "Semua"
       ? programs
-      : programs.filter((program) => program.category === selectedCategory);
+      : programs.filter(
+          (program) => program.category === selectedCategory.toUpperCase()
+        );
 
   if (isLoading) {
     return (

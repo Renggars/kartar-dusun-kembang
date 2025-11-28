@@ -12,12 +12,12 @@ const StructurePage = () => {
   );
   return (
     <section id="structure" className="min-h-screen text-white bg-white">
-      <div className="pt-16 px-4 sm:px-6 lg:px-8">
+      <div className="pt-20 px-4 sm:px-6 lg:px-8">
         <motion.h1 // <<< MENGGUNAKAN motion.h1
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-5xl font-extrabold text-center text-[#282B33]"
+          className="text-4xl md:text-6xl font-extrabold uppercase tracking-tighter text-black mb-4 text-center"
         >
           Structure
         </motion.h1>

@@ -62,7 +62,7 @@ export default function Marketplace({ limit }: { limit?: number }) {
   return (
     <section
       id="marketplace"
-      className="pt-5 pb-10 md:py-24 bg-white min-h-screen text-black"
+      className="pt-5 pb-10 md:py-12 bg-white min-h-screen text-black"
     >
       <div className="container mx-auto sm:px-6 lg:px-12">
         {/* --- HEADER SECTION (Style Lando Norris: Bold & Uppercase) --- */}

@@ -9,7 +9,12 @@ import {
 } from "@/lib/uploadProgramImage";
 import { trpc } from "@/trpc/client";
 import { FaFileUpload } from "react-icons/fa";
-import { ProgramItem } from "@/types";
+// Import ProgramCategory dari types
+import { ProgramItem, ProgramCategory } from "@/types";
+
+const PROGRAM_CATEGORY_OPTIONS = Object.keys(
+  ProgramCategory
+) as ProgramCategory[];
 
 function formatDate(d: string) {
   return new Date(d).toLocaleDateString("id-ID", {
@@ -18,6 +23,18 @@ function formatDate(d: string) {
     day: "numeric",
   });
 }
+
+// Perluas tipe state editing
+type EditingState = {
+  id?: number;
+  slug: string;
+  title: string;
+  date: string;
+  description: string;
+  imageUrl?: string;
+  category: ProgramCategory; // DITAMBAHKAN
+  location: string; // DITAMBAHKAN
+};
 
 export default function AdminProgramsPage() {
   const ctx = trpc.useContext();
@@ -35,14 +52,7 @@ export default function AdminProgramsPage() {
     onSuccess: () => ctx.program.list.invalidate(),
   });
 
-  const [editing, setEditing] = useState<null | {
-    id?: number;
-    slug: string;
-    title: string;
-    date: string;
-    description: string;
-    imageUrl?: string;
-  }>(null);
+  const [editing, setEditing] = useState<EditingState | null>(null);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -53,29 +63,70 @@ export default function AdminProgramsPage() {
     setEditing(null);
     setSelectedImage(null);
     setUploading(false);
+  }; // Handler untuk mengisi state editing dari data ProgramItem
+
+  const openEditModal = (p: ProgramItem) => {
+    const categoryValue =
+      p.category in ProgramCategory
+        ? (p.category as ProgramCategory)
+        : PROGRAM_CATEGORY_OPTIONS[0];
+
+    setEditing({
+      id: p.id,
+      slug: p.slug,
+      title: p.title, // Pastikan date diubah menjadi ISO string
+      date:
+        p.date instanceof Date
+          ? p.date.toISOString()
+          : new Date(p.date).toISOString(),
+      description: p.description,
+      imageUrl: p.imageUrl ?? undefined,
+      category: categoryValue, // AMBIL NILAI BARU
+      location: p.location ?? "", // AMBIL NILAI BARU, default string kosong
+    });
+  };
+
+  const openCreateModal = () => {
+    setEditing({
+      slug: `program-${Date.now()}`,
+      title: "",
+      date: new Date().toISOString(),
+      description: "",
+      imageUrl: undefined,
+      category: PROGRAM_CATEGORY_OPTIONS[0] as ProgramCategory,
+      location: "",
+    });
+  }; // Handler untuk perubahan input
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setEditing((prev) => {
+      if (!prev) return null;
+      if (name === "date") {
+        return { ...prev, date: new Date(value).toISOString() };
+      }
+      if (name === "category") {
+        return { ...prev, category: value as ProgramCategory };
+      }
+      return { ...prev, [name]: value };
+    });
   };
 
   return (
     <div className="p-8 max-w-6xl mx-auto text-gray-900">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Admin Program</h1>
-
         <button
-          onClick={() =>
-            setEditing({
-              slug: `program-${Date.now()}`,
-              title: "",
-              date: new Date().toISOString(),
-              description: "",
-              imageUrl: undefined,
-            })
-          }
+          onClick={openCreateModal}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700"
         >
           + Tambah Program
         </button>
       </div>
-
       {/* List Program */}
       <div className="grid gap-4">
         {programsQuery.data?.map((p: ProgramItem) => (
@@ -98,24 +149,15 @@ export default function AdminProgramsPage() {
                 >
                   {p.title}
                 </Link>
+
                 <div className="text-xs text-gray-500">
                   {formatDate(p.date.toString())}
                 </div>
               </div>
             </div>
-
             <div className="flex gap-2">
               <button
-                onClick={() =>
-                  setEditing({
-                    id: p.id,
-                    slug: p.slug,
-                    title: p.title,
-                    date: p.date.toISOString(),
-                    description: p.description,
-                    imageUrl: p.imageUrl ?? undefined,
-                  })
-                }
+                onClick={() => openEditModal(p)}
                 className="px-3 py-1 bg-yellow-500 text-white rounded-md"
               >
                 Edit
@@ -135,7 +177,6 @@ export default function AdminProgramsPage() {
           </div>
         ))}
       </div>
-
       {/* Modal Form */}
       {editing && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
@@ -146,54 +187,72 @@ export default function AdminProgramsPage() {
             >
               ✕
             </button>
-
             <h2 className="text-lg font-semibold mb-3">
               {editing.id ? "Edit Program" : "Buat Program"}
             </h2>
-
-            {/* Slug */}
             <label className="block mb-2 text-sm">Slug</label>
             <input
               value={editing.slug}
-              onChange={(e) => setEditing({ ...editing, slug: e.target.value })}
+              name="slug"
+              onChange={handleInputChange}
               className="w-full px-3 py-2 border rounded mb-3 border-gray-500"
             />
-
             {/* Judul */}
             <label className="block mb-2 text-sm">Judul</label>
             <input
               value={editing.title}
-              onChange={(e) =>
-                setEditing({ ...editing, title: e.target.value })
-              }
+              name="title"
+              onChange={handleInputChange}
               className="w-full px-3 py-2 border rounded mb-3 border-gray-500"
             />
+            <div className="grid grid-cols-2 gap-4">
+              {/* Kategori (Select) */}
+              <div>
+                <label className="block mb-2 text-sm">Kategori</label>
+                <select
+                  name="category"
+                  value={editing.category}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border rounded mb-3 border-gray-500 bg-white"
+                >
+                  {PROGRAM_CATEGORY_OPTIONS.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat.charAt(0) + cat.slice(1).toLowerCase()}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
+              {/* Lokasi */}
+              <div>
+                <label className="block mb-2 text-sm">Lokasi (Opsional)</label>
+                <input
+                  value={editing.location}
+                  name="location"
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border rounded mb-3 border-gray-500"
+                  placeholder="Contoh: Kembangbelor"
+                />
+              </div>
+            </div>
             {/* Tanggal */}
             <label className="block mb-2 text-sm">Tanggal</label>
             <input
               type="date"
               value={editing.date.slice(0, 10)}
-              onChange={(e) =>
-                setEditing({
-                  ...editing,
-                  date: new Date(e.target.value).toISOString(),
-                })
-              }
+              name="date"
+              onChange={handleInputChange}
               className="w-full px-3 py-2 border rounded mb-3 border-gray-500"
             />
-
             {/* Deskripsi */}
-            <label className="block mb-2 text-sm">Deskripsi</label>
+            <label className="block mb-2 text-sm">Deskripsi</label>           {" "}
             <textarea
               value={editing.description}
-              onChange={(e) =>
-                setEditing({ ...editing, description: e.target.value })
-              }
+              name="description"
+              onChange={handleInputChange}
               rows={4}
               className="w-full px-3 py-2 border rounded mb-3 border-gray-500"
             />
-
             {/* Upload Gambar */}
             <label className="block mb-2 text-sm">Gambar</label>
             <div className="flex items-center gap-3 mb-4">
@@ -219,7 +278,6 @@ export default function AdminProgramsPage() {
                   <FaFileUpload className="text-3xl text-gray-500" />
                 )}
               </div>
-
               <input
                 type="file"
                 accept="image/*"
@@ -229,26 +287,23 @@ export default function AdminProgramsPage() {
                 }}
               />
             </div>
-
             {/* Buttons */}
             <div className="flex justify-end gap-2">
               <button onClick={resetModal} className="px-4 py-2 rounded border">
                 Batal
               </button>
-
               <button
                 onClick={async () => {
                   setUploading(true);
 
-                  let finalImageUrl = editing.imageUrl ?? "";
+                  let finalImageUrl = editing.imageUrl ?? ""; // Jika upload gambar baru
 
-                  // Jika upload gambar baru
                   if (selectedImage) {
                     if (editing.imageUrl) {
                       await deleteProgramImage(editing.imageUrl);
                     }
                     finalImageUrl = await uploadProgramImage(selectedImage);
-                  }
+                  } // --- PERBARUI PAYLOAD ---
 
                   const payload = {
                     slug: editing.slug,
@@ -256,6 +311,8 @@ export default function AdminProgramsPage() {
                     date: editing.date,
                     description: editing.description,
                     imageUrl: finalImageUrl,
+                    category: editing.category,
+                    location: editing.location,
                   };
 
                   if (editing.id) {

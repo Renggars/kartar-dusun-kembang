@@ -1,6 +1,8 @@
 // src/server/service/programService.ts
 import { TRPCError } from "@trpc/server";
 import type { Context } from "@/server/context";
+import { ProgramInput, ProgramUpdateInput } from "@/types";
+import { prisma } from "@/lib/prisma";
 
 export const listPrograms = async (
   ctx: Context,
@@ -44,49 +46,32 @@ export const getRelatedPrograms = async (ctx: Context) => {
   });
 };
 
-export const createProgram = async (
-  ctx: Context,
-  input: {
-    slug: string;
-    title: string;
-    date: string;
-    description: string;
-    imageUrl?: string | null;
-  }
-) => {
+export const createProgram = async (input: ProgramInput) => {
   const cleanSlug = input.slug
     .toLowerCase()
     .replace(/ /g, "-")
     .replace(/[^a-z0-9-]/g, "");
 
-  return ctx.prisma.program.create({
+  return await prisma.program.create({
     data: {
       slug: cleanSlug,
       title: input.title,
       date: new Date(input.date),
       description: input.description,
       imageUrl: input.imageUrl ?? null,
+      category: input.category,
+      location: input.location ?? null,
     },
   });
 };
 
-export const updateProgram = async (
-  ctx: Context,
-  input: {
-    id: number;
-    slug: string;
-    title: string;
-    date: string;
-    description: string;
-    imageUrl?: string | null;
-  }
-) => {
+export const updateProgram = async (input: ProgramUpdateInput) => {
   const cleanSlug = input.slug
     .toLowerCase()
     .replace(/ /g, "-")
     .replace(/[^a-z0-9-]/g, "");
 
-  return ctx.prisma.program.update({
+  return await prisma.program.update({
     where: { id: input.id },
     data: {
       slug: cleanSlug,
@@ -94,6 +79,8 @@ export const updateProgram = async (
       date: new Date(input.date),
       description: input.description,
       imageUrl: input.imageUrl ?? null,
+      category: { set: input.category },
+      location: input.location ?? null,
     },
   });
 };

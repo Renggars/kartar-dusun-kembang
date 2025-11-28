@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-import { ArrowLeft, MapPin, Users, Calendar } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar } from "lucide-react";
 
 export default function ProgramDetailPage() {
   const { slug } = useParams() as { slug: string };
@@ -36,8 +36,6 @@ export default function ProgramDetailPage() {
       </div>
     );
   }
-
-  const dummyLocation = "Balai Desa Kembang Sari";
 
   return (
     <div className="bg-white text-black min-h-screen font-sans">
@@ -81,14 +79,12 @@ export default function ProgramDetailPage() {
             {program.title}
           </h1>
           <div className="flex flex-wrap gap-y-2 gap-x-6 text-sm font-semibold text-gray-600 mb-8">
-            <span className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-indigo-500" />
-              Oleh
-              <span className="font-bold text-gray-900">Karang Taruna</span>
+            <span className="font-bold text-white px-3 py-1 rounded-lg bg-[#1581bc]">
+              {program.category}
             </span>
             <span className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-indigo-500" />
-              {dummyLocation}
+              <MapPin className="w-4 h-4 text-[#1581bc]" />
+              {program.location}
             </span>
           </div>
           <div className="border-t border-gray-200 py-6">

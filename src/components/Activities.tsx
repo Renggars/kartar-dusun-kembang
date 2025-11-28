@@ -3,8 +3,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-// import { ProgramItem } from "@/types"; // Import ProgramItem interface
-import { motion, Variants } from "framer-motion"; // Ganti 'motion/react' ke 'framer-motion'
+import { motion, Variants } from "framer-motion";
+import { ProgramItem } from "@/types";
+import { trpc } from "@/trpc/client";
+import { useEffect } from "react";
+import { useLoadingContext } from "@/context/LoadingContext";
 
 // --- VARIAN ANIMASI ---
 const containerVariants: Variants = {
@@ -45,47 +48,48 @@ const buttonVariants: Variants = {
   },
 };
 
-interface ProgramItemsTes {
-  id: number;
-  date: string; // Format ISO string, misal '2025-11-15T00:00:00.000Z'
-  title: string;
-  description: string;
-  imageUrl: string | null;
-  slug: string;
-}
-
 export default function Activities() {
-  // --- DATA STATIS ---
-  const staticPrograms: ProgramItemsTes[] = [
-    {
-      id: 1,
-      date: "2025-11-15T00:00:00.000Z",
-      title: "Turnamen Olahraga Antar RW",
-      description:
-        "Turnamen futsal dan bulu tangkis untuk mempererat persaudaraan antarwarga desa serta meningkatkan sportifitas.",
-      imageUrl: "/gallery1.png",
-      slug: "turnamen-olahraga-antar-rw",
-    },
-    {
-      id: 2,
-      date: "2025-11-20T00:00:00.000Z",
-      title: "Kerja Bakti Lingkungan",
-      description:
-        "Kegiatan gotong royong membersihkan area desa, selokan, dan fasilitas umum setiap bulan untuk menjaga kebersihan.",
-      imageUrl: "/gallery1.png", // Pastikan gambar ini ada di public/
-      slug: "",
-    },
-    {
-      id: 3,
-      date: "2025-12-01T00:00:00.000Z",
-      title: "Pelatihan Keterampilan Digital",
-      description:
-        "Workshop untuk meningkatkan literasi digital dan keterampilan coding bagi pemuda desa agar siap menghadapi era digital.",
-      imageUrl: "/gallery1.png", // Pastikan gambar ini ada di public/
-      slug: "pelatihan-keterampilan-digital",
-    },
-    // Tambahkan lebih banyak item jika diperlukan
-  ];
+  // --- STATE & CONTEXT ---
+  const { setActivitiesReady } = useLoadingContext();
+
+  // --- FETCH DATA MENGGUNAKAN TRPC ---
+  const {
+    data: programs = [],
+    isLoading,
+    isError,
+  } = trpc.program.list.useQuery({
+    take: 3, // Ambil hanya 3 item untuk beranda
+  });
+
+  // --- EFFECT UNTUK LOADING CONTEXT ---
+  useEffect(() => {
+    // Panggil setActivitiesReady(true) setelah data selesai dimuat (isLoading menjadi false)
+    if (!isLoading) {
+      setActivitiesReady(true);
+    }
+  }, [isLoading, setActivitiesReady]);
+
+  const activitiesData: ProgramItem[] = programs;
+
+  if (isLoading) {
+    return (
+      <div className="py-20 bg-white min-h-[50vh] flex items-center justify-center invisible">
+        <div className="w-8 h-8 border-4 border-[#1581bc] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section id="activities" className="pt-20 pb-10 bg-white">
+        <div className="container mx-auto px-6 lg:px-12 text-center">
+          <p className="text-xl text-red-600">
+            Terjadi kesalahan saat memuat data program.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="activities" className="pt-20 pb-10 bg-white overflow-hidden">
@@ -100,7 +104,7 @@ export default function Activities() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+          <h2 className="text-4xl md:text-6xl font-extrabold uppercase tracking-tighter text-black mb-4 text-center">
             Program & Kegiatan
           </h2>
           <p className="text-lg text-gray-600 mt-2">
@@ -117,7 +121,7 @@ export default function Activities() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }} // Animasi saat masuk viewport
         >
-          {staticPrograms.map((item: ProgramItemsTes) => (
+          {activitiesData.map((item: ProgramItem) => (
             <motion.div
               key={item.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300"

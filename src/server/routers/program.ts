@@ -10,6 +10,7 @@ import {
   updateProgram,
   deleteProgram,
 } from "@/server/service/programService";
+import { ProgramCategory, ProgramInput, ProgramUpdateInput } from "@/types";
 
 export const programRouter = router({
   list: publicProcedure
@@ -46,10 +47,12 @@ export const programRouter = router({
         date: z.string(),
         description: z.string(),
         imageUrl: z.string().nullable().optional(),
+        category: ProgramCategory, // Category required
+        location: z.string().nullable().optional(),
       })
     )
-    .mutation(({ ctx, input }) => {
-      return createProgram(ctx, input);
+    .mutation(({ input }) => {
+      return createProgram(input as ProgramInput);
     }),
 
   update: publicProcedure
@@ -61,10 +64,12 @@ export const programRouter = router({
         date: z.string(),
         description: z.string(),
         imageUrl: z.string().nullable().optional(),
+        category: ProgramCategory, // Category required
+        location: z.string().nullable().optional(), // Location optional
       })
     )
-    .mutation(({ ctx, input }) => {
-      return updateProgram(ctx, input);
+    .mutation(({ input }) => {
+      return updateProgram(input as ProgramUpdateInput);
     }),
 
   delete: publicProcedure
