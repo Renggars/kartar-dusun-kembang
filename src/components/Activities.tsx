@@ -7,9 +7,9 @@ import { motion, Variants } from "framer-motion";
 import { useEffect } from "react";
 import { useLoadingContext } from "@/context/LoadingContext";
 
-import kegiatan1 from "../assets/kegiatan/kegiatan1.png";
-import kegiatan2 from "../assets/kegiatan/kegiatan2.png";
-import kegiatan3 from "../assets/kegiatan/kegiatan3.png";
+import kegiatan1 from "../assets/kegiatan1.png";
+import kegiatan2 from "../assets/kegiatan2.png";
+import kegiatan3 from "../assets/kegiatan3.png";
 
 // --- VARIAN ANIMASI ---
 const containerVariants: Variants = {
