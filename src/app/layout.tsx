@@ -47,10 +47,10 @@ const LayoutWithLoadingControl = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isMarketplaceReady, isActivitiesReady } = useLoadingContext();
+  const { isMarketplaceReady } = useLoadingContext();
   const [isLoading, setIsLoading] = useState(true);
 
-  const allDataReady = isMarketplaceReady && isActivitiesReady;
+  const allDataReady = isMarketplaceReady;
 
   // LOGIKA UTAMA: Gabungkan Waktu Minimum dan Kesiapan Data
   useEffect(() => {

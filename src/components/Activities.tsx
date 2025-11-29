@@ -4,8 +4,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
-import { useEffect } from "react";
-import { useLoadingContext } from "@/context/LoadingContext";
 
 import kegiatan1 from "../assets/kegiatan1.png";
 import kegiatan2 from "../assets/kegiatan2.png";
@@ -51,13 +49,6 @@ const buttonVariants: Variants = {
 };
 
 export default function Activities() {
-  const { setActivitiesReady } = useLoadingContext();
-
-  // Mark ready instantly (karena tidak loading dari server)
-  useEffect(() => {
-    setActivitiesReady(true);
-  }, [setActivitiesReady]);
-
   // --- STATIC DATA ---
   const activitiesData = [
     {
