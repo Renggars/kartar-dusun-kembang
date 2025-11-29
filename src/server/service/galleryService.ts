@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 type CreateGalleryInput = {
   title: string;
   category: GalleryCategory;
-  imageUrl: string; // Asumsikan URL sudah didapatkan setelah proses upload
+  imageUrl: string;
 };
 
 // Tipe data untuk input update item galeri
