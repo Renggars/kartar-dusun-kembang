@@ -51,6 +51,23 @@ model MarketplaceItem {
   updatedAt   DateTime @updatedAt
 }
 
+model Gallery {
+  id          Int             @id @default(autoincrement())
+  title       String
+  category    GalleryCategory
+  description String          @db.Text
+  imageUrl    String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+enum GalleryCategory {
+  UMKM
+  Event
+  Organisasi
+  Lainnya
+}
+
 enum Category {
   UMKM
   Wisata

@@ -7,10 +7,10 @@ import { FaShop, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa6";
 import { IoIosClose } from "react-icons/io";
 import { HiMenuAlt2 } from "react-icons/hi";
 
-import kegiatan1 from "../assets/gallery1.png";
-import kegiatan2 from "../assets/gallery2.png";
-import kegiatan3 from "../assets/gallery3.png";
-import kegiatan4 from "../assets/gallery4.png";
+import kegiatan1 from "../assets/gallery3.png";
+import kegiatan2 from "../assets/gallery4.png";
+import kegiatan3 from "../assets/gallery5.png";
+import kegiatan4 from "../assets/gallery6.png";
 
 const navLinks = [
   { name: "Home", href: "#home" },

@@ -3,7 +3,7 @@ import { FaTiktok, FaYoutube, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="pt-5 md:pt-10 pb-5 md:pb-7 bg-gray-950">
+    <footer className="pt-5 md:pt-10 pb-5 md:pb-7 bg-gray-950 text-white">
       <div className="container mx-auto px-6 md:px-20">
         {/* Bagian Atas */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-start text-center md:text-left space-y-6 md:space-y-0">

@@ -4,10 +4,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
-import { ProgramItem } from "@/types";
-import { trpc } from "@/trpc/client";
 import { useEffect } from "react";
 import { useLoadingContext } from "@/context/LoadingContext";
+
+import kegiatan1 from "../assets/kegiatan/kegiatan1.png";
+import kegiatan2 from "../assets/kegiatan/kegiatan2.png";
+import kegiatan3 from "../assets/kegiatan/kegiatan3.png";
 
 // --- VARIAN ANIMASI ---
 const containerVariants: Variants = {
@@ -15,8 +17,8 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, // Setiap item kartu akan muncul bergantian
-      delayChildren: 0.2, // Penundaan sebelum animasi kartu dimulai
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
     },
   },
 };
@@ -40,7 +42,7 @@ const buttonVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      delay: 0.5, // Muncul setelah kartu
+      delay: 0.5,
       type: "spring",
       stiffness: 100,
       damping: 10,
@@ -49,54 +51,48 @@ const buttonVariants: Variants = {
 };
 
 export default function Activities() {
-  // --- STATE & CONTEXT ---
   const { setActivitiesReady } = useLoadingContext();
 
-  // --- FETCH DATA MENGGUNAKAN TRPC ---
-  const {
-    data: programs = [],
-    isLoading,
-    isError,
-  } = trpc.program.list.useQuery({
-    take: 3, // Ambil hanya 3 item untuk beranda
-  });
-
-  // --- EFFECT UNTUK LOADING CONTEXT ---
+  // Mark ready instantly (karena tidak loading dari server)
   useEffect(() => {
-    // Panggil setActivitiesReady(true) setelah data selesai dimuat (isLoading menjadi false)
-    if (!isLoading) {
-      setActivitiesReady(true);
-    }
-  }, [isLoading, setActivitiesReady]);
+    setActivitiesReady(true);
+  }, [setActivitiesReady]);
 
-  const activitiesData: ProgramItem[] = programs;
-
-  if (isLoading) {
-    return (
-      <div className="py-20 bg-white min-h-[50vh] flex items-center justify-center invisible">
-        <div className="w-8 h-8 border-4 border-[#1581bc] border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <section id="activities" className="pt-20 pb-10 bg-white">
-        <div className="container mx-auto px-6 lg:px-12 text-center">
-          <p className="text-xl text-red-600">
-            Terjadi kesalahan saat memuat data program.
-          </p>
-        </div>
-      </section>
-    );
-  }
+  // --- STATIC DATA ---
+  const activitiesData = [
+    {
+      id: 1,
+      title: "Kegiatan Pembukaan KKN UNESA di Desa Kembang",
+      slug: "kegiatan-pembukaan-kkn-unesa-di-desa-kembang",
+      date: "2025-09-15",
+      imageUrl: kegiatan1,
+      description:
+        "Pembukaan program KKN UNESA di Desa Kembang menjadi momentum awal kolaborasi antara mahasiswa KKN, perangkat desa, dan Karang Taruna setempat. Karang Taruna hadir sebagai tamu undangan dan mitra pemuda desa dalam mendukung berbagai kegiatan sosial, pendidikan, dan pemberdayaan masyarakat yang akan berlangsung selama masa KKN. Kehadiran Karang Taruna pada acara pembukaan ini menunjukkan komitmen bersama dalam membangun lingkungan desa yang lebih aktif, kreatif, dan bermanfaat bagi warga. Melalui sinergi antara pemuda desa dan mahasiswa KKN, diharapkan berbagai program yang direncanakan dapat berjalan lancar dan memberikan dampak positif bagi masyarakat.",
+    },
+    {
+      id: 2,
+      title: "Kerja Bakti dan Penanaman Pohon Beringin Iprik",
+      slug: "kerja-bakti-dan-penanaman-pohon-beringin-iprik",
+      date: "2025-09-19",
+      imageUrl: kegiatan2,
+      description:
+        "Kegiatan kerja bakti dan penanaman pohon beringin iprik dilaksanakan oleh Karang Taruna Dusun Kembang sebagai upaya menjaga kelestarian lingkungan. Pemuda Karang Taruna bersama warga melakukan pembersihan area sekitar titik penanaman, kemudian menanam bibit pohon beringin iprik yang nantinya diharapkan menjadi ruang teduh bagi masyarakat. Mahasiswa KKN juga ikut terlibat dalam kegiatan ini, memberikan dukungan tenaga dan membantu proses penanaman pohon. Melalui kegiatan ini, Karang Taruna berkomitmen untuk terus mendorong penghijauan desa dan meningkatkan kesadaran lingkungan di kalangan pemuda dan masyarakat.",
+    },
+    {
+      id: 3,
+      title: "Kerja Bakti Membersihkan TPU Dusun Kembang",
+      slug: "kerja-bakti-membersihkan-tpu-dusun-kembang",
+      date: "2025-09-25",
+      imageUrl: kegiatan3,
+      description:
+        "Kegiatan kerja bakti membersihkan Tempat Pemakaman Umum (TPU) Dusun Kembang dilaksanakan sebagai bentuk kepedulian Karang Taruna terhadap kebersihan lingkungan dan fasilitas umum desa. Para pemuda Karang Taruna bekerja bersama membersihkan area makam, memangkas rumput liar, serta merapikan akses jalan agar lebih nyaman digunakan warga yang berziarah. Kegiatan ini turut dibantu oleh mahasiswa KKN Unesa yang ikut berpartisipasi dan memberikan tenaga dalam proses gotong royong. Melalui kegiatan ini, diharapkan semangat kebersamaan, kekompakan, dan kepedulian sosial antarwarga semakin kuat, serta lingkungan TPU tetap terawat dengan baik.",
+    },
+  ];
 
   return (
     <section id="activities" className="pt-20 pb-10 bg-white overflow-hidden">
-      {" "}
-      {/* overflow-hidden untuk animasi masuk */}
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Judul Section (Animasi sederhana) */}
+        {/* Judul */}
         <motion.div
           className="text-center mb-8 md:mb-12"
           initial={{ opacity: 0, y: -20 }}
@@ -104,7 +100,7 @@ export default function Activities() {
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-4xl md:text-6xl font-extrabold uppercase tracking-tighter text-black mb-4 text-center">
+          <h2 className="text-4xl md:text-6xl font-extrabold uppercase tracking-tighter text-black mb-4">
             Program & Kegiatan
           </h2>
           <p className="text-lg text-gray-600 mt-2">
@@ -113,28 +109,27 @@ export default function Activities() {
           <div className="w-24 h-1 bg-[#1581bc] mx-auto mt-4" />
         </motion.div>
 
-        {/* Kartu Kegiatan (Container dengan Stagger Effect) */}
+        {/* Grid Kartu */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }} // Animasi saat masuk viewport
+          viewport={{ once: true, amount: 0.3 }}
         >
-          {activitiesData.map((item: ProgramItem) => (
+          {activitiesData.map((item) => (
             <motion.div
               key={item.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
-              variants={cardVariants} // Setiap kartu akan menggunakan varian ini
+              variants={cardVariants}
             >
               <div className="relative h-48 md:h-52 xl:h-56 w-full">
                 <Image
-                  src={item.imageUrl || "/placeholder-400x300.png"}
+                  src={item.imageUrl}
                   alt={item.title}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority={false} // Atur ke true jika ini bagian pertama di halaman
                 />
               </div>
               <div className="p-6">
@@ -162,6 +157,7 @@ export default function Activities() {
           ))}
         </motion.div>
 
+        {/* Tombol Lihat Semua */}
         <motion.div
           className="text-center mt-12"
           variants={buttonVariants}
@@ -174,7 +170,6 @@ export default function Activities() {
             className="relative inline-block bg-[#1581bc] text-white font-semibold px-10 py-4 rounded-full shadow-md hover:-translate-y-1 hover:shadow-lg transition-all duration-300 text-lg overflow-hidden group"
           >
             <div className="absolute bg-white/20 inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-
             <span className="relative z-10">Lihat Semua Program</span>
           </Link>
         </motion.div>

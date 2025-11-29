@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, ShoppingBag, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 export default function MarketplaceNavbar() {
@@ -28,9 +28,9 @@ export default function MarketplaceNavbar() {
 
   const navLinks = [
     { name: "BERANDA", href: "/" },
-    { name: "MARKETPLACE", href: "/marketplace" },
-    { name: "WISATA", href: "/wisata" },
-    { name: "EVENT", href: "/event" },
+
+    { name: "Location", href: "/#contact" },
+    { name: "Contact", href: "/#contact" },
   ];
 
   return (
@@ -55,21 +55,27 @@ export default function MarketplaceNavbar() {
 
       {/* --- MAIN NAVBAR --- */}
       <nav className="bg-gray-50 border-b border-white/10 px-4 md:px-12 h-16 md:h-20 flex items-center justify-between relative shadow-md">
-        {/* 1. BAGIAN KIRI: Logo (Mobile) & Menu Links (Desktop) */}
+        {/* 1. BAGIAN KIRI: Logo Utama */}
         <div className="flex items-center">
-          {/* A. LOGO MOBILE (Hanya muncul di HP, Paling Kiri) */}
-          <Link href="/" className="md:hidden block mr-4">
+          <Link
+            href="/"
+            // Logo kecil untuk mobile (40x40), logo besar untuk desktop (50x50)
+            className="flex items-center"
+          >
             <Image
               src="/logo.png"
               alt="Logo"
-              width={40}
-              height={40}
-              className="w-10 h-10"
+              width={50} // Ukuran desktop
+              height={50} // Ukuran desktop
+              className="w-10 h-10 md:w-[50px] md:h-[50px]"
             />
           </Link>
+        </div>
 
-          {/* B. DESKTOP MENU LINKS (Hidden di Mobile) */}
-          <div className="hidden md:flex items-center gap-8">
+        {/* 2. BAGIAN KANAN: Menu Links (Desktop) & Hamburger (Mobile) */}
+        <div className="flex items-center gap-5 md:gap-8">
+          {/* A. DESKTOP MENU LINKS (Hidden di Mobile, Muncul di Kanan Desktop) */}
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -80,71 +86,8 @@ export default function MarketplaceNavbar() {
               </Link>
             ))}
           </div>
-        </div>
 
-        {/* 2. BAGIAN TENGAH: LOGO DESKTOP (Absolute Center, Hidden di Mobile) */}
-        <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 z-10">
-          <Link
-            href="/"
-            className="group flex flex-col items-center justify-center"
-          >
-            <Image
-              src="/logo.png"
-              alt="Logo"
-              width={80}
-              height={80}
-              className="w-12 h-12"
-            />
-          </Link>
-        </div>
-
-        {/* 3. LOGO DESKTOP (Muncul di Tengah Absolute HANYA saat Desktop) */}
-        <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 z-10">
-          <Link
-            href="/"
-            className="group flex flex-col items-center justify-center"
-          >
-            <Image
-              src="/logo.png"
-              alt="Logo"
-              width={80}
-              height={80}
-              className="w-12 h-12"
-            />
-          </Link>
-        </div>
-
-        {/* 3. BAGIAN KANAN: Icons (Desktop) & Hamburger (Mobile) */}
-        <div className="flex items-center gap-5 md:gap-6">
-          {/* A. DESKTOP ICONS (Hidden di Mobile) */}
-          <div className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-1 text-[#1581bc] text-xs font-bold cursor-pointer hover:text-gray-600">
-              <span>IDR</span>
-              <svg width="8" height="5" viewBox="0 0 10 6" fill="currentColor">
-                <path
-                  d="M1 1L5 5L9 1"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <button className="text-[#1581bc] hover:text-gray-600 transition-colors">
-              <Search className="w-6 h-6" strokeWidth={2.5} />
-            </button>
-            <Link
-              href="/cart"
-              className="text-[#1581bc] hover:text-gray-600 transition-colors relative"
-            >
-              <ShoppingBag className="w-6 h-6" strokeWidth={2.5} />
-              <span className="absolute -top-1 -right-1 bg-white text-black text-[9px] font-black w-3.5 h-3.5 flex items-center justify-center rounded-full border border-gray-200">
-                2
-              </span>
-            </Link>
-          </div>
-
-          {/* B. HAMBURGER MENU (Hanya muncul di HP, Paling Kanan) */}
+          {/* C. HAMBURGER MENU (Hanya muncul di HP) */}
           <button
             className="md:hidden text-[#1581bc] hover:text-gray-600 transition-colors"
             onClick={() => setIsMobileMenuOpen(true)}

@@ -9,6 +9,8 @@ import gallery2 from "../assets/gallery2.png";
 import gallery3 from "../assets/gallery3.png";
 import gallery4 from "../assets/gallery4.png";
 import gallery5 from "../assets/gallery5.png";
+import gallery6 from "../assets/gallery6.png";
+import gallery7 from "../assets/gallery7.png";
 
 // Konfigurasi posisi kartu (Pengganti itemStyles Tailwind)
 // Kita ubah ke angka agar bisa dianimasikan dengan halus oleh Framer Motion
@@ -29,8 +31,8 @@ export default function GalleryPage() {
     { image: gallery3, title: "Pasar Mingguan" },
     { image: gallery4, title: "Senam Pagi" },
     { image: gallery5, title: "Festival Panen Raya" },
-    { image: gallery4, title: "Senam Pagi" },
-    { image: gallery5, title: "Festival Panen Raya" },
+    { image: gallery6, title: "Senam Pagi" },
+    { image: gallery7, title: "Festival Panen Raya" },
   ];
 
   const imageWrapperClass =
@@ -50,7 +52,7 @@ export default function GalleryPage() {
         className="text-center leading-tight mb-24"
       >
         <span className="block text-4xl md:text-5xl font-extrabold tracking-tight uppercase font-['Mona_Sans']">
-          Galeri Kegiatan
+          Galeri
         </span>
         <span className="block text-4xl md:text-5xl font-serif">
           Karang Taruna

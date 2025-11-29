@@ -47,35 +47,25 @@ const LayoutWithLoadingControl = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isMarketplaceReady } = useLoadingContext();
+  const { isMarketplaceReady, isActivitiesReady } = useLoadingContext();
   const [isLoading, setIsLoading] = useState(true);
 
-  const allDataReady = isMarketplaceReady;
+  const allDataReady = isMarketplaceReady && isActivitiesReady;
 
   // LOGIKA UTAMA: Gabungkan Waktu Minimum dan Kesiapan Data
   useEffect(() => {
     const MIN_DISPLAY_TIME = 800; // Minimal tampil 0.8 detik untuk user experience
 
-    // Timer untuk waktu minimum tampil
-    const minTimeTimer = setTimeout(() => {
-      // Jika waktu minimum tercapai DAN semua data sudah siap, hilangkan loading
-      if (allDataReady) {
+    if (allDataReady) {
+      const timer = setTimeout(() => {
         setIsLoading(false);
-      }
-    }, MIN_DISPLAY_TIME);
+      }, MIN_DISPLAY_TIME);
 
-    // Cek jika data siap lebih cepat dari waktu minimum
-    if (allDataReady && isLoading) {
-      // Data sudah siap, tapi timer belum habis, hilangkan loading segera
-      setIsLoading(false);
-      clearTimeout(minTimeTimer); // Hentikan timer jika data sudah ready
+      return () => clearTimeout(timer);
     }
-
-    return () => clearTimeout(minTimeTimer);
-  }, [allDataReady, isLoading]);
+  }, [allDataReady]);
 
   const handleLoadingFinish = () => {
-    // Dipanggil saat animasi fade out selesai
     setIsLoading(false);
   };
 

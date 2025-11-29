@@ -1,5 +1,6 @@
 // src/server/index.ts
 import { authRouter } from "./routers/auth";
+import { galleryRouter } from "./routers/gallery";
 import { marketplaceRouter } from "./routers/marketplace";
 import { messageRouter } from "./routers/message";
 import { programRouter } from "./routers/program";
@@ -10,6 +11,7 @@ export const appRouter = router({
   message: messageRouter,
   program: programRouter,
   marketplace: marketplaceRouter,
+  gallery: galleryRouter,
 });
 
 export type AppRouter = typeof appRouter;

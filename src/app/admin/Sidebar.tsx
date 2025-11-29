@@ -1,12 +1,15 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+
 import { FaChevronLeft } from "react-icons/fa"; // Menambahkan FaChevronLeft untuk tombol collapse
 import { FiImage } from "react-icons/fi";
 import { LuNewspaper } from "react-icons/lu";
 import { MdMailOutline, MdOutlineDashboard, MdMenu } from "react-icons/md"; // Menambahkan MdMenu
 import { IoIosClose } from "react-icons/io";
-import Image from "next/image";
 import { FaShop } from "react-icons/fa6";
 
 interface SidebarProps {
@@ -17,12 +20,12 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   // State baru untuk mode desktop: apakah sidebar sedang diperluas (expanded) atau disembunyikan (collapsed)
   const [isExpanded, setIsExpanded] = useState(true);
-  const [active, setActive] = useState("Dashboard");
+  const pathname = usePathname();
 
   const menus = [
     {
       name: "Dashboard",
-      icon: <MdOutlineDashboard size={20} />, // Ikon sedikit lebih besar
+      icon: <MdOutlineDashboard size={20} />,
       href: "/admin/dashboard",
     },
     {
@@ -50,6 +53,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
+  const isActive = (href: string) => {
+    return pathname === href;
+  };
 
   return (
     <aside
@@ -69,7 +75,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         }`}
       >
         {isExpanded && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer">
             {/* Menggunakan ikon Karang Taruna */}
             <Image src="/logo.png" alt="Logo" width={32} height={32} />
             <h1 className="text-xl font-bold text-indigo-700">Admin Panel</h1>
@@ -80,7 +86,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         {isExpanded && (
           <button
             onClick={handleToggle}
-            className={`hidden md:block p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-transform duration-300 
+            className={`cursor-pointer hidden md:block p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-transform duration-300 
             ${isExpanded ? "rotate-0" : "rotate-180"}
             ${isExpanded ? "ml-0" : "hidden"} 
           `}
@@ -93,7 +99,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         {!isExpanded && (
           <button
             onClick={handleToggle}
-            className="hidden md:block p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-all duration-300"
+            className="cursor-pointer hidden md:block p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-all duration-300"
           >
             <MdMenu size={20} />
           </button>
@@ -119,7 +125,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             key={menu.name}
             href={menu.href}
             onClick={() => {
-              setActive(menu.name);
               onClose();
             }}
             className={`
@@ -132,7 +137,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               font-medium rounded-lg transition-all duration-200 
               text-gray-600 my-1
               ${
-                active === menu.name
+                isActive(menu.href)
                   ? "bg-indigo-100 text-indigo-700 font-semibold shadow-sm"
                   : "hover:bg-gray-50 hover:text-indigo-600"
               }
@@ -155,12 +160,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <div
         className={`h-16 flex items-center justify-center border-t border-gray-200 transition-all duration-300`}
       >
-        <div
-          className={`p-2 bg-gray-100 rounded-full text-gray-400 ${
-            !isExpanded && "w-8 h-8"
-          }`}
-        >
-          <FaShop size={isExpanded ? 16 : 12} />
+        <div className={`text-xs text-gray-500 ${!isExpanded && "w-8 h-8"}`}>
+          @2025{" "}
+          <span className={`${!isExpanded && "hidden"}`}>Kartar Kembang</span>
         </div>
       </div>
     </aside>
