@@ -50,7 +50,13 @@ export default function Navbar() {
       {/* --- NAVBAR HEADER --- */}
       <nav className="fixed top-0 left-0 z-100 w-full flex items-center justify-between px-4 sm:px-10 py-3 text-white">
         <Link href="/" className="relative w-12 h-12 sm:w-16 sm:h-16 z-100">
-          <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            fill
+            sizes="(max-width: 640px) 48px, 64px"
+            className="object-contain"
+          />
         </Link>
 
         <div className="flex items-center gap-2 md:gap-4 z-100">
@@ -112,7 +118,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* --- DESKTOP MENU (Lando Style) --- */}
+      {/* --- DESKTOP MENU --- */}
       <div
         className={`hidden lg:flex fixed inset-0 z-40 bg-[#1e1e1c] text-[#f0f0f0] transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
           menuOpen ? "opacity-100 visible" : "opacity-0 invisible delay-200"

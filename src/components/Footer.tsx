@@ -3,7 +3,10 @@ import { FaTiktok, FaYoutube, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="pt-5 md:pt-10 pb-5 md:pb-7 bg-gray-950 text-white">
+    <footer
+      id="footer"
+      className="pt-5 md:pt-10 pb-5 md:pb-7 bg-gray-950 text-white"
+    >
       <div className="container mx-auto px-6 md:px-20">
         {/* Bagian Atas */}
         <div className="flex flex-col md:flex-row md:justify-between md:items-start text-center md:text-left space-y-6 md:space-y-0">
@@ -20,30 +23,38 @@ const Footer = () => {
 
           {/* Sosial Media Mobile*/}
           <div className="flex sm:hidden justify-center md:justify-end space-x-6 text-2xl md:text-3xl">
-            <Link href="#" className="hover:text-lime-500 transition">
+            <Link
+              href="https://www.instagram.com/persatuanpemudapemudikembang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-500 transition"
+            >
               <FaInstagram />
             </Link>
-            <Link href="#" className="hover:text-lime-500 transition">
+            <Link href="#footer" className="hover:text-blue-500 transition">
               <FaYoutube />
             </Link>
-            <Link href="#" className="hover:text-lime-500 transition">
+            <Link href="#footer" className="hover:text-blue-500 transition">
               <FaTiktok />
             </Link>
           </div>
 
           {/* Navigasi (desktop kanan / mobile tengah) */}
           <div className="grid grid-cols-2 gap-3 md:flex md:space-x-8 text-sm md:text-base font-medium justify-center md:justify-end">
-            <Link href="#" className="hover:text-blue-500 transition">
+            <Link href="/" className="hover:text-blue-500 transition">
               Beranda
             </Link>
-            <Link href="#" className="hover:text-blue-500 transition">
+            <Link
+              href="/#activities"
+              className="hover:text-blue-500 transition"
+            >
               Program
             </Link>
-            <Link href="#" className="hover:text-blue-500 transition">
-              Galeri
-            </Link>
-            <Link href="#" className="hover:text-blue-500 transition">
+            <Link href="/#about" className="hover:text-blue-500 transition">
               Tentang
+            </Link>
+            <Link href="/#gallery" className="hover:text-blue-500 transition">
+              Galeri
             </Link>
           </div>
         </div>
@@ -62,7 +73,12 @@ const Footer = () => {
 
           {/* Sosial Media */}
           <div className="hidden sm:flex justify-center md:justify-end space-x-6 text-2xl md:text-3xl">
-            <Link href="#" className="hover:text-blue-500 transition">
+            <Link
+              href="https://www.instagram.com/persatuanpemudapemudikembang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-500 transition"
+            >
               <FaInstagram />
             </Link>
             <Link href="#" className="hover:text-blue-500 transition">

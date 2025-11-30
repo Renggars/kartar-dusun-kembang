@@ -1,5 +1,3 @@
-// app/admin/gallery/page.tsx atau components/admin/AdminGalleryPage.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -110,18 +108,20 @@ export default function AdminGalleryPage() {
 
   // --- Render ---
   return (
-    <div className="p-6 md:p-8 max-w-6xl mx-auto text-gray-900">
+    <div className="p-4 md:p-8 max-w-6xl mx-auto text-gray-900">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Galeri Kegiatan</h1>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
+        <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2 mt-3">
+          Galeri Kegiatan
+        </h1>
         <button
           onClick={() =>
             setEditing({
               title: "",
-              category: GalleryCategory.UMKM,
+              category: GalleryCategory.UMKM, // deafult category
             })
           }
-          className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
+          className="inline-flex items-center justify-center gap-2 bg-[#1581bc] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#1895d9] transition duration-200 w-full sm:w-auto text-sm font-semibold"
         >
           + Tambah Item
         </button>
@@ -132,31 +132,33 @@ export default function AdminGalleryPage() {
         {dataQuery.data?.map((item: Gallery) => (
           <div
             key={item.id}
-            className="bg-white p-4 rounded-xl shadow-md flex items-center justify-between border border-gray-100"
+            // Tambahkan flex-col di mobile, kembali ke flex-row di md
+            className="bg-white p-4 rounded-xl shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between border border-gray-100"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4 grow w-full">
               {/* Gambar Item */}
               <Image
                 src={item.imageUrl ?? "/placeholder-400x300.png"}
                 alt={item.title}
-                width={96}
-                height={64}
-                className="w-24 h-16 object-cover rounded-lg shrink-0"
+                width={80} // Diperkecil sedikit untuk mobile
+                height={60}
+                className="w-20 h-16 object-cover rounded-lg shrink-0"
               />
 
               {/* Detail Item */}
-              <div>
-                <span className="font-semibold text-gray-800 block">
+              <div className="flex flex-col justify-center min-w-0">
+                <span className="font-semibold text-gray-800 block text-base leading-tight">
                   {item.title}
                 </span>
-                <span className="text-xs text-blue-600 font-medium bg-blue-50/50 px-2 py-0.5 rounded-full inline-block mt-0.5">
+                {/* Pindahkan kategori di bawah judul */}
+                <span className="text-xs text-[#1581bc] font-medium bg-indigo-50/50 px-2 py-0.5 rounded-full inline-block mt-1 uppercase max-w-fit">
                   {item.category}
                 </span>
               </div>
             </div>
 
             {/* Aksi */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-4 sm:mt-0 sm:ml-4 shrink-0 w-full sm:w-auto">
               <button
                 onClick={() =>
                   setEditing({
@@ -166,7 +168,9 @@ export default function AdminGalleryPage() {
                     imageUrl: item.imageUrl,
                   })
                 }
-                className="px-3 py-1 bg-yellow-500 text-white text-sm rounded-md hover:bg-yellow-600 transition"
+                // Gaya tombol Edit modern (Indigo)
+                className="lg:min-w-20 px-4 py-2 text-black text-sm rounded-lg border
+                border-gray-950 hover:bg-gray-100 transition-colors duration-200 flex-1 cursor-pointer"
               >
                 Edit
               </button>
@@ -182,10 +186,11 @@ export default function AdminGalleryPage() {
                   }
                 }}
                 disabled={deleteMutation.isPending}
-                className="px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition"
+                // Gaya tombol Hapus modern (Rose)
+                className="lg:min-w-20 px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition duration-200 flex-1 disabled:opacity-50 cursor-pointer"
               >
                 {deleteMutation.isPending ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-4 h-4 animate-spin mx-auto" />
                 ) : (
                   "Hapus"
                 )}
@@ -193,21 +198,30 @@ export default function AdminGalleryPage() {
             </div>
           </div>
         ))}
+        {/* State Kosong (Jika tidak ada data) */}
+        {dataQuery.data?.length === 0 && (
+          <div className="p-8 text-center text-gray-500 border border-dashed rounded-xl bg-gray-50 mt-4">
+            <p className="font-semibold">Tidak ada item galeri ditemukan.</p>
+            <p className="text-sm">
+              Klik &quot;Tambah Item&quot; untuk memulai.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* --- MODAL FORM (CREATE / UPDATE) --- */}
       {editing && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 transition-opacity duration-300">
-          <div className="bg-white w-full max-w-2xl rounded-xl p-6 relative shadow-2xl">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto pt-40 md:pt-0">
+          <div className="bg-white w-full max-w-2xl rounded-xl p-6 relative shadow-2xl my-8 mt-56 md:mt-0">
             {/* Close Button */}
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 transition"
               onClick={resetModal}
             >
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6" />
             </button>
 
-            <h2 className="text-xl font-bold mb-5 text-gray-800">
+            <h2 className="text-xl font-bold mb-5 text-gray-800 border-b pb-3">
               {editing.id ? "Edit Item Galeri" : "Tambah Item Galeri Baru"}
             </h2>
 
@@ -218,6 +232,7 @@ export default function AdminGalleryPage() {
               }}
             >
               {/* Judul & Kategori */}
+              {/* Menggunakan grid-cols-1 di mobile, grid-cols-2 di sm+ */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -258,13 +273,13 @@ export default function AdminGalleryPage() {
               </div>
 
               {/* Image Upload */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Gambar
+              <div className="mb-6 border p-4 rounded-lg bg-gray-50">
+                <label className="block text-sm font-semibold text-gray-800 mb-2">
+                  Gambar (Max. 1MB)
                 </label>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
                   {/* Pratinjau Gambar */}
-                  <div className="relative w-32 h-24 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border border-dashed border-gray-400">
+                  <div className="relative w-full h-32 sm:w-32 sm:h-24 bg-white rounded-lg overflow-hidden flex items-center justify-center border-2 border-dashed border-gray-300 shrink-0">
                     {selectedImage || editing.imageUrl ? (
                       <Image
                         alt="Pratinjau Gambar"
@@ -289,27 +304,28 @@ export default function AdminGalleryPage() {
                       const file = e.target.files?.[0];
                       if (file) setSelectedImage(file);
                     }}
-                    className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                    className="w-full sm:w-auto text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 transition"
                   />
                 </div>
                 {editing.imageUrl && !selectedImage && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    Gambar saat ini: {editing.imageUrl.substring(0, 50)}...
+                  <p className="text-xs text-gray-500 mt-2">
+                    Gambar saat ini sudah tersimpan.
                   </p>
                 )}
                 {selectedImage && (
-                  <p className="text-xs text-red-500 mt-1">
-                    Gambar akan diganti saat disimpan.
+                  <p className="text-xs text-red-500 mt-2 font-medium">
+                    PERHATIAN: Gambar baru akan menggantikan gambar lama setelah
+                    disimpan.
                   </p>
                 )}
               </div>
 
               {/* Tombol Aksi */}
-              <div className="flex justify-end gap-3">
+              <div className="flex justify-end gap-3 pt-4 border-t">
                 <button
                   type="button"
                   onClick={resetModal}
-                  className="px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+                  className="px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition text-sm font-medium"
                 >
                   Batal
                 </button>
@@ -321,7 +337,7 @@ export default function AdminGalleryPage() {
                     createMutation.isPending ||
                     updateMutation.isPending
                   }
-                  className="inline-flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition disabled:opacity-50"
+                  className="inline-flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition duration-200 text-sm font-medium disabled:opacity-50"
                 >
                   {uploading ||
                   createMutation.isPending ||

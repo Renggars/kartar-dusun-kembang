@@ -54,7 +54,7 @@ const LayoutWithLoadingControl = ({
 
   // LOGIKA UTAMA: Gabungkan Waktu Minimum dan Kesiapan Data
   useEffect(() => {
-    const MIN_DISPLAY_TIME = 800; // Minimal tampil 0.8 detik untuk user experience
+    const MIN_DISPLAY_TIME = 500; // Minimal tampil 0.8 detik untuk user experience
 
     if (allDataReady) {
       const timer = setTimeout(() => {

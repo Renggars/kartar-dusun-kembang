@@ -130,9 +130,6 @@ export default function ProgramDetailPage() {
                 <h4 className="font-bold uppercase text-sm leading-tight group-hover:underline decoration-1 underline-offset-2">
                   {r.title}
                 </h4>
-                {/* <p className="text-xs text-gray-500 mt-1">
-                  {r.category || "Kegiatan"}
-                </p> */}
               </Link>
             ))}
           </div>

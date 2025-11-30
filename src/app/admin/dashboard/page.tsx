@@ -171,15 +171,18 @@ export default function DashboardPage() {
 
   // --- RENDER KOMPONEN ---
   return (
-    <div className="h-screen bg-white font-sans px-4 py-8 sm:p-6 lg:p-8">
+    <div className="h-screen bg-white font-sans px-4 py-8 sm:p-6 lg:p-8 overflow-y-auto scroll-smooth">
       <header className="flex justify-between items-center mb-4 md:mb-8">
         <h1 className="text-xl sm:text-3xl font-extrabold text-gray-900 mb-3 sm:mb-0">
           Selamat Datang di Dashboard Admin Karang Taruna!
         </h1>
         <div className="flex items-center space-x-2 md:space-x-4">
-          <div className="bg-white p-3 rounded-full shadow-md">
-            <Calendar className="h-5 w-5 md:h-6 md:w-6 text-indigo-600" />
-          </div>
+          <Link
+            href="#calendar"
+            className="bg-white p-3 rounded-full shadow-md"
+          >
+            <Calendar className="h-5 w-5 md:h-6 md:w-6 text-[#1581bc]" />
+          </Link>
           <span className="text-gray-700 font-medium text-sm md:text-lg hidden md:block">
             {formattedDate}
           </span>
@@ -208,7 +211,7 @@ export default function DashboardPage() {
             </h2>
             <Link
               href="/admin/program"
-              className="flex items-center text-indigo-600 hover:text-indigo-800 font-semibold text-xs sm:text-sm transition-colors duration-200"
+              className="flex items-center text-[#1581bc] hover:text-[#1895d9] font-semibold text-xs sm:text-sm transition-colors duration-200"
             >
               Lihat Semua <ArrowRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
             </Link>
@@ -255,7 +258,7 @@ export default function DashboardPage() {
                     </h3>
                     <p className="text-gray-600 text-xs sm:text-sm">
                       Diterbitkan pada
-                      <span className="font-medium text-indigo-700">
+                      <span className="font-medium text-[#1581bc]">
                         {" "}
                         {item.date}
                       </span>
@@ -268,14 +271,17 @@ export default function DashboardPage() {
         </main>
 
         {/* Sidebar untuk Kalender dan Informasi Tambahan */}
-        <aside className="lg:col-span-1 flex flex-col space-y-4 md:space-y-6">
+        <aside
+          id="calendar"
+          className="lg:col-span-1 flex flex-col space-y-4 md:space-y-6"
+        >
           <div className="bg-white p-4 md:p-6 rounded-2xl shadow-xl">
             {/* Kalender Component (Tidak Berubah) */}
             <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 flex items-center">
-              <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 mr-2" />
+              <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-[#1581bc] mr-2" />
               Kalender
             </h3>
-            <div className="text-center bg-indigo-50 p-3 sm:p-4 rounded-lg text-indigo-800 font-semibold">
+            <div className="text-center bg-indigo-50 p-3 sm:p-4 rounded-lg text-[#1581bc] font-semibold">
               <p className="text-xs sm:text-sm mb-2">
                 {calendarMonthName} {currentYear}
               </p>
@@ -298,7 +304,7 @@ export default function DashboardPage() {
                       day === todayDate &&
                       currentMonth === today.getMonth() &&
                       currentYear === today.getFullYear()
-                        ? "ring-2 ring-indigo-500 bg-indigo-100 text-indigo-800 font-bold"
+                        ? "ring-2 ring-[#1581bc] bg-indigo-100 text-gray-900 hover:bg-gray-50 font-bold"
                         : ""
                     }`}
                   >
@@ -324,7 +330,7 @@ export default function DashboardPage() {
                 <div className="h-3 bg-indigo-500 rounded w-5/6"></div>
               </div>
             ) : latestMessage ? (
-              <div className="space-y-2 mb-4 bg-indigo-700/50 p-3 rounded-lg">
+              <div className="space-y-2 mb-4 bg-indigo-700/60 p-3 rounded-lg">
                 <div className="flex justify-between items-center text-xs text-indigo-100">
                   <p className="font-bold text-sm sm:text-base text-white truncate">
                     {latestMessage.name} {/* Asumsi field nama adalah 'name' */}
@@ -355,7 +361,7 @@ export default function DashboardPage() {
             )}
             <Link
               href="/admin/pesan"
-              className="flex items-center justify-center w-full bg-white text-indigo-700 font-bold py-2 px-4 rounded-full hover:bg-indigo-100 transition-all duration-300 shadow-md text-sm cursor-pointer"
+              className="flex items-center justify-center w-full bg-white text-[#1581bc] font-bold py-2 px-4 rounded-full hover:bg-indigo-100 transition-all duration-300 shadow-md text-sm cursor-pointer"
             >
               <Mail className="h-4 w-4 mr-2" /> Lihat Semua Pesan
             </Link>

@@ -188,11 +188,6 @@ export default function ProgramPage() {
             </p>
           </div>
         )}
-
-        {/* --- BUTTON: BROWSE ALL (Jika ada pagination atau lebih dari limit) --- */}
-        {/* Asumsi: Jika ada 10 program tapi yang ditampilkan semua, tombol ini tidak perlu. 
-                    Saya hanya meninggalkannya jika Anda ingin pagination di masa depan.
-                */}
       </div>
     </section>
   );

@@ -65,7 +65,7 @@ export const loginUser = async (ctx: Context, input: LoginInput) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60, // 1 jam
+      maxAge: Number(process.env.ACCESS_TOKEN_MAX_AGE), // 6 jam
       path: "/",
     });
 
@@ -74,7 +74,7 @@ export const loginUser = async (ctx: Context, input: LoginInput) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60, // 7 hari
+      maxAge: Number(process.env.REFRESH_TOKEN_MAX_AGE), // 7 hari
       path: "/",
     });
 

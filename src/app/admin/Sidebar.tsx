@@ -78,7 +78,12 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           <div className="flex items-center gap-2 cursor-pointer">
             {/* Menggunakan ikon Karang Taruna */}
             <Image src="/logo.png" alt="Logo" width={32} height={32} />
-            <h1 className="text-xl font-bold text-indigo-700">Admin Panel</h1>
+            <Link
+              href={"/admin/dashboard"}
+              className="text-xl font-bold text-[#1581bc]"
+            >
+              Admin Panel
+            </Link>
           </div>
         )}
 
@@ -109,9 +114,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Tombol close (mobile only) */}
       <button
         onClick={onClose}
-        className="md:hidden absolute top-4 right-4 p-1 rounded-md text-gray-600 hover:bg-gray-100"
+        className="md:hidden absolute top-4 right-4 p-1 rounded-md text-gray-600 hover:bg-gray-100 "
       >
-        <IoIosClose size={22} />
+        <IoIosClose size={30} />
       </button>
 
       {/* Menu navigasi */}
@@ -138,8 +143,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               text-gray-600 my-1
               ${
                 isActive(menu.href)
-                  ? "bg-indigo-100 text-indigo-700 font-semibold shadow-sm"
-                  : "hover:bg-gray-50 hover:text-indigo-600"
+                  ? "bg-[#1581bc] text-white font-semibold shadow-sm"
+                  : "hover:bg-gray-100 hover:text-[#1581bc]"
               }
             `}
             // Tambahkan tooltip untuk mode collapsed

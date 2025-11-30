@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 import { IoIosMenu } from "react-icons/io";
+import Link from "next/link";
 
 export default function AdminLayout({
   children,
@@ -27,14 +28,16 @@ export default function AdminLayout({
       {/* Konten utama */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Header (mobile) */}
-        <header className="md:hidden fixed top-0 left-0 right-0 flex items-center justify-between px-4 py-3 bg-blue-800 text-white shadow z-30">
+        <header className="md:hidden fixed top-0 left-0 right-0 flex items-center justify-between px-4 py-3 bg-[#1581bc] text-white shadow z-30">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-md bg-blue-700 hover:bg-blue-600 transition-colors"
+            className="p-2 rounded-md bg-gray-800 hover:bg-gray-900 transition-colors cursor-pointer"
           >
             <IoIosMenu size={22} />
           </button>
-          <h1 className="text-lg font-semibold">Admin Panel</h1>
+          <Link href={"/admin/dashboard"} className="text-lg font-semibold">
+            Admin Panel
+          </Link>
         </header>
 
         {/* Main content scrollable */}

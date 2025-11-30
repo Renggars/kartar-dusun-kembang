@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion, Variants } from "motion/react";
 import { MapPin, Users, Zap } from "lucide-react";
 import { FaShop } from "react-icons/fa6";
+import { trpc } from "@/trpc/client";
+import CountUp from "react-countup";
 
 // --- VARIAN ANIMASI ---
 const itemVariants: Variants = {
@@ -32,16 +34,44 @@ const heroData = {
   description:
     "Membangun Generasi Muda Dusun Kembang Belor yang Kreatif, Inovatif, dan Berkarakter. Mari bersama wujudkan potensi desa.",
   imageUrl: "/hero.jpg", // Pastikan gambar ini sesuai dengan tema Karang Taruna
-  infoCards: [
-    { label: "Anggota", value: "40+", icon: Users, link: "#anggota" },
-    { label: "Program", value: "6+", icon: Zap, link: "#program" },
-    { label: "UMKM", value: "5+", icon: FaShop, link: "#marketplace" },
-  ],
 };
 
 export default function Hero() {
-  const { location, title, highlight, description, imageUrl, infoCards } =
-    heroData;
+  // --- FETCH DATA DINAMIS ---
+
+  // 1. Marketplace (untuk menghitung UMKM)
+  const { data: marketplaceItems = [], isLoading: isLoadingMarketplace } =
+    trpc.marketplace.list.useQuery();
+  const umkmCount = marketplaceItems.filter(
+    (item) => item.category === "UMKM"
+  ).length; // 2. Programs (untuk menghitung Program/Kegiatan)
+
+  const { data: programs = [], isLoading: isLoadingPrograms } =
+    trpc.program.list.useQuery();
+  const programCount = programs.length;
+
+  // Tentukan apakah salah satu data masih loading
+  const isLoadingData = isLoadingMarketplace || isLoadingPrograms;
+
+  // --- DATA HERO (Gabungan Statis & Dinamis) ---
+  const { location, title, highlight, description, imageUrl } = heroData;
+
+  // Definisikan infoCards di sini dengan nilai dinamis
+  const infoCards = [
+    { label: "Anggota", value: 40, icon: Users, link: "#anggota" }, // Statis
+    {
+      label: "Program",
+      value: programCount,
+      icon: Zap,
+      link: "#program",
+    }, // Dinamis
+    {
+      label: "UMKM",
+      value: umkmCount,
+      icon: FaShop,
+      link: "#marketplace",
+    }, // Dinamis
+  ];
 
   const heroStyle = {
     // Menggunakan gradien yang lebih gelap di bagian bawah untuk kontras
@@ -80,7 +110,7 @@ export default function Hero() {
 
         {/* HIGHLIGHT */}
         <motion.p
-          className="text-4xl sm:text-6xl md:text-7xl font-extrabold mb-6"
+          className="text-4xl sm:text-6xl md:text-7xl font-extrabold mb-5 md:mb-6"
           variants={itemVariants}
         >
           <span className="text-[#1581bc]">{highlight}</span>
@@ -88,14 +118,14 @@ export default function Hero() {
 
         {/* DESKRIPSI */}
         <motion.p
-          className="text-base sm:text-lg text-gray-200 mb-8 max-w-xl"
+          className="text-base sm:text-lg text-gray-200 mb-5 md:mb-8 max-w-xl"
           variants={itemVariants}
         >
           {description}
         </motion.p>
 
         {/* TOMBOL CALL TO ACTION (CTA) */}
-        <motion.div variants={itemVariants} className="mb-10">
+        <motion.div variants={itemVariants} className="mb-5 md:mb-10">
           <Link
             href="#about"
             className="relative inline-block bg-[#1581bc] text-white font-semibold px-6 lg:px-8 py-4 rounded-xl shadow-md hover:-translate-y-1 hover:shadow-lg transition-all duration-300 text-lg overflow-hidden group"
@@ -111,17 +141,31 @@ export default function Hero() {
           className="flex flex-row gap-4 overflow-x-auto pb-4 -mx-6 px-6 sm:-mx-12 sm:px-12"
           variants={itemVariants}
         >
-          {infoCards.map((card, index) => (
-            <Link key={index} href={card.link}>
-              <div className="flex flex-col justify-between p-3 md:p-4 bg-white/10 backdrop-blur-sm rounded-xl lg:h-28 lg:w-40 border border-white/20 transition-all duration-300 hover:bg-white/20 cursor-pointer">
-                <p className="text-sm text-gray-300 flex items-center">
-                  <card.icon className="w-4 h-4 mr-1" />
-                  {card.label}
-                </p>
-                <p className="text-2xl md:text-3xl font-bold">{card.value}</p>
-              </div>
-            </Link>
-          ))}
+          {infoCards.map((card, index) => {
+            return (
+              <Link key={index} href={card.link}>
+                <div className="flex flex-col justify-between p-3 md:p-4 bg-white/10 backdrop-blur-sm rounded-xl lg:h-28 lg:w-40 border border-white/20 transition-all duration-300 hover:bg-white/20 cursor-pointer">
+                  <p className="text-sm text-gray-300 flex items-center">
+                    <card.icon className="w-4 h-4 mr-1" />
+                    {card.label}
+                  </p>
+                  <p className="text-2xl md:text-3xl font-bold">
+                    {isLoadingData ? (
+                      <span>0+</span>
+                    ) : (
+                      <CountUp
+                        start={0}
+                        end={card.value}
+                        duration={2.5}
+                        delay={1}
+                        suffix="+"
+                      />
+                    )}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </motion.div>
       </motion.div>
     </section>

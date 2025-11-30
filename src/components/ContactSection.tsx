@@ -20,7 +20,7 @@ const ContactSection = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ staggerChildren: 0.2 }} // Stagger untuk elemen anak
+      transition={{ staggerChildren: 0.2 }}
     >
       <div className="container mx-auto px-2">
         <div className="grid grid-cols-1 gap-10 md:gap-8 items-start">
@@ -79,10 +79,10 @@ const ContactSection = () => {
               >
                 <MdOutlineEmail className="text-2xl shrink-0" />
                 <Link
-                  href="mailto:info.ktdusunkembang@email.com"
+                  href="mailto:contact.karangtarunakembang@gmail.com"
                   className="text-lg font-semibold"
                 >
-                  info.ktdusunkembang@email.com
+                  contact.karangtarunakembang@gmail.com
                 </Link>
               </motion.div>
 
@@ -94,7 +94,7 @@ const ContactSection = () => {
               >
                 <FaPhoneAlt className="text-xl shrink-0" />
                 <Link href="tel:0123456789" className="text-lg font-semibold">
-                  +62 812-3456-7890 (Chat Only)
+                  +62 812-1625-2511 (Chat Only)
                 </Link>
               </motion.div>
             </div>

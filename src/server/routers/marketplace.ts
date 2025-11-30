@@ -40,6 +40,7 @@ export const marketplaceRouter = router({
         slug: z.string(),
         category: z.enum(MarketplaceCategory),
         description: z.string(),
+        noHp: z.string().nullable().optional(),
         imageUrl: z.string().nullable().optional(),
       })
     )
@@ -53,6 +54,7 @@ export const marketplaceRouter = router({
         slug: z.string(),
         category: z.enum(MarketplaceCategory),
         description: z.string(),
+        noHp: z.string().nullable().optional(),
         imageUrl: z.string().nullable().optional(),
       })
     )
